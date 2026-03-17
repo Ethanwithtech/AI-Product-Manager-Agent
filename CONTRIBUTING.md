@@ -240,6 +240,17 @@ Before adding a new skill, determine which type it should be:
 
 ## 📐 Skill Format (Required Structure)
 
+### Naming Conventions
+
+Skill names must be **generic and universal** — they describe what the skill does, not who built it. No contributor handles, company names, or personal prefixes.
+
+- ✅ `pm-skill-creator`
+- ✅ `discovery-interview-prep`
+- ❌ `acme-pm-skill-creator`
+- ❌ `yourhandle-discovery-prep`
+
+The skill belongs to the community once merged. The name should reflect that.
+
 Every skill **must** follow this format:
 
 ~~~markdown
@@ -313,6 +324,7 @@ Your skill should pass these checks:
 - [ ] **Skimmable:** Can you skim the headings and bullets and get 80% of the value?
 - [ ] **Zero fluff:** Did you cut every word that doesn't earn its keep? (But not the lesson — see Design Philosophy above)
 - [ ] **Properly categorized:** Is it clearly a component, interactive, or workflow skill?
+- [ ] **If you removed existing content:** Can you confirm nothing pedagogic was lost? "Why This Works," Anti-Patterns, consequence explanations in Common Pitfalls, and educational preambles are load-bearing. "The agent already knows this" is not a valid reason to remove them — the human reader may not.
 
 **For Interactive Skills Only:**
 - [ ] **Bounded questions:** 3-5 questions max (not a 20-question survey)
@@ -345,6 +357,9 @@ Your skill should pass these checks:
 ---
 
 ## 🔄 Review Process
+
+**A note on external scoring tools:**
+Tools that score or grade skills can be useful for surfacing structural issues. If you use one, share the results — that's helpful context. Just note that most tools optimize for agent execution efficiency, which is only half this repo's mission. A score improvement that comes from removing pedagogic content will be sent back for revision.
 
 **What happens after you submit:**
 
@@ -391,7 +406,8 @@ Your skill should pass these checks:
 - Duplicate content (check existing skills first)
 - Sales or marketing content (this is a PM skill library)
 - Overly academic or theoretical frameworks (skills must be actionable)
-- **Efficiency edits that strip pedagogic value** — trimming explanation, removing anti-patterns, or cutting examples to make a skill shorter is a defect. The teaching is the point.
+- **Efficiency edits that strip pedagogic value** — trimming explanation, removing anti-patterns, or cutting examples to make a skill shorter is a defect. The teaching is the point. Specifically protected: "Why This Works" sections, Anti-Patterns, consequence chains in Common Pitfalls, and educational preambles that explain why a framework exists.
+- **Content removal justified only by a score from an external tool** — external skill scoring tools may optimize for agent execution efficiency, which is only half this repo's mission. Score improvements are useful signal, but content removal requires explicit justification beyond a score change.
 
 ---
 
