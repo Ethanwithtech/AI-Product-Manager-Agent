@@ -6,8 +6,8 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square)](https://github.com/deanpeters/Product-Manager-Skills/blob/main/CONTRIBUTING.md)
 [![Version](https://img.shields.io/badge/version-v0.75-blue?style=flat-square)](https://github.com/deanpeters/Product-Manager-Skills)
 [![Claude Code Plugin](https://img.shields.io/badge/Claude%20Code-Plugin%20Marketplace-5C4EE5?style=flat-square)](https://code.claude.com/docs/en/plugin-marketplaces)
-![Skills](https://img.shields.io/badge/skills-46-informational?style=flat-square)
-![Commands](https://img.shields.io/badge/commands-6-informational?style=flat-square)
+![Skills](https://img.shields.io/badge/skills-63-informational?style=flat-square)
+![Commands](https://img.shields.io/badge/commands-9-informational?style=flat-square)
 ![Streamlit Beta](https://img.shields.io/badge/streamlit-beta-orange?style=flat-square)
 
 ```text
@@ -706,6 +706,175 @@ Related skills and external frameworks.
 ```
 
 **Clean. Practical. Zero fluff.**
+
+---
+
+## 🚀 PM Team MCP Toolkit
+
+A complete **Skills + MCP + Web Console** toolkit for 5-person (or smaller) PM teams. Each PM works in their own CodeBuddy with locally loaded skills; shared data flows through a remote MCP Server; a lightweight web console lets you manage everything from a browser.
+
+### Architecture
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│  PM-A's CodeBuddy    PM-B's CodeBuddy    PM-C's CodeBuddy      │
+│  ┌─────────────┐     ┌─────────────┐     ┌─────────────┐       │
+│  │ Local Skills │     │ Local Skills │     │ Local Skills │       │
+│  │ + Agents     │     │ + Agents     │     │ + Agents     │       │
+│  └──────┬──────┘     └──────┬──────┘     └──────┬──────┘       │
+│         │ MCP Protocol      │                    │              │
+│         └───────────────────┼────────────────────┘              │
+│                             ▼                                   │
+│              ┌──────────────────────────┐                       │
+│              │   Remote MCP Server      │                       │
+│              │   (FastAPI + SQLite +    │                       │
+│              │    ChromaDB)             │                       │
+│              └──────────┬───────────────┘                       │
+│                         │ REST API                              │
+│                         ▼                                       │
+│              ┌──────────────────────────┐                       │
+│              │   Web Admin Console      │                       │
+│              │   (React + Arco Design)  │                       │
+│              └──────────────────────────┘                       │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### PM Team Skills (18 new skills)
+
+| Skill | Type | Description |
+|-------|------|-------------|
+| [`product-knowledge-base`](skills/product-knowledge-base/SKILL.md) | Component | Organize and query product docs for optimal AI context via MCP |
+| [`requirement-generator`](skills/requirement-generator/SKILL.md) | Workflow | Generate structured PRD from natural language + knowledge context, optionally sync to TAPD |
+| [`ui-draft-generator`](skills/ui-draft-generator/SKILL.md) | Workflow | Generate React + Arco Design UI code from requirements |
+| [`product-sync-agent`](skills/product-sync-agent/SKILL.md) | Interactive | Sync product progress, detect team conflicts via MCP |
+| [`fullchain-efficiency`](skills/fullchain-efficiency/SKILL.md) | Workflow | End-to-end: knowledge search → PRD → UI draft → team sync |
+| [`feedback-insight-engine`](skills/feedback-insight-engine/SKILL.md) | Interactive | Collect and analyze bids, reviews, surveys, and interviews, then discuss iteration priorities with the PM |
+| [`pm-strategist`](skills/pm-strategist/SKILL.md) | Workflow | 自主产品策划：五角色推演流水线 + GAN 式生成-批判循环，输入需求+代码仓库，输出三版方案对比、PRD、路线图 |
+| [`skill-navigator`](skills/skill-navigator/SKILL.md) | Component | 路由索引 Skill，列出全部 63 个 Skill 并按场景分类，帮 AI 快速定位 |
+| [`asr-sentence-recognition`](skills/asr-sentence-recognition/SKILL.md) | Component | 腾讯云 ASR 语音识别：短音频/极速/异步三种模式，支持 20+ 语种 |
+| [`docx`](skills/docx/SKILL.md) | Component | 创建、读取、编辑 Word (.docx) 文档 |
+| [`multi-perspective-evaluation`](skills/multi-perspective-evaluation/SKILL.md) | Interactive | 五维度（怀疑论者/用户拥护者/执行者/远见者/系统思考者）全面评估方案 |
+| [`pdf`](skills/pdf/SKILL.md) | Component | PDF 读取、合并、拆分、OCR、加密等全功能操作 |
+| [`tapd-toolkit`](skills/tapd-toolkit/SKILL.md) | Component | TAPD 扩展：图片/附件上传、查询与下载 |
+| [`tencent-meeting-mcp`](skills/tencent-meeting-mcp/SKILL.md) | Interactive | 腾讯会议管理：预约/修改/取消、成员管理、录制与转写 |
+| [`wecom-doc-skills-v2`](skills/wecom-doc-skills-v2/SKILL.md) | Component | 企业微信文档读取 v2：支持文档/表格/幻灯片/思维导图 |
+| [`wecom-message`](skills/wecom-message/SKILL.md) | Component | 通过 Webhook 向企业微信发送消息 |
+| [`woa-preview`](skills/woa-preview/SKILL.md) | Workflow | 将文档/报告发布到 pages.woa.com 静态预览服务 |
+| [`xiaohongshu-mcp`](skills/xiaohongshu-mcp/SKILL.md) | Interactive | 小红书内容自动化：发布、搜索、分析笔记 |
+
+### Agent Roles (7 definitions in `agents/`)
+
+| Agent | Focus |
+|-------|-------|
+| [`product-manager`](agents/product-manager.md) | PRD writing, backlog management, stakeholder communication |
+| [`pm-strategist`](agents/pm-strategist.md) | 自主产品策划：五角色推演 + GAN 生成-批判循环，读代码不改代码，输出完整产品方案 |
+| [`ui-designer`](agents/ui-designer.md) | React + Arco Design component design, responsive layouts |
+| [`ux-architect`](agents/ux-architect.md) | Information architecture, user flows, interaction patterns |
+| [`sprint-prioritizer`](agents/sprint-prioritizer.md) | RICE/MoSCoW frameworks, capacity planning |
+| [`feedback-synthesizer`](agents/feedback-synthesizer.md) | Multi-channel feedback collection and analysis |
+| [`agents-orchestrator`](agents/agents-orchestrator.md) | Multi-agent pipeline coordination, quality gates |
+
+### Workflow Commands (4 new commands)
+
+| Command | Skills Used |
+|---------|-------------|
+| [`strategize`](commands/strategize.md) | pm-strategist → problem-statement → jobs-to-be-done → multi-perspective-evaluation → requirement-generator → roadmap-planning |
+| [`generate-requirement`](commands/generate-requirement.md) | knowledge-base → requirement-generator → sync-agent |
+| [`generate-ui-draft`](commands/generate-ui-draft.md) | knowledge-base → ui-draft-generator |
+| [`fullchain`](commands/fullchain.md) | All 5 skills in sequence |
+
+### Quick Start — Deploy MCP Server
+
+**Option 1: Docker Compose (recommended)**
+
+```bash
+cd platform
+cp .env.example .env
+# Edit .env to set JWT_SECRET and other values
+docker compose up -d
+```
+
+The MCP Server runs at `http://localhost:8000`, Web Console at `http://localhost:3000`.
+
+**Option 2: Run locally**
+
+```bash
+# MCP Server
+cd mcp-server
+pip install -r requirements.txt
+python main.py
+
+# Web Console (separate terminal)
+cd platform/web
+npm install
+npm run dev
+```
+
+**Option 3: Team shared deployment (recommended for teams)**
+
+```bash
+# One-command start with team config guide
+./scripts/start-server.sh --team
+
+# Other PMs connect using the printed server IP
+# Frontend connects to remote backend:
+VITE_API_URL=http://<server-ip>:8000 npm run dev
+```
+
+> 💡 Team mode prints the server IP and ready-to-paste `.mcp.json` config for all team members.
+
+### Key Features
+
+| Feature | Description |
+|---------|-------------|
+| **📚 知识库** | 支持 .md/.txt/.pdf/.docx/.html 上传，ChromaDB 向量语义搜索，AI Skill 自动检索 |
+| **📝 需求单 + TAPD 同步** | AI 生成 PRD → 存入本地 → 可选同步到 TAPD（创建需求 + 上传附件 + 嵌入图片） |
+| **📊 进度看板** | 4 列看板 + 自动冲突检测（模块重叠 / 关键词重叠），实时同步所有 PM 状态 |
+| **💬 反馈分析** | 收集标书/评论/访谈/调研，自动提取主题、情感评分、生成产品迭代建议 |
+| **📋 模板管理** | 支持文件上传或手动创建，三种分类（需求模板/团队规则/检查清单），AI 自动调用 |
+| **🔄 团队协同** | 所有 PM 连同一个 MCP Server，共享知识库/需求/进度，创建需求自动检测冲突 |
+
+### Configure CodeBuddy
+
+Add this to your CodeBuddy MCP settings:
+
+```json
+{
+  "mcpServers": {
+    "pm-team-hub": {
+      "url": "http://your-server:8000/mcp",
+      "description": "PM团队共享数据中心 — 知识库/需求单/进度/规则"
+    }
+  }
+}
+```
+
+### MCP Tools Available (12 tools)
+
+| Category | Tools |
+|----------|-------|
+| **Knowledge Base** | `search_knowledge`, `add_knowledge_document`, `list_knowledge_documents`, `delete_knowledge_document` |
+| **Requirements** | `create_requirement`, `get_requirement`, `list_requirements`, `update_requirement` |
+| **Progress Sync** | `update_progress`, `get_progress_board`, `check_conflicts` |
+| **Templates** | `get_templates` |
+
+### Web Admin Console Pages
+
+- **知识库管理** — Upload docs (.md/.txt/.pdf/.docx/.html), view document list, test semantic search with ChromaDB vector matching
+- **需求单管理** — Browse/edit requirements with Markdown preview, filter by status, auto-generated from AI skills
+- **产品进度看板** — 4-column Kanban (Planning → In Progress → Review → Done), automatic conflict detection across PMs
+- **反馈分析** — Collect bids, reviews, surveys, interviews; auto-extract themes; sentiment analysis; generate iteration recommendations
+- **规则/模板管理** — Create and edit shared templates with live Markdown preview, **支持文件上传** (.md/.txt/.docx/.pdf)
+
+### Package Skills for Distribution
+
+```bash
+# Package all PM toolkit skills
+./scripts/package-skills-for-codebuddy.sh
+
+# Package with ZIP archives
+./scripts/package-skills-for-codebuddy.sh --zip
+```
 
 ---
 

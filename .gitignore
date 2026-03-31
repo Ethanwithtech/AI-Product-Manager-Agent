@@ -220,3 +220,30 @@ skills-backup-*.tar.gz
 
 # Local marketplace working docs (do not commit yet)
 docs/marketplace/
+
+# PM Team Hub data (local databases, not for git)
+mcp-server/data/
+*.sqlite3
+*.db
+
+# ChromaDB vector store
+data/chroma/
+
+# Node modules
+node_modules/
+
+# Local MCP config (contains server URLs)
+.mcp.json
+
+# CodeBuddy local data
+.codebuddy/
+
+# SkillHub lock file
+skills/.skills_store_lock.json
+
+# Screenshots output
+screenshots/
+
+# WeChat message node_modules
+skills/wecom-message/node_modules/
+platform/web/node_modules/

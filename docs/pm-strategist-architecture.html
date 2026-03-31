@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PM Strategist Agent — 架构设计图</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #0f172a; color: #e2e8f0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 40px 20px; min-width: 1100px; }
+  
+  .title { text-align: center; margin-bottom: 12px; }
+  .title h1 { font-size: 32px; font-weight: 700; background: linear-gradient(135deg, #a78bfa, #38bdf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .title p { color: #94a3b8; font-size: 14px; margin-top: 6px; }
+  
+  .container { max-width: 1200px; margin: 0 auto; position: relative; }
+  
+  /* ===== Input Layer ===== */
+  .input-layer { display: flex; justify-content: center; gap: 20px; margin-bottom: 32px; }
+  .input-box { background: linear-gradient(135deg, #1e3a5f, #1e40af); border: 1px solid #3b82f6; border-radius: 12px; padding: 16px 24px; text-align: center; min-width: 200px; }
+  .input-box .icon { font-size: 28px; margin-bottom: 6px; }
+  .input-box .label { font-weight: 600; font-size: 14px; color: #93c5fd; }
+  .input-box .desc { font-size: 12px; color: #64748b; margin-top: 4px; }
+  
+  /* ===== Arrow ===== */
+  .arrow { text-align: center; margin: 16px 0; font-size: 24px; color: #475569; }
+  .arrow-small { text-align: center; margin: 8px 0; font-size: 20px; color: #475569; }
+  
+  /* ===== Main Layout: 3 columns ===== */
+  .main-layout { display: grid; grid-template-columns: 200px 1fr 200px; gap: 24px; align-items: start; }
+  
+  /* ===== Side Panels ===== */
+  .side-panel { background: #1e293b; border-radius: 12px; padding: 16px; border: 1px solid #334155; }
+  .side-panel h3 { font-size: 13px; font-weight: 700; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; }
+  .side-panel.mcp h3 { color: #fbbf24; }
+  .side-panel.skills h3 { color: #a78bfa; }
+  .side-panel .tool-tag { background: #1a1a2e; border: 1px solid #334155; border-radius: 6px; padding: 6px 10px; margin-bottom: 6px; font-size: 11px; font-family: 'SF Mono', 'Fira Code', monospace; color: #94a3b8; }
+  .side-panel.mcp .tool-tag { border-color: #92400e; color: #fcd34d; }
+  .side-panel.skills .tool-tag { border-color: #4c1d95; color: #c4b5fd; }
+  .tool-tag .phase { font-size: 9px; color: #64748b; display: block; margin-top: 2px; }
+  
+  /* ===== Pipeline ===== */
+  .pipeline { display: flex; flex-direction: column; gap: 0; }
+  
+  .phase-card { border-radius: 14px; padding: 20px; position: relative; transition: transform 0.2s; }
+  .phase-card:hover { transform: scale(1.01); }
+  .phase-card .phase-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .phase-card .phase-num { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; flex-shrink: 0; }
+  .phase-card .phase-name { font-size: 18px; font-weight: 700; }
+  .phase-card .phase-role { font-size: 12px; color: rgba(255,255,255,0.6); font-style: italic; }
+  .phase-card .phase-items { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .phase-card .item { background: rgba(0,0,0,0.25); border-radius: 6px; padding: 4px 10px; font-size: 11px; color: rgba(255,255,255,0.8); }
+  
+  .phase-planner { background: linear-gradient(135deg, #9a3412, #c2410c); border: 1px solid #ea580c; }
+  .phase-planner .phase-num { background: #7c2d12; color: #fdba74; }
+  
+  .phase-researcher { background: linear-gradient(135deg, #065f46, #047857); border: 1px solid #10b981; }
+  .phase-researcher .phase-num { background: #064e3b; color: #6ee7b7; }
+  
+  .phase-synthesizer { background: linear-gradient(135deg, #4c1d95, #6d28d9); border: 1px solid #8b5cf6; }
+  .phase-synthesizer .phase-num { background: #3b0764; color: #c4b5fd; }
+  
+  .phase-critic { background: linear-gradient(135deg, #7f1d1d, #b91c1c); border: 1px solid #ef4444; }
+  .phase-critic .phase-num { background: #450a0a; color: #fca5a5; }
+  
+  .phase-validator { background: linear-gradient(135deg, #14532d, #15803d); border: 1px solid #22c55e; }
+  .phase-validator .phase-num { background: #052e16; color: #86efac; }
+  
+  /* ===== GAN Loop ===== */
+  .gan-loop { background: linear-gradient(135deg, #78350f, #92400e); border: 2px dashed #f59e0b; border-radius: 16px; padding: 20px; margin: 0; position: relative; }
+  .gan-loop h3 { color: #fbbf24; font-size: 16px; margin-bottom: 12px; text-align: center; }
+  .gan-inner { display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap; }
+  .gan-box { background: rgba(0,0,0,0.3); border-radius: 10px; padding: 12px 16px; text-align: center; min-width: 140px; }
+  .gan-box .gan-label { font-weight: 700; font-size: 13px; color: #fde68a; }
+  .gan-box .gan-desc { font-size: 11px; color: #fbbf24; margin-top: 4px; }
+  .gan-arrow { font-size: 24px; color: #f59e0b; }
+  .gan-condition { background: rgba(0,0,0,0.4); border: 1px solid #d97706; border-radius: 8px; padding: 8px 14px; font-size: 11px; color: #fcd34d; text-align: center; }
+  
+  /* ===== Scoring Table ===== */
+  .scoring-section { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 20px; margin: 24px 0; }
+  .scoring-section h3 { color: #f87171; font-size: 16px; margin-bottom: 14px; text-align: center; }
+  .score-table { width: 100%; border-collapse: collapse; }
+  .score-table th { background: #0f172a; color: #94a3b8; font-size: 12px; padding: 8px 12px; text-align: left; border-bottom: 1px solid #334155; }
+  .score-table td { padding: 8px 12px; font-size: 13px; border-bottom: 1px solid #1e293b; }
+  .score-table .axis-name { font-weight: 600; }
+  .score-table .weight { color: #f59e0b; font-weight: 700; }
+  .score-table .bar { height: 8px; border-radius: 4px; display: inline-block; vertical-align: middle; }
+  
+  /* ===== Output Layer ===== */
+  .output-layer { margin-top: 32px; }
+  .output-layer h3 { text-align: center; color: #4ade80; font-size: 16px; margin-bottom: 16px; }
+  .output-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .output-item { background: linear-gradient(135deg, #052e16, #14532d); border: 1px solid #22c55e; border-radius: 10px; padding: 12px; text-align: center; }
+  .output-item .out-icon { font-size: 22px; margin-bottom: 4px; }
+  .output-item .out-label { font-size: 12px; font-weight: 600; color: #86efac; }
+  
+  /* ===== How to Use ===== */
+  .usage-section { margin-top: 48px; background: #1e293b; border-radius: 16px; padding: 32px; border: 1px solid #334155; }
+  .usage-section h2 { font-size: 24px; margin-bottom: 20px; background: linear-gradient(135deg, #38bdf8, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .usage-step { display: flex; gap: 16px; margin-bottom: 20px; align-items: flex-start; }
+  .usage-step .step-num { width: 36px; height: 36px; background: #3b82f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 16px; flex-shrink: 0; }
+  .usage-step .step-content h4 { font-size: 15px; margin-bottom: 4px; color: #e2e8f0; }
+  .usage-step .step-content p { font-size: 13px; color: #94a3b8; line-height: 1.6; }
+  .code-block { background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 14px 18px; margin: 8px 0; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 13px; color: #a5f3fc; overflow-x: auto; white-space: pre; }
+  
+  /* ===== Capability Matrix ===== */
+  .cap-section { margin-top: 48px; }
+  .cap-section h2 { text-align: center; font-size: 24px; margin-bottom: 20px; background: linear-gradient(135deg, #fb923c, #f87171); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .cap-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .cap-card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 20px; }
+  .cap-card.has { border-color: #22c55e; }
+  .cap-card.no { border-color: #ef4444; }
+  .cap-card .cap-status { font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 4px; display: inline-block; margin-bottom: 8px; }
+  .cap-card.has .cap-status { background: #14532d; color: #4ade80; }
+  .cap-card.no .cap-status { background: #450a0a; color: #fca5a5; }
+  .cap-card h4 { font-size: 15px; margin-bottom: 6px; }
+  .cap-card p { font-size: 12px; color: #94a3b8; line-height: 1.5; }
+  .cap-card .cap-detail { font-size: 11px; color: #64748b; margin-top: 8px; font-style: italic; }
+  
+  /* ===== Connector Lines (CSS only, simplified) ===== */
+  .connector { display: flex; justify-content: center; }
+  .connector .dot { width: 8px; height: 8px; border-radius: 50%; background: #475569; }
+  .connector .line { width: 2px; height: 20px; background: #475569; margin: 0 auto; }
+  
+  /* ===== Three Proposals ===== */
+  .proposals { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 12px 0; }
+  .proposal-card { border-radius: 10px; padding: 14px; text-align: center; }
+  .proposal-card.conservative { background: linear-gradient(135deg, #14532d, #166534); border: 1px solid #22c55e; }
+  .proposal-card.balanced { background: linear-gradient(135deg, #713f12, #854d0e); border: 1px solid #eab308; }
+  .proposal-card.aggressive { background: linear-gradient(135deg, #7f1d1d, #991b1b); border: 1px solid #ef4444; }
+  .proposal-card .prop-icon { font-size: 24px; }
+  .proposal-card .prop-name { font-weight: 700; font-size: 14px; margin: 4px 0; }
+  .proposal-card .prop-desc { font-size: 11px; opacity: 0.8; }
+
+  .section-divider { border: none; border-top: 1px solid #1e293b; margin: 48px 0; }
+  
+  .footnote { text-align: center; color: #475569; font-size: 12px; margin-top: 40px; }
+</style>
+</head>
+<body>
+
+<!-- ===== TITLE ===== -->
+<div class="title">
+  <h1>🧠 PM Strategist Agent — 架构设计图</h1>
+  <p>借鉴 Anthropic GAN Generator-Evaluator Loop 的自主产品策划系统</p>
+</div>
+
+<div class="container">
+
+<!-- ===== INPUT LAYER ===== -->
+<div class="input-layer">
+  <div class="input-box">
+    <div class="icon">👤</div>
+    <div class="label">客户需求描述</div>
+    <div class="desc">自然语言，任意详细程度</div>
+  </div>
+  <div class="input-box">
+    <div class="icon">📦</div>
+    <div class="label">代码仓库路径</div>
+    <div class="desc">可选但强烈推荐</div>
+  </div>
+  <div class="input-box">
+    <div class="icon">📋</div>
+    <div class="label">已知约束</div>
+    <div class="desc">预算 / 时间 / 团队 / 技术限制</div>
+  </div>
+</div>
+
+<div class="arrow">⬇</div>
+
+<!-- ===== MAIN 3-COLUMN LAYOUT ===== -->
+<div class="main-layout">
+
+  <!-- LEFT: MCP Tools -->
+  <div class="side-panel mcp">
+    <h3>🔌 MCP 工具层</h3>
+    <div class="tool-tag">search_knowledge<span class="phase">Phase 2 检索知识库</span></div>
+    <div class="tool-tag">get_templates<span class="phase">Phase 2 加载模板</span></div>
+    <div class="tool-tag">get_progress_board<span class="phase">Phase 2 团队进度</span></div>
+    <div class="tool-tag">create_requirement<span class="phase">Phase 5+ 存储 PRD</span></div>
+    <div class="tool-tag">check_conflicts<span class="phase">Phase 4-5 冲突检测</span></div>
+    <div class="tool-tag">update_progress<span class="phase">Phase 5+ 记录进度</span></div>
+    <div style="margin-top: 20px;">
+      <h3>🤖 SubAgent</h3>
+      <div class="tool-tag">code-explorer<span class="phase">Phase 2 自动分析代码仓库</span></div>
+    </div>
+  </div>
+
+  <!-- CENTER: Pipeline -->
+  <div class="pipeline">
+
+    <!-- Phase 1: Planner -->
+    <div class="phase-card phase-planner">
+      <div class="phase-header">
+        <div class="phase-num">1</div>
+        <div>
+          <div class="phase-name">🧠 PLANNER — 需求拆解与问题定义</div>
+          <div class="phase-role">把客户说的翻译成结构化的问题空间</div>
+        </div>
+      </div>
+      <div class="phase-items">
+        <div class="item">提取目标/用户/场景</div>
+        <div class="item">构建假设树</div>
+        <div class="item">定义成功标准</div>
+        <div class="item">划定范围边界</div>
+        <div class="item">标注开放问题</div>
+      </div>
+    </div>
+
+    <div class="arrow-small">⬇</div>
+
+    <!-- Phase 2: Researcher -->
+    <div class="phase-card phase-researcher">
+      <div class="phase-header">
+        <div class="phase-num">2</div>
+        <div>
+          <div class="phase-name">🔍 RESEARCHER — 代码与上下文检索</div>
+          <div class="phase-role">读代码、查知识库、建立技术约束全景</div>
+        </div>
+      </div>
+      <div class="phase-items">
+        <div class="item">读仓库结构/模块/接口</div>
+        <div class="item">分析数据模型</div>
+        <div class="item">检索知识库文档</div>
+        <div class="item">查团队在途工作</div>
+        <div class="item">能力-机会映射</div>
+        <div class="item">标注信息缺口</div>
+      </div>
+    </div>
+
+    <div class="arrow-small">⬇</div>
+
+    <!-- Phase 3: Synthesizer + 3 Proposals -->
+    <div class="phase-card phase-synthesizer">
+      <div class="phase-header">
+        <div class="phase-num">3</div>
+        <div>
+          <div class="phase-name">💡 SYNTHESIZER — 方案生成器 (GAN Generator)</div>
+          <div class="phase-role">基于问题+约束，生成三版差异化产品方案</div>
+        </div>
+      </div>
+      <div class="proposals">
+        <div class="proposal-card conservative">
+          <div class="prop-icon">🟢</div>
+          <div class="prop-name">保守版</div>
+          <div class="prop-desc">最小改动<br/>最大复用<br/>最快见效</div>
+        </div>
+        <div class="proposal-card balanced">
+          <div class="prop-icon">🟡</div>
+          <div class="prop-name">平衡版</div>
+          <div class="prop-desc">创新与稳定<br/>兼顾差异化<br/>适中风险</div>
+        </div>
+        <div class="proposal-card aggressive">
+          <div class="prop-icon">🔴</div>
+          <div class="prop-name">激进版</div>
+          <div class="prop-desc">最大用户价值<br/>新架构方向<br/>接受高风险</div>
+        </div>
+      </div>
+      <div class="phase-items">
+        <div class="item">每版含 PRD 骨架</div>
+        <div class="item">路线图 + 里程碑</div>
+        <div class="item">Trade-off 分析</div>
+        <div class="item">预填自我批判</div>
+      </div>
+    </div>
+
+    <div class="arrow-small">⬇</div>
+
+    <!-- GAN Loop -->
+    <div class="gan-loop">
+      <h3>🔄 GAN 生成-批判迭代循环（最多 4 轮）</h3>
+      <div class="gan-inner">
+        <div class="gan-box">
+          <div class="gan-label">🛡️ CRITIC 批判器</div>
+          <div class="gan-desc">四轴独立评分<br/>逐项质疑打分</div>
+        </div>
+        <div class="gan-arrow">→</div>
+        <div class="gan-condition">
+          加权总分 ≥ 7.0 ?<br/>
+          <span style="color:#4ade80">✅ 通过 → Validator</span><br/>
+          <span style="color:#fca5a5">❌ 不通过 ↓</span>
+        </div>
+        <div class="gan-arrow">→</div>
+        <div class="gan-box">
+          <div class="gan-label">🔧 REFINER 重写器</div>
+          <div class="gan-desc">只改失败维度<br/>保留已通过部分</div>
+        </div>
+        <div class="gan-arrow">→ 回到 Synthesizer</div>
+      </div>
+    </div>
+
+    <div class="arrow-small">⬇</div>
+
+    <!-- Phase 5: Validator -->
+    <div class="phase-card phase-validator">
+      <div class="phase-header">
+        <div class="phase-num">5</div>
+        <div>
+          <div class="phase-name">✅ VALIDATOR — 最终一致性校验</div>
+          <div class="phase-role">确认方案自洽、与代码现实一致、可交付</div>
+        </div>
+      </div>
+      <div class="phase-items">
+        <div class="item">8 项校验清单</div>
+        <div class="item">代码可行性二次确认</div>
+        <div class="item">置信度评估</div>
+        <div class="item">APPROVED / REVISE</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: Skills -->
+  <div class="side-panel skills">
+    <h3>🧩 可插拔 Skill 池</h3>
+    <div class="tool-tag">problem-statement<span class="phase">Phase 1 结构化问题</span></div>
+    <div class="tool-tag">jobs-to-be-done<span class="phase">Phase 1 用户动机</span></div>
+    <div class="tool-tag">company-research<span class="phase">Phase 1 竞品调研 (条件)</span></div>
+    <div class="tool-tag">pestel-analysis<span class="phase">Phase 1 外部环境 (条件)</span></div>
+    <div class="tool-tag">product-knowledge-base<span class="phase">Phase 2 知识库检索</span></div>
+    <div class="tool-tag">requirement-generator<span class="phase">Phase 3 PRD 生成</span></div>
+    <div class="tool-tag">roadmap-planning<span class="phase">Phase 3 路线图</span></div>
+    <div class="tool-tag">proto-persona<span class="phase">Phase 3 用户画像 (条件)</span></div>
+    <div class="tool-tag">customer-journey-map<span class="phase">Phase 3 体验旅程 (条件)</span></div>
+    <div class="tool-tag">feature-investment-advisor<span class="phase">Phase 3 ROI 分析 (条件)</span></div>
+    <div class="tool-tag">tam-sam-som-calculator<span class="phase">Phase 3 市场规模 (条件)</span></div>
+    <div class="tool-tag">prioritization-advisor<span class="phase">Phase 3 优先级 (条件)</span></div>
+    <div class="tool-tag" style="border-color: #991b1b; color: #fca5a5;">multi-perspective-evaluation<span class="phase">Phase 4 五维度批判 (核心)</span></div>
+    <div style="margin-top: 12px; border-top: 1px solid #334155; padding-top: 12px;">
+      <div style="font-size: 11px; color: #64748b; margin-bottom: 6px;">📦 ClawHub 社区 Skill</div>
+      <div class="tool-tag" style="border-color: #0e7490; color: #67e8f9;">playwright-mcp<span class="phase">Phase 2-3 浏览器自动化+截图</span></div>
+      <div class="tool-tag" style="border-color: #0e7490; color: #67e8f9;">browser-use<span class="phase">Phase 2-3 智能浏览器代理</span></div>
+    </div>
+    <div style="margin-top: 12px; border-top: 1px solid #334155; padding-top: 12px;">
+      <div style="font-size: 11px; color: #64748b; margin-bottom: 6px;">🎨 新增能力</div>
+      <div class="tool-tag" style="border-color: #166534; color: #86efac;">PRD 自动附截图<span class="phase">Phase 3 涉及 UI 时自动截图</span></div>
+      <div class="tool-tag" style="border-color: #166534; color: #86efac;">案例风格模仿<span class="phase">Phase 2-3 提取+模仿 PRD 风格</span></div>
+      <div class="tool-tag" style="border-color: #166534; color: #86efac;">全量 64 Skill 调度<span class="phase">三层调度覆盖全场景</span></div>
+    </div>
+  </div>
+
+</div><!-- end main-layout -->
+
+<div class="arrow">⬇</div>
+
+<!-- ===== SCORING SECTION ===== -->
+<div class="scoring-section">
+  <h3>🎯 Critic 四轴评分框架 — GAN Discriminator 核心</h3>
+  <table class="score-table">
+    <thead>
+      <tr><th>评分轴</th><th>权重</th><th>评估内容</th><th>可视化</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="axis-name">📌 需求匹配度</td>
+        <td class="weight">30%</td>
+        <td>方案是否真的解决了客户声明和未声明的需求？</td>
+        <td><span class="bar" style="width:180px;background:linear-gradient(90deg,#3b82f6,#60a5fa)"></span></td>
+      </tr>
+      <tr>
+        <td class="axis-name">⚙️ 技术可行性</td>
+        <td class="weight">25%</td>
+        <td>现有代码库和团队能否现实地构建这个？</td>
+        <td><span class="bar" style="width:150px;background:linear-gradient(90deg,#10b981,#34d399)"></span></td>
+      </tr>
+      <tr>
+        <td class="axis-name">💰 商业价值</td>
+        <td class="weight">25%</td>
+        <td>这个方案是否推动了有意义的业务指标？</td>
+        <td><span class="bar" style="width:150px;background:linear-gradient(90deg,#f59e0b,#fbbf24)"></span></td>
+      </tr>
+      <tr>
+        <td class="axis-name">🛡️ 风险可控度</td>
+        <td class="weight">20%</td>
+        <td>风险是否被识别、可缓解、可恢复？</td>
+        <td><span class="bar" style="width:120px;background:linear-gradient(90deg,#ef4444,#f87171)"></span></td>
+      </tr>
+    </tbody>
+  </table>
+  <div style="text-align:center;margin-top:12px;font-size:13px;color:#94a3b8;">
+    加权总分 ≥ <strong style="color:#4ade80">7.0</strong> = PASS &nbsp;&nbsp;|&nbsp;&nbsp; &lt; 7.0 = REVISE &nbsp;&nbsp;|&nbsp;&nbsp; 最多迭代 <strong style="color:#f59e0b">4 轮</strong>
+  </div>
+</div>
+
+<!-- ===== OUTPUT LAYER ===== -->
+<div class="output-layer">
+  <h3>📄 最终输出 — 11 节完整产品策略文档</h3>
+  <div class="output-grid">
+    <div class="output-item"><div class="out-icon">📋</div><div class="out-label">执行摘要</div></div>
+    <div class="output-item"><div class="out-icon">🎯</div><div class="out-label">问题定义</div></div>
+    <div class="output-item"><div class="out-icon">💻</div><div class="out-label">技术上下文</div></div>
+    <div class="output-item"><div class="out-icon">📊</div><div class="out-label">三版方案对比</div></div>
+    <div class="output-item"><div class="out-icon">🛡️</div><div class="out-label">批判审查记录</div></div>
+    <div class="output-item"><div class="out-icon">📝</div><div class="out-label">推荐方案 PRD</div></div>
+    <div class="output-item"><div class="out-icon">🗺️</div><div class="out-label">实施路线图</div></div>
+    <div class="output-item"><div class="out-icon">⚠️</div><div class="out-label">风险清单</div></div>
+    <div class="output-item"><div class="out-icon">📈</div><div class="out-label">成功指标</div></div>
+    <div class="output-item"><div class="out-icon">❓</div><div class="out-label">已知局限</div></div>
+    <div class="output-item"><div class="out-icon">📖</div><div class="out-label">迭代日志</div></div>
+    <div class="output-item" style="border-color:#3b82f6;background:linear-gradient(135deg,#1e1b4b,#312e81);">
+      <div class="out-icon">🔗</div><div class="out-label" style="color:#93c5fd;">可衔接 /fullchain</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== HOW TO USE ===== -->
+<hr class="section-divider">
+
+<div class="usage-section">
+  <h2>🚀 怎么用这个 Agent</h2>
+  
+  <div class="usage-step">
+    <div class="step-num">1</div>
+    <div class="step-content">
+      <h4>最简用法 — 在 CodeBuddy 对话框中输入</h4>
+      <div class="code-block">/strategize 我们的电商平台需要一个智能推荐系统。
+用户反馈"猜你喜欢"完全不准，点击率只有 2%，行业平均 8%。
+团队 3 后端 + 2 前端，无 ML 工程师，Q3 必须上线，月预算 ≤ 20 万。
+代码仓库：/path/to/ecommerce-platform</div>
+    </div>
+  </div>
+
+  <div class="usage-step">
+    <div class="step-num">2</div>
+    <div class="step-content">
+      <h4>Agent 全自动执行五阶段流水线</h4>
+      <p>无需你回答任何问题。它会自主读代码、查知识库、生成三版方案、批判打分、迭代修改、校验输出。</p>
+    </div>
+  </div>
+
+  <div class="usage-step">
+    <div class="step-num">3</div>
+    <div class="step-content">
+      <h4>最终得到完整的 11 节产品策略文档</h4>
+      <p>包含：问题定义 → 技术分析 → 三版方案对比 → 推荐 PRD → 路线图 → 风险清单 → 批判审查记录。</p>
+    </div>
+  </div>
+
+  <div class="usage-step">
+    <div class="step-num">4</div>
+    <div class="step-content">
+      <h4>后续衔接（可选）</h4>
+      <div class="code-block">/generate-requirement    # 细化推荐方案的 PRD
+/fullchain               # 从 PRD 直接生成 UI 草稿
+/strategy                # 如需更广的市场战略分析</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CAPABILITY MATRIX ===== -->
+<hr class="section-divider">
+
+<div class="cap-section">
+  <h2>📦 当前能力矩阵 — 有什么 / 没什么</h2>
+  
+  <div class="cap-grid">
+    <div class="cap-card has">
+      <div class="cap-status">✅ 已具备</div>
+      <h4>🔍 代码仓库理解</h4>
+      <p>自动读取目录结构、README、模块、接口、数据模型、配置、测试</p>
+      <div class="cap-detail">通过 code-explorer SubAgent 实现</div>
+    </div>
+    <div class="cap-card has">
+      <div class="cap-status">✅ 已具备</div>
+      <h4>📚 知识库检索</h4>
+      <p>语义搜索产品文档、设计规范、历史决策（ChromaDB 向量）</p>
+      <div class="cap-detail">通过 MCP search_knowledge 实现</div>
+    </div>
+    <div class="cap-card has">
+      <div class="cap-status">✅ 已具备</div>
+      <h4>🛡️ GAN 批判循环</h4>
+      <p>生成器 vs 批判器对抗，四轴评分，最多 4 轮迭代</p>
+      <div class="cap-detail">Synthesizer + Critic + Refiner</div>
+    </div>
+    <div class="cap-card has">
+      <div class="cap-status">✅ 已具备</div>
+      <h4>📝 PRD / 需求文档生成</h4>
+      <p>结构化 PRD、用户故事、验收标准，可存入共享仓库</p>
+      <div class="cap-detail">requirement-generator + prd-development</div>
+    </div>
+    <div class="cap-card has">
+      <div class="cap-status">✅ 已具备</div>
+      <h4>🗺️ 路线图规划</h4>
+      <p>分阶段实施路线图、里程碑、依赖项、优先级</p>
+      <div class="cap-detail">roadmap-planning + prioritization-advisor</div>
+    </div>
+    <div class="cap-card has">
+      <div class="cap-status">✅ 已具备</div>
+      <h4>👥 多角度评估</h4>
+      <p>怀疑论者 / 用户拥护者 / 执行者 / 远见者 / 系统思考者</p>
+      <div class="cap-detail">multi-perspective-evaluation (5 维度)</div>
+    </div>
+
+    <!-- NOT available -->
+    <div class="cap-card has">
+      <div class="cap-status">✅ 已具备</div>
+      <h4>📸 浏览器截图 + 自动化</h4>
+      <p>截取全页/元素/移动端，支持 ClawHub playwright-mcp 和 browser-use 智能浏览器代理</p>
+      <div class="cap-detail">browser-screenshot Skill + skillhub install playwright-mcp / browser-use</div>
+    </div>
+    <div class="cap-card has">
+      <div class="cap-status">✅ 已具备</div>
+      <h4>📄 PRD 自动附加 UI 截图</h4>
+      <p>方案涉及 UI 设计时，自动截取当前界面（Before）和竞品截图嵌入 PRD</p>
+      <div class="cap-detail">Synthesizer 阶段自动触发 browser-screenshot</div>
+    </div>
+    <div class="cap-card has">
+      <div class="cap-status">✅ 已具备</div>
+      <h4>🎨 需求单风格模仿</h4>
+      <p>提供历史需求单案例，Agent 自动提取风格（结构/语气/术语/格式）并模仿输出</p>
+      <div class="cap-detail">PRD Style Learning — 案例驱动模仿机制</div>
+    </div>
+    <div class="cap-card has">
+      <div class="cap-status">✅ 已具备</div>
+      <h4>🧩 全量 64 Skill 调度</h4>
+      <p>三层调度：14 核心（始终可用）+ 30 扩展（条件触发）+ 12 工具（按需调用）</p>
+      <div class="cap-detail">覆盖发现/战略/交付/财务/AI/工具/通讯全场景</div>
+    </div>
+    <div class="cap-card has">
+      <div class="cap-status">✅ 已具备</div>
+      <h4>🌐 联网搜索</h4>
+      <p>实时搜索互联网获取行业数据、竞品信息、市场报告</p>
+      <div class="cap-detail">CodeBuddy IDE 内置 web_search + web_fetch 工具</div>
+    </div>
+    <div class="cap-card no">
+      <div class="cap-status">⚠️ 部分具备</div>
+      <h4>🕷️ 深度网页爬取</h4>
+      <p>基础页面抓取已支持（web_fetch + browser-use），复杂反爬场景需额外配置</p>
+      <div class="cap-detail">browser-use 可处理大部分场景，反爬严格的站点可能需要代理</div>
+    </div>
+  </div>
+
+  <div style="margin-top: 24px; background: #0f172a; border: 1px solid #334155; border-radius: 12px; padding: 20px;">
+    <h4 style="color: #38bdf8; margin-bottom: 10px;">💡 重要说明：Skill ≠ 全部能力</h4>
+    <p style="font-size: 13px; color: #94a3b8; line-height: 1.8;">
+      项目自带 <strong>64 个 Skill</strong>（结构化产品方法论）+ ClawHub 社区 Skill（playwright-mcp、browser-use）。Agent 运行在 <strong>CodeBuddy IDE</strong> 环境中，IDE 还提供：<br/>
+      <span style="color:#4ade80">✅</span> <strong>web_search</strong> — 联网搜索（IDE 内置）<br/>
+      <span style="color:#4ade80">✅</span> <strong>web_fetch</strong> — 抓取网页内容（IDE 内置）<br/>
+      <span style="color:#4ade80">✅</span> <strong>read_file / codebase_search</strong> — 代码理解（IDE 内置）<br/>
+      <span style="color:#4ade80">✅</span> <strong>image_gen</strong> — 图片生成（IDE 内置）<br/>
+      <span style="color:#4ade80">✅</span> <strong>playwright-mcp / browser-use</strong> — 浏览器自动化（ClawHub 社区）<br/><br/>
+      <strong>ClawHub 安装方式：</strong><br/>
+      <code style="background:#1e293b;padding:2px 6px;border-radius:4px;color:#a5f3fc;">skillhub install playwright-mcp</code> — Playwright MCP 服务器（截图+自动化）<br/>
+      <code style="background:#1e293b;padding:2px 6px;border-radius:4px;color:#a5f3fc;">skillhub install browser-use</code> — 智能浏览器代理（AI 驱动交互）
+    </p>
+  </div>
+</div>
+
+<div class="footnote">
+  PM Strategist Agent v1.1 — Built on AI-Product-Manager-Agent project<br/>
+  Inspired by Anthropic GAN Generator-Evaluator Loop Architecture<br/>
+  <span style="color:#64748b">v1.1 新增：浏览器截图(ClawHub) + PRD 自动附截图 + 案例风格模仿 + 全量 64 Skill 调度</span>
+</div>
+
+</div><!-- end container -->
+</body>
+</html>

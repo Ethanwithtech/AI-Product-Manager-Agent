@@ -5,8 +5,8 @@
     "email": "dean.peters@productside.com"
   },
   "metadata": {
-    "description": "46 battle-tested product management skills for Claude Code — discovery, strategy, finance, career, and more.",
-    "version": "0.75.0"
+    "description": "63 battle-tested product management skills for Claude Code — discovery, strategy, finance, career, PM team toolkit, and more.",
+    "version": "1.1.0"
   },
   "plugins": [
     {
@@ -620,6 +620,233 @@
         "skill-authoring",
         "contributor",
         "workflow"
+      ],
+      "strict": false
+    },
+    {
+      "name": "product-knowledge-base",
+      "source": "./skills/product-knowledge-base",
+      "description": "Organize and query a product knowledge base for optimal AI-assisted output via MCP.",
+      "category": "team-toolkit",
+      "tags": [
+        "pm",
+        "knowledge-base",
+        "mcp",
+        "document-management",
+        "semantic-search"
+      ],
+      "strict": false
+    },
+    {
+      "name": "requirement-generator",
+      "source": "./skills/requirement-generator",
+      "description": "Generate structured PRD requirement documents from natural language with knowledge context.",
+      "category": "team-toolkit",
+      "tags": [
+        "pm",
+        "prd",
+        "requirements",
+        "mcp",
+        "workflow"
+      ],
+      "strict": false
+    },
+    {
+      "name": "ui-draft-generator",
+      "source": "./skills/ui-draft-generator",
+      "description": "Generate React + Arco Design UI draft code from requirement descriptions.",
+      "category": "team-toolkit",
+      "tags": [
+        "pm",
+        "ui-design",
+        "react",
+        "arco-design",
+        "workflow"
+      ],
+      "strict": false
+    },
+    {
+      "name": "product-sync-agent",
+      "source": "./skills/product-sync-agent",
+      "description": "Synchronize product progress and detect team conflicts via MCP tools.",
+      "category": "team-toolkit",
+      "tags": [
+        "pm",
+        "progress-sync",
+        "conflict-detection",
+        "mcp",
+        "interactive"
+      ],
+      "strict": false
+    },
+    {
+      "name": "fullchain-efficiency",
+      "source": "./skills/fullchain-efficiency",
+      "description": "End-to-end workflow from requirement input to UI draft output with team sync.",
+      "category": "team-toolkit",
+      "tags": [
+        "pm",
+        "fullchain",
+        "end-to-end",
+        "mcp",
+        "workflow"
+      ],
+      "strict": false
+    },
+    {
+      "name": "feedback-insight-engine",
+      "source": "./skills/feedback-insight-engine",
+      "description": "Collect and analyze user feedback, bids, or research data to generate actionable product iteration insights through guided discussion.",
+      "category": "team-toolkit",
+      "tags": [
+        "pm",
+        "feedback-analysis",
+        "bids",
+        "product-iteration",
+        "interactive"
+      ],
+      "strict": false
+    },
+    {
+      "name": "skill-navigator",
+      "source": "./skills/skill-navigator",
+      "description": "当用户不确定该用哪个 Skill 时作为路由索引，列出所有 63 个 Skill 并按场景分类。",
+      "category": "meta",
+      "tags": [
+        "pm",
+        "navigator",
+        "index",
+        "routing"
+      ],
+      "strict": false
+    },
+    {
+      "name": "asr-sentence-recognition",
+      "source": "./skills/asr-sentence-recognition",
+      "description": "Tencent Cloud ASR: short/flash/async recognition for audio-to-text tasks.",
+      "category": "team-toolkit",
+      "tags": [
+        "pm",
+        "asr",
+        "speech-recognition",
+        "tencent-cloud"
+      ],
+      "strict": false
+    },
+    {
+      "name": "docx",
+      "source": "./skills/docx",
+      "description": "Create, read, edit, and manipulate Word documents (.docx files).",
+      "category": "team-toolkit",
+      "tags": [
+        "pm",
+        "docx",
+        "word",
+        "document"
+      ],
+      "strict": false
+    },
+    {
+      "name": "multi-perspective-evaluation",
+      "source": "./skills/multi-perspective-evaluation",
+      "description": "通过五个专业维度对方案、想法或决策进行全面评估分析。",
+      "category": "team-toolkit",
+      "tags": [
+        "pm",
+        "evaluation",
+        "multi-perspective",
+        "decision"
+      ],
+      "strict": false
+    },
+    {
+      "name": "pdf",
+      "source": "./skills/pdf",
+      "description": "Read, create, merge, split, encrypt, OCR, and manipulate PDF files.",
+      "category": "team-toolkit",
+      "tags": [
+        "pm",
+        "pdf",
+        "document",
+        "ocr"
+      ],
+      "strict": false
+    },
+    {
+      "name": "tapd-toolkit",
+      "source": "./skills/tapd-toolkit",
+      "description": "TAPD 扩展技能集：上传图片/附件、查询和下载附件。",
+      "category": "team-toolkit",
+      "tags": [
+        "pm",
+        "tapd",
+        "attachment",
+        "image-upload"
+      ],
+      "strict": false
+    },
+    {
+      "name": "tencent-meeting-mcp",
+      "source": "./skills/tencent-meeting-mcp",
+      "description": "腾讯会议管理：预约/修改/取消会议、成员管理、录制与转写。",
+      "category": "team-toolkit",
+      "tags": [
+        "pm",
+        "tencent-meeting",
+        "meeting",
+        "recording"
+      ],
+      "strict": false
+    },
+    {
+      "name": "wecom-doc-skills-v2",
+      "source": "./skills/wecom-doc-skills-v2",
+      "description": "企业微信文档读取工具 v2：支持文档、表格、幻灯片、思维导图。",
+      "category": "team-toolkit",
+      "tags": [
+        "pm",
+        "wecom",
+        "document",
+        "spreadsheet"
+      ],
+      "strict": false
+    },
+    {
+      "name": "wecom-message",
+      "source": "./skills/wecom-message",
+      "description": "Send messages to WeCom (企业微信) via webhooks using MCP protocol.",
+      "category": "team-toolkit",
+      "tags": [
+        "pm",
+        "wecom",
+        "webhook",
+        "messaging"
+      ],
+      "strict": false
+    },
+    {
+      "name": "woa-preview",
+      "source": "./skills/woa-preview",
+      "description": "将文档/报告发布到 pages.woa.com 静态预览服务。",
+      "category": "team-toolkit",
+      "tags": [
+        "pm",
+        "preview",
+        "deploy",
+        "vuepress"
+      ],
+      "strict": false
+    },
+    {
+      "name": "xiaohongshu-mcp",
+      "source": "./skills/xiaohongshu-mcp",
+      "description": "Automate Xiaohongshu (RedNote) content publishing, search, and analytics.",
+      "category": "team-toolkit",
+      "tags": [
+        "pm",
+        "xiaohongshu",
+        "social-media",
+        "content"
       ],
       "strict": false
     }

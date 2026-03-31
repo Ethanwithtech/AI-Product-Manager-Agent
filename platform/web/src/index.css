@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: #F7F8FA;
+  color: #1D2129;
+  margin: 0;
+}
+
+/* Arco Design overrides for consistent theming */
+.arco-layout {
+  background: transparent;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background: #C9CDD4;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #86909C;
+}
+
+/* Markdown content styling */
+.markdown-content h1 { font-size: 24px; font-weight: 600; margin: 16px 0 8px; }
+.markdown-content h2 { font-size: 20px; font-weight: 600; margin: 14px 0 6px; }
+.markdown-content h3 { font-size: 16px; font-weight: 600; margin: 12px 0 4px; }
+.markdown-content p { margin: 8px 0; line-height: 1.7; }
+.markdown-content ul, .markdown-content ol { padding-left: 20px; margin: 8px 0; }
+.markdown-content li { margin: 4px 0; }
+.markdown-content code {
+  background: #F2F3F5;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 13px;
+}
+.markdown-content pre {
+  background: #1D2129;
+  color: #E5E6EB;
+  padding: 16px;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 12px 0;
+}
+.markdown-content pre code {
+  background: none;
+  padding: 0;
+  color: inherit;
+}
+.markdown-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+}
+.markdown-content th, .markdown-content td {
+  border: 1px solid #E5E6EB;
+  padding: 8px 12px;
+  text-align: left;
+}
+.markdown-content th {
+  background: #F7F8FA;
+  font-weight: 500;
+}

@@ -1,0 +1,54 @@
+version: "3.8"
+
+# PM Team Hub — One-command deployment
+# Usage: docker compose up -d
+# Docs:  See README.md > PM Team MCP Toolkit
+
+services:
+  # ──────── MCP Server (FastAPI + SQLite + ChromaDB) ────────
+  mcp-server:
+    build:
+      context: ../mcp-server
+      dockerfile: Dockerfile
+    container_name: pm-mcp-server
+    restart: unless-stopped
+    ports:
+      - "${MCP_PORT:-8000}:8000"
+    volumes:
+      - mcp-data:/app/data
+      - chroma-data:/app/chroma_data
+    environment:
+      - DATABASE_URL=sqlite:///data/pm_team_hub.db
+      - CHROMA_PERSIST_DIR=/app/chroma_data
+      - CORS_ORIGINS=${CORS_ORIGINS:-*}
+      - HOST=0.0.0.0
+      - PORT=8000
+      - ACCESS_TOKEN=${ACCESS_TOKEN:-}
+      - JWT_SECRET=${JWT_SECRET:-change-me-in-production}
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+  # ──────── Web Admin Console (React + Arco Design) ────────
+  web-console:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    container_name: pm-web-console
+    restart: unless-stopped
+    ports:
+      - "${WEB_PORT:-3000}:80"
+    depends_on:
+      mcp-server:
+        condition: service_healthy
+    environment:
+      - API_BASE_URL=http://mcp-server:8000
+
+volumes:
+  mcp-data:
+    driver: local
+  chroma-data:
+    driver: local
