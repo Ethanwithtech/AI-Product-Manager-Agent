@@ -380,6 +380,136 @@
   </div>
 </div>
 
+<!-- ===== ADVANCED ARCHITECTURE — Claude Code Inspired ===== -->
+<div style="margin: 24px 0;">
+  <h3 style="text-align: center; color: #c084fc; font-size: 18px; margin-bottom: 16px;">⚡ 高级架构 — 借鉴 Claude Code 工程实践</h3>
+  
+  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+    
+    <div style="background: linear-gradient(135deg, #1e1b4b, #312e81); border: 1px solid #6366f1; border-radius: 12px; padding: 16px;">
+      <div style="font-size: 20px; margin-bottom: 6px;">🔀</div>
+      <div style="font-weight: 700; font-size: 14px; color: #a5b4fc; margin-bottom: 6px;">Parallel Workers</div>
+      <div style="font-size: 11px; color: #94a3b8; line-height: 1.6;">
+        Researcher 阶段并行启动 5 个 Worker：<br/>
+        <span style="color:#818cf8">A</span> code-explorer &nbsp;
+        <span style="color:#818cf8">B</span> search_knowledge<br/>
+        <span style="color:#818cf8">C</span> ask_im_question &nbsp;
+        <span style="color:#818cf8">D</span> playwright 截图<br/>
+        <span style="color:#818cf8">E</span> web_search 联网<br/>
+        <span style="font-size:10px;color:#6366f1;font-style:italic;">"Don't serialize work that can run simultaneously"</span>
+      </div>
+    </div>
+
+    <div style="background: linear-gradient(135deg, #1a2e05, #365314); border: 1px solid #65a30d; border-radius: 12px; padding: 16px;">
+      <div style="font-size: 20px; margin-bottom: 6px;">📦</div>
+      <div style="font-weight: 700; font-size: 14px; color: #bef264; margin-bottom: 6px;">Context Compaction</div>
+      <div style="font-size: 11px; color: #94a3b8; line-height: 1.6;">
+        GAN 循环 Round 2+ 使用压缩传递：<br/>
+        <code style="font-size:10px;color:#a3e635;">&lt;analysis&gt;</code> 内部推理（不进入输出）<br/>
+        Handoff Summary: 最高分方案 + 失败维度 + 修订要求<br/>
+        避免 4 轮后 token 爆炸
+      </div>
+    </div>
+
+    <div style="background: linear-gradient(135deg, #2a0a0a, #7f1d1d); border: 1px solid #dc2626; border-radius: 12px; padding: 16px;">
+      <div style="font-size: 20px; margin-bottom: 6px;">🔒</div>
+      <div style="font-weight: 700; font-size: 14px; color: #fca5a5; margin-bottom: 6px;">Independent Verification</div>
+      <div style="font-size: 11px; color: #94a3b8; line-height: 1.6;">
+        Critic 不能自己原谅自己<br/>
+        Validator ≠ Critic 的复述（维度不同）<br/>
+        禁止声称"所有指标都会改善"<br/>
+        <span style="font-size:10px;color:#ef4444;font-style:italic;">"Only the verifier assigns a verdict"</span>
+      </div>
+    </div>
+
+    <div style="background: linear-gradient(135deg, #172554, #1e3a5f); border: 1px solid #3b82f6; border-radius: 12px; padding: 16px;">
+      <div style="font-size: 20px; margin-bottom: 6px;">🧠</div>
+      <div style="font-weight: 700; font-size: 14px; color: #93c5fd; margin-bottom: 6px;">Memory System</div>
+      <div style="font-size: 11px; color: #94a3b8; line-height: 1.6;">
+        跨会话持久化产品记忆：<br/>
+        <code style="font-size:10px;color:#60a5fa;">MEMORY.md</code> 索引 + 决策历史<br/>
+        用户偏好 / 项目约束 / 过去策略<br/>
+        下次运行自动加载上下文
+      </div>
+    </div>
+
+    <div style="background: linear-gradient(135deg, #422006, #713f12); border: 1px solid #d97706; border-radius: 12px; padding: 16px;">
+      <div style="font-size: 20px; margin-bottom: 6px;">🎨</div>
+      <div style="font-weight: 700; font-size: 14px; color: #fcd34d; margin-bottom: 6px;">Output Modes</div>
+      <div style="font-size: 11px; color: #94a3b8; line-height: 1.6;">
+        三种输出风格可切换：<br/>
+        <span style="color:#fbbf24">Standard</span> — 完整 11 节 PRD<br/>
+        <span style="color:#fbbf24">Explanatory</span> — 附 ★ Insight 教学框<br/>
+        <span style="color:#fbbf24">Brief</span> — 3 页以内快速汇报<br/>
+        <code style="font-size:10px;color:#f59e0b;">/strategize --mode brief</code>
+      </div>
+    </div>
+
+    <div style="background: linear-gradient(135deg, #0c4a4e, #134e4a); border: 1px solid #14b8a6; border-radius: 12px; padding: 16px;">
+      <div style="font-size: 20px; margin-bottom: 6px;">🚦</div>
+      <div style="font-weight: 700; font-size: 14px; color: #5eead4; margin-bottom: 6px;">Reversibility Framework</div>
+      <div style="font-size: 11px; color: #94a3b8; line-height: 1.6;">
+        方案每步标注可逆性等级：<br/>
+        <span style="color:#4ade80">🟢 REVERSIBLE</span> 可随时回滚<br/>
+        <span style="color:#fbbf24">🟡 CAUTION</span> 可回滚但有成本<br/>
+        <span style="color:#ef4444">🔴 IRREVERSIBLE</span> 不可逆操作<br/>
+        不可逆排在阶段末尾
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== THREE-PIECE OUTPUT ===== -->
+<div style="margin: 24px 0; background: #1e293b; border: 2px solid #22c55e; border-radius: 16px; padding: 24px;">
+  <h3 style="text-align: center; color: #4ade80; font-size: 18px; margin-bottom: 16px;">📦 三件套输出（标配，不是选配）</h3>
+  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+    
+    <div style="background: linear-gradient(135deg, #1e3a5f, #1e40af); border: 1px solid #3b82f6; border-radius: 12px; padding: 16px; text-align: center;">
+      <div style="font-size: 32px; margin-bottom: 8px;">📄</div>
+      <div style="font-weight: 700; font-size: 15px; color: #93c5fd;">Word 需求文档</div>
+      <div style="font-size: 11px; color: #94a3b8; margin-top: 6px; line-height: 1.5;">
+        .docx 主交付物<br/>
+        11 节完整 PRD<br/>
+        截图通过 ImageRun 嵌入<br/>
+        封面 + 目录 + 页码
+      </div>
+      <div style="margin-top: 8px; background: #0f172a; border-radius: 6px; padding: 4px 8px; font-size: 10px; color: #60a5fa; font-family: monospace;">
+        产品策略文档_[功能名].docx
+      </div>
+    </div>
+
+    <div style="background: linear-gradient(135deg, #4c1d95, #6d28d9); border: 1px solid #8b5cf6; border-radius: 12px; padding: 16px; text-align: center;">
+      <div style="font-size: 32px; margin-bottom: 8px;">🖥️</div>
+      <div style="font-weight: 700; font-size: 15px; color: #c4b5fd;">HTML 交互原型</div>
+      <div style="font-size: 11px; color: #94a3b8; margin-top: 6px; line-height: 1.5;">
+        单文件 HTML<br/>
+        CSS+JS 全内嵌<br/>
+        可点击/可交互/响应式<br/>
+        涉及 UI 时必出
+      </div>
+      <div style="margin-top: 8px; background: #0f172a; border-radius: 6px; padding: 4px 8px; font-size: 10px; color: #a78bfa; font-family: monospace;">
+        prototype_[功能名].html
+      </div>
+    </div>
+
+    <div style="background: linear-gradient(135deg, #14532d, #15803d); border: 1px solid #22c55e; border-radius: 12px; padding: 16px; text-align: center;">
+      <div style="font-size: 32px; margin-bottom: 8px;">📸</div>
+      <div style="font-weight: 700; font-size: 15px; color: #86efac;">截图集</div>
+      <div style="font-size: 11px; color: #94a3b8; margin-top: 6px; line-height: 1.5;">
+        Before + 竞品 + 原型<br/>
+        桌面端 + 移动端<br/>
+        自动截取 → 自动嵌入 Word<br/>
+        playwright MCP 驱动
+      </div>
+      <div style="margin-top: 8px; background: #0f172a; border-radius: 6px; padding: 4px 8px; font-size: 10px; color: #4ade80; font-family: monospace;">
+        screenshots/*.png
+      </div>
+    </div>
+
+  </div>
+</div>
+
 <!-- ===== OUTPUT LAYER ===== -->
 <div class="output-layer">
   <h3>📄 最终输出 — 11 节完整产品策略文档</h3>
@@ -545,9 +675,9 @@
 </div>
 
 <div class="footnote">
-  PM Strategist Agent v1.1 — Built on AI-Product-Manager-Agent project<br/>
-  Inspired by Anthropic GAN Generator-Evaluator Loop Architecture<br/>
-  <span style="color:#64748b">v1.1 新增：浏览器截图(ClawHub) + PRD 自动附截图 + 案例风格模仿 + 全量 64 Skill 调度</span>
+  PM Strategist Agent v1.2 — Built on AI-Product-Manager-Agent project<br/>
+  Inspired by Anthropic GAN Generator-Evaluator Loop + Claude Code Engineering Practices<br/>
+  <span style="color:#64748b">v1.2 新增：Parallel Workers + Context Compaction + Independent Verification + Memory System + Output Modes + Reversibility Framework + 三件套输出(Word+HTML+截图)</span>
 </div>
 
 </div><!-- end container -->
