@@ -340,10 +340,37 @@ The Agent autonomously selects skills based on phase and context signals:
 | Researcher | IM 产品相关 | `im-desk-mcp:ask_im_question` | 查询 IM 智能客服知识库获取产品背景 |
 | Researcher | 需要截取竞品/产品页面 | `browser-screenshot` / `playwright` MCP | 浏览器截图和自动化 |
 | Synthesizer | 方案涉及 UI 设计 | `browser-screenshot` / `playwright` MCP | 自动截取 Before 图嵌入 PRD |
+| Researcher | 需要深度调研 | `multi-search-engine` | 17 引擎搜索（国内8+国际9），支持高级语法、时间筛选、站内搜索 |
 
 ## PRD Style Learning — 案例驱动的需求文档模仿
 
 当用户提供需求单案例（历史 PRD、公司模板、标杆文档）时，Agent 在 Synthesizer 阶段不使用默认模板，而是**从案例中提取风格特征并模仿**。
+
+### 预置案例库
+
+项目中已内置两个高质量 PRD 案例，Agent 可直接加载作为风格参考：
+
+| 案例 | 路径 | 风格特征 |
+|------|------|---------|
+| Desk 扩展中心 ADP 集成 | `docs/prd-examples/case1-desk-adp-extension.md` | 多期规划、界面清单表格、弹窗文案逐字定义、中英翻译表、存量逻辑说明 |
+| CRM SDK Integration Demo | `docs/prd-examples/case2-crm-sdk-demo.md` | 用户路径/转化路径定义、SDK 功能逐项表格、11 步引导教程、200+ 条文案翻译 |
+
+**自动加载规则**：
+- 当目标项目是 TCCC/Desk 相关 → 自动加载两个案例
+- 当用户额外提供案例 → 用户案例优先级高于预置案例
+- 当无案例 → 使用 `requirement-generator` Skill 的默认 7 段式模板
+
+### 从案例中学到的 TCCC PRD 规范
+
+基于两个案例的共性特征，TCCC 产品线的 PRD 应遵循：
+
+1. **界面清单表格**：每个界面独立一行，含「界面名称 | 截图 | 交互/功能」三列
+2. **多期规划标注**：明确标注"本期"、"二期"、"三期"，以及"本期不做"的显式声明
+3. **弹窗文案逐字定义**：每个弹窗的标题、正文、按钮文案都逐字写清
+4. **中英翻译对照表**：按功能模块分组，每个文案都有中英对照
+5. **用户路径描述**：体验路径和转化路径分别定义
+6. **存量/增量逻辑分离**：存量用户的兼容逻辑单独说明
+7. **业务规则显式列举**：互斥逻辑、白名单、版本限制等规则逐条列出
 
 **工作机制**：
 
@@ -351,6 +378,7 @@ The Agent autonomously selects skills based on phase and context signals:
    - 直接粘贴需求单文本
    - 提供文件路径（支持 .md/.txt/.docx/.pdf）
    - 上传到知识库后通过 `search_knowledge` 检索
+   - 自动从 `docs/prd-examples/` 加载预置案例
 
 2. **风格提取**（Researcher 阶段自动执行）：
    - 从案例中识别：文档结构（几级标题、哪些节）、语气风格（正式/简洁/技术导向）、术语体系（公司专有名词）、详细程度（每节多长）、特殊格式（表格/列表/编号偏好）

@@ -120,11 +120,12 @@ best_for:
 | `fullchain-efficiency` | 需求到 UI 一条龙 | 知识检索→PRD→UI 全自动 |
 | `feedback-insight-engine` | 反馈分析与讨论 | 分析标书、评价、工单、访谈等反馈 |
 
-### 🔧 效率工具（6 个）
+### 🔧 效率工具（7 个）
 
 | Skill | 干什么 | 什么时候用 |
 |-------|--------|-----------|
 | `browser-screenshot` | 浏览器网页截图 | 截取竞品页面、产品界面、移动端截图，支持全页/元素/设备模拟 |
+| `multi-search-engine` | 多引擎搜索 | 17 个搜索引擎（国内8+国际9），高级语法、时间筛选、站内搜索，无需 API |
 | `docx` | Word 文档操作 | 创建、编辑、读取 .docx 文件 |
 | `pdf` | PDF 文件操作 | 读取、合并、拆分、加水印 PDF |
 | `multi-perspective-evaluation` | 多角度评估 | 从 5 个维度（怀疑者/用户拥护者/执行者/远见者/系统思考者）评估方案 |
