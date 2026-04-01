@@ -140,8 +140,8 @@
 
 <!-- ===== TITLE ===== -->
 <div class="title">
-  <h1>🧠 PM Strategist Agent — 架构设计图</h1>
-  <p>借鉴 Anthropic GAN Generator-Evaluator Loop 的自主产品策划系统</p>
+  <h1>🧠 PM Strategist Agent — 架构设计图 v1.3</h1>
+  <p>借鉴 Anthropic GAN Generator-Evaluator Loop + Claude Code 工程实践的自主产品策划系统</p>
 </div>
 
 <div class="container">
@@ -153,19 +153,29 @@
     <div class="label">客户需求描述</div>
     <div class="desc">自然语言，任意详细程度</div>
   </div>
-  <div class="input-box">
-    <div class="icon">📦</div>
-    <div class="label">代码仓库路径</div>
-    <div class="desc">可选但强烈推荐</div>
+  <div class="input-box" style="border-color:#22c55e;">
+    <div class="icon">🔗</div>
+    <div class="label">GitHub / GitLab URL</div>
+    <div class="desc">自动 clone · 失败则申请权限</div>
   </div>
   <div class="input-box">
     <div class="icon">📋</div>
-    <div class="label">已知约束</div>
-    <div class="desc">预算 / 时间 / 团队 / 技术限制</div>
+    <div class="label">已知约束 + PRD 案例</div>
+    <div class="desc">预算/时间/团队 + 风格参考</div>
   </div>
 </div>
 
-<div class="arrow">⬇</div>
+<!-- ===== GIT CLONE STEP ===== -->
+<div style="margin: 0 auto 16px; max-width: 700px; background: linear-gradient(135deg, #14532d, #166534); border: 1px solid #22c55e; border-radius: 12px; padding: 14px 20px; display: flex; align-items: center; gap: 16px;">
+  <div style="font-size: 24px;">⬇️</div>
+  <div style="flex: 1;">
+    <div style="font-weight: 700; font-size: 14px; color: #86efac;">Step 0: Git Clone（最高优先级，不可跳过）</div>
+    <div style="font-size: 11px; color: #94a3b8; margin-top: 4px; line-height: 1.5;">
+      给了 URL → <span style="color:#4ade80">git clone</span> 到本地 → 成功则继续 ·
+      <span style="color:#fca5a5">失败</span> → 主动向用户申请权限（PAT/公开/本地路径）· 不跳过
+    </div>
+  </div>
+</div>
 
 <!-- ===== MAIN 3-COLUMN LAYOUT ===== -->
 <div class="main-layout">
@@ -173,15 +183,22 @@
   <!-- LEFT: MCP Tools -->
   <div class="side-panel mcp">
     <h3>🔌 MCP 工具层</h3>
-    <div class="tool-tag">search_knowledge<span class="phase">Phase 2 检索知识库</span></div>
-    <div class="tool-tag">get_templates<span class="phase">Phase 2 加载模板</span></div>
+    <div class="tool-tag">search_knowledge<span class="phase">Phase 2 检索知识库 (ChromaDB)</span></div>
+    <div class="tool-tag">ask_im_question<span class="phase">Phase 2 IM Desk 知识库 (RAG)</span></div>
+    <div class="tool-tag">get_templates<span class="phase">Phase 2 加载 PRD 模板</span></div>
     <div class="tool-tag">get_progress_board<span class="phase">Phase 2 团队进度</span></div>
     <div class="tool-tag">create_requirement<span class="phase">Phase 5+ 存储 PRD</span></div>
     <div class="tool-tag">check_conflicts<span class="phase">Phase 4-5 冲突检测</span></div>
     <div class="tool-tag">update_progress<span class="phase">Phase 5+ 记录进度</span></div>
-    <div style="margin-top: 20px;">
+    <div style="margin-top: 16px;">
       <h3>🤖 SubAgent</h3>
       <div class="tool-tag">code-explorer<span class="phase">Phase 2 自动分析代码仓库</span></div>
+    </div>
+    <div style="margin-top: 16px;">
+      <h3>🌐 IDE 内置</h3>
+      <div class="tool-tag">web_search<span class="phase">Phase 2 联网搜索</span></div>
+      <div class="tool-tag">web_fetch<span class="phase">Phase 2 抓取网页</span></div>
+      <div class="tool-tag">image_gen<span class="phase">Phase 3 图片生成</span></div>
     </div>
   </div>
 
@@ -213,17 +230,18 @@
       <div class="phase-header">
         <div class="phase-num">2</div>
         <div>
-          <div class="phase-name">🔍 RESEARCHER — 代码与上下文检索</div>
-          <div class="phase-role">读代码、查知识库、建立技术约束全景</div>
+          <div class="phase-name">🔍 RESEARCHER — 代码与上下文检索（5 Worker 并行）</div>
+          <div class="phase-role">clone 代码、查知识库、搜竞品、截图、IM 知识——全部并行</div>
         </div>
       </div>
       <div class="phase-items">
-        <div class="item">读仓库结构/模块/接口</div>
-        <div class="item">分析数据模型</div>
-        <div class="item">检索知识库文档</div>
-        <div class="item">查团队在途工作</div>
+        <div class="item" style="background:rgba(0,102,255,0.3);">A: code-explorer</div>
+        <div class="item" style="background:rgba(16,185,129,0.3);">B: search_knowledge</div>
+        <div class="item" style="background:rgba(139,92,246,0.3);">C: ask_im_question</div>
+        <div class="item" style="background:rgba(236,72,153,0.3);">D: playwright 截图</div>
+        <div class="item" style="background:rgba(245,158,11,0.3);">E: web_search 联网</div>
         <div class="item">能力-机会映射</div>
-        <div class="item">标注信息缺口</div>
+        <div class="item">PRD 案例风格提取</div>
       </div>
     </div>
 
@@ -328,6 +346,7 @@
       <div style="font-size: 11px; color: #64748b; margin-bottom: 6px;">📦 ClawHub 社区 Skill</div>
       <div class="tool-tag" style="border-color: #0e7490; color: #67e8f9;">playwright-mcp<span class="phase">Phase 2-3 浏览器自动化+截图</span></div>
       <div class="tool-tag" style="border-color: #0e7490; color: #67e8f9;">browser-use<span class="phase">Phase 2-3 智能浏览器代理</span></div>
+      <div class="tool-tag" style="border-color: #0e7490; color: #67e8f9;">multi-search-engine<span class="phase">Phase 2 17引擎深度调研</span></div>
     </div>
     <div style="margin-top: 12px; border-top: 1px solid #334155; padding-top: 12px;">
       <div style="font-size: 11px; color: #64748b; margin-bottom: 6px;">🎨 新增能力</div>
@@ -460,7 +479,73 @@
   </div>
 </div>
 
-<!-- ===== THREE-PIECE OUTPUT ===== -->
+<!-- ===== SESSION CHECKPOINT + PRD STYLE LEARNING ===== -->
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 24px 0;">
+
+  <!-- Session Checkpoint -->
+  <div style="background: linear-gradient(135deg, #1e1b4b, #312e81); border: 2px solid #6366f1; border-radius: 16px; padding: 20px;">
+    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+      <span style="font-size: 24px;">⏸️</span>
+      <div>
+        <div style="font-weight: 700; font-size: 15px; color: #a5b4fc;">Session Checkpoint — 断点续跑</div>
+        <div style="font-size: 11px; color: #818cf8;">跨会话不丢进度</div>
+      </div>
+    </div>
+    <div style="font-size: 12px; color: #c7d2fe; line-height: 1.8;">
+      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+        <span style="color: #4ade80;">●</span> 上下文 &lt; 60% → 继续
+      </div>
+      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+        <span style="color: #fbbf24;">●</span> 上下文 60-80% → 压缩后继续
+      </div>
+      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+        <span style="color: #ef4444;">●</span> 上下文 &gt; 80% → 保存 checkpoint → 提示开新会话
+      </div>
+      <div style="background: rgba(0,0,0,0.3); border-radius: 8px; padding: 10px; font-family: monospace; font-size: 10px; color: #a5b4fc;">
+        ./output/checkpoint_[功能名].md<br/>
+        ├── Phase 1-2 完整产出 ✅<br/>
+        ├── 关键变量快照<br/>
+        └── 恢复指令<br/><br/>
+        用户说"继续" → 读取 checkpoint → 接着跑
+      </div>
+      <div style="margin-top: 10px; font-size: 10px; color: #818cf8;">
+        推荐分割：会话1(P1+P2) → 会话2(P3+P4) → 会话3(P5+输出)
+      </div>
+    </div>
+  </div>
+
+  <!-- PRD Style Learning -->
+  <div style="background: linear-gradient(135deg, #422006, #713f12); border: 2px solid #d97706; border-radius: 16px; padding: 20px;">
+    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+      <span style="font-size: 24px;">📝</span>
+      <div>
+        <div style="font-weight: 700; font-size: 15px; color: #fcd34d;">PRD Style Learning — 案例模仿</div>
+        <div style="font-size: 11px; color: #f59e0b;">从真实需求单学习输出风格</div>
+      </div>
+    </div>
+    <div style="font-size: 12px; color: #fef3c7; line-height: 1.8;">
+      <div style="font-weight: 600; margin-bottom: 6px;">预置 TCCC 案例库：</div>
+      <div style="background: rgba(0,0,0,0.3); border-radius: 8px; padding: 8px 10px; margin-bottom: 8px; font-size: 10px; color: #fcd34d;">
+        📄 case1: Desk 扩展中心 ADP 集成<br/>
+        📄 case2: CRM SDK Integration Demo
+      </div>
+      <div style="font-weight: 600; margin-bottom: 6px;">提取的 7 条规范：</div>
+      <div style="font-size: 10px; color: #fbbf24; line-height: 1.6;">
+        ① 界面清单表格（名称|截图|交互）<br/>
+        ② 多期规划标注（本期/二期/三期）<br/>
+        ③ 弹窗文案逐字定义<br/>
+        ④ 中英翻译对照表（按模块分组）<br/>
+        ⑤ 用户路径 + 转化路径<br/>
+        ⑥ 存量/增量逻辑分离<br/>
+        ⑦ 业务规则显式列举
+      </div>
+      <div style="margin-top: 8px; font-size: 10px; color: #92400e; background: rgba(0,0,0,0.2); padding: 6px 8px; border-radius: 4px;">
+        TCCC 项目 → 自动加载 · 用户案例 → 优先级更高 · 无案例 → 默认模板
+      </div>
+    </div>
+  </div>
+
+</div>
 <div style="margin: 24px 0; background: #1e293b; border: 2px solid #22c55e; border-radius: 16px; padding: 24px;">
   <h3 style="text-align: center; color: #4ade80; font-size: 18px; margin-bottom: 16px;">📦 三件套输出（标配，不是选配）</h3>
   <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
@@ -675,9 +760,9 @@
 </div>
 
 <div class="footnote">
-  PM Strategist Agent v1.2 — Built on AI-Product-Manager-Agent project<br/>
+  PM Strategist Agent v1.3 — Built on AI-Product-Manager-Agent project<br/>
   Inspired by Anthropic GAN Generator-Evaluator Loop + Claude Code Engineering Practices<br/>
-  <span style="color:#64748b">v1.2 新增：Parallel Workers + Context Compaction + Independent Verification + Memory System + Output Modes + Reversibility Framework + 三件套输出(Word+HTML+截图)</span>
+  <span style="color:#64748b">v1.3: Git Clone 必做 + 权限申请 · Session Checkpoint 断点续跑 · PRD 案例学习(TCCC 7规范) · multi-search-engine 17引擎 · im-desk-mcp 集成 · 5 Worker 并行</span>
 </div>
 
 </div><!-- end container -->
