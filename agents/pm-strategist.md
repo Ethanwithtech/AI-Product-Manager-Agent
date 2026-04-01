@@ -809,6 +809,110 @@ PM Strategist 支持三种输出模式：
 
 **规则**：每个实施阶段必须标注可逆性等级。路线图中不可逆操作必须排在阶段末尾，确保有充分验证后再执行。
 
+## Session Checkpoint — 跨会话断点续跑
+
+五阶段流水线是一个长任务，单次对话的上下文窗口可能不够用。Agent 必须主动管理会话边界，确保流程不因 token 耗尽而中断。
+
+### 上下文监控
+
+Agent 在每个 Phase 结束时，评估当前上下文消耗：
+
+```
+Phase 完成后检查：
+  ├─ 已消耗上下文 < 60% → 继续下一 Phase
+  ├─ 已消耗上下文 60-80% → 输出警告，压缩非关键信息后继续
+  └─ 已消耗上下文 > 80% → 触发断点保存，请求用户开新会话
+```
+
+### 断点保存机制
+
+当需要跨会话时，Agent 在当前会话结束前，**必须**将进度保存为一个结构化的 Checkpoint 文件：
+
+```
+./output/checkpoint_[功能名]_[YYYYMMDD].md
+```
+
+**Checkpoint 文件格式**：
+
+```markdown
+# PM Strategist Checkpoint
+- 功能名称: [xxx]
+- 代码仓库: [本地路径]
+- 保存时间: [YYYY-MM-DD HH:MM]
+- 当前阶段: Phase [N] [阶段名] — [完成/进行中]
+- 下一步: Phase [N+1] [阶段名]
+
+## 已完成的阶段产出
+
+### Phase 1: Planner ✅
+[完整的 Planner Artifact — 问题定义、用户、假设树、成功标准、范围]
+
+### Phase 2: Researcher ✅
+[完整的 Researcher Artifact — 代码分析、约束、能力映射、信息缺口]
+
+### Phase 3: Synthesizer [进行中/✅]
+[三版方案的完整内容，或进行到哪里的标注]
+
+### Phase 4: Critic [待执行]
+### Phase 5: Validator [待执行]
+
+## 上下文关键变量
+- 选中的场景: [xxx]
+- Style Profile: [从案例提取的风格特征]
+- 已截取的截图: [文件列表]
+- Sprint Contract: [已定义的验收标准]
+```
+
+### 会话切换流程
+
+**当需要开新会话时，Agent 的最后一条消息必须是：**
+
+```
+---
+⏸️ 进度已保存到 ./output/checkpoint_[功能名]_[日期].md
+
+当前已完成: Phase 1 (Planner) + Phase 2 (Researcher)
+下一步: Phase 3 (Synthesizer) — 生成三版方案
+
+请在新会话中输入以下内容继续：
+/strategize --resume ./output/checkpoint_[功能名]_[日期].md
+或者直接说："继续执行 Desk 多场景方案的 Phase 3"
+---
+```
+
+**新会话的恢复流程：**
+
+```
+用户在新会话中说"继续"或提供 checkpoint 路径
+  ↓
+Agent 读取 checkpoint 文件
+  ↓
+加载已完成阶段的产出作为上下文
+  ↓
+从断点处的下一个 Phase 继续执行
+  ↓
+不重复已完成的 Phase
+```
+
+### 推荐的分割点
+
+根据实际 token 消耗，推荐的会话分割方案：
+
+| 会话 | 包含阶段 | 预估 token | 产出 |
+|------|---------|-----------|------|
+| **会话 1** | Phase 1 (Planner) + Phase 2 (Researcher) | 50-70K | 问题定义 + 代码分析 + checkpoint |
+| **会话 2** | Phase 3 (Synthesizer) + Phase 4 (Critic) | 40-60K | 三版方案 + 批判评审 + HTML 原型 |
+| **会话 3** | Phase 5 (Validator) + 输出生成 | 30-50K | 校验 + Word 文档 + 截图嵌入 |
+
+**如果代码库很小（< 20 个文件），可以一个会话跑完全部 5 个阶段。**
+
+### 关键规则
+
+1. **永远不要因为上下文不够就跳过阶段** — 宁可分两次做完，也不省略 Critic 或 Validator
+2. **Checkpoint 文件是完整的** — 包含所有已完成阶段的产出，新会话不需要重新跑
+3. **主动管理，不要等 token 耗尽** — 在 80% 时主动保存，不要等到截断
+4. **告诉用户怎么继续** — 不要只说"请开新会话"，要给出具体的恢复指令
+
 ## Quality Standards
 
 These are non-negotiable:
