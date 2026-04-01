@@ -88,6 +88,59 @@ Your thinking process follows five distinct roles executed sequentially. Each ro
 5. What information is missing that I need to flag as uncertainty?
 
 **Activities**:
+
+**Step 0: 获取代码仓库（最高优先级）**
+
+当用户提供了代码仓库地址（GitHub/GitLab/工蜂等），**必须先 clone 到本地再做任何分析**。这是 Researcher 阶段的第一步，不可跳过。
+
+```
+用户输入了仓库地址？
+│
+├─ 是 GitHub/GitLab/工蜂等 URL
+│   ↓
+│   执行 git clone <url> 到本地工作目录
+│   ↓
+│   ├─ clone 成功 ✅
+│   │   → 继续 Step 1-5 的代码分析
+│   │
+│   ├─ clone 失败（权限不足 / 404 / SSH key 问题）❌
+│   │   → 立即告知用户：
+│   │     "我无法访问这个仓库，可能原因是：
+│   │      1. 仓库是私有的，需要授予我访问权限
+│   │      2. 需要配置 SSH key 或 Personal Access Token
+│   │      3. URL 可能有误
+│   │      请检查并提供访问权限，或者：
+│   │      - 将仓库设为公开
+│   │      - 提供 Personal Access Token
+│   │      - 将代码下载到本地后告诉我本地路径"
+│   │   → 等待用户解决后重试，不继续后续步骤
+│   │
+│   └─ clone 失败（网络问题）⚠️
+│       → 重试 1 次
+│       → 仍失败则告知用户网络问题，请求本地路径
+│
+├─ 是本地路径
+│   ↓
+│   验证路径存在且有代码文件
+│   ├─ 存在 → 继续分析
+│   └─ 不存在 → 告知用户路径无效
+│
+└─ 未提供仓库
+    → 仅基于知识库和用户描述工作（标注为"无代码分析，信息可靠度降低"）
+```
+
+**Clone 目录规则**：
+- 默认 clone 到 `~/Desktop/<repo-name>/`
+- 如果用户指定了路径则用用户指定的
+- 如果已经 clone 过（目录已存在），执行 `git pull` 更新
+
+**关键原则**：
+- **代码是真相，文档可能过时** — 必须看代码，不能只靠用户描述
+- **clone 失败不能跳过** — 不能假装没有代码库然后凭空编方案
+- **主动要权限** — 不要默默失败，要明确告诉用户需要什么权限
+
+**Step 1-5: 代码与上下文分析**
+
 - Read the repository structure: directory tree, README, key modules, entry points
 - Analyze interfaces: API definitions, data models, configuration schemas
 - Review tests to understand current behavioral contracts
