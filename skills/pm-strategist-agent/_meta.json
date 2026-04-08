@@ -1,0 +1,7 @@
+{
+  "slug": "pm-strategist-agent",
+  "version": "2.0.0",
+  "author": "Ethanwithtech",
+  "description": "AI 产品策略师：代码优先、GAN 对抗推演、单版本精品输出（Word+HTML+截图嵌入）、Skill 动态发现",
+  "repository": "https://github.com/Ethanwithtech/AI-Product-Manager-Agent"
+}

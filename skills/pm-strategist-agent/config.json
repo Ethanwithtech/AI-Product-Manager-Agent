@@ -1,0 +1,34 @@
+{
+  "name": "pm-strategist-agent",
+  "version": "2.0.0",
+  "type": "workflow",
+  "theme": "pm-strategy",
+  "tags": ["产品策划", "PRD", "需求分析", "GAN", "Word", "原型", "截图"],
+  "requires": {
+    "tools": ["read_file", "write_to_file", "execute_command", "codebase_search", "web_search"],
+    "optional_tools": ["browser_take_screenshot", "browser_navigate", "browser_snapshot"],
+    "bins": ["git"],
+    "optional_bins": ["node", "npx", "python3"]
+  },
+  "dynamic_skills": {
+    "screenshot": {
+      "preferred": "playwright-mcp (via MCP or skillhub install)",
+      "fallback": "python3 playwright library",
+      "install": "skillhub install playwright-mcp"
+    },
+    "search": {
+      "preferred": "multi-search-engine (via skillhub)",
+      "fallback": "IDE web_search tool",
+      "install": "skillhub install multi-search-engine"
+    },
+    "docx": {
+      "preferred": "docx npm package",
+      "fallback": "Markdown output (degraded)",
+      "install": "npm install docx"
+    }
+  },
+  "outputs": [
+    "Word PRD (.docx) with embedded screenshots",
+    "HTML Prototype (.html)"
+  ]
+}
