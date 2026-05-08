@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>腾讯云联络中心 TCCC — AI驱动的全渠道智能联络中心</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,'PingFang SC','Helvetica Neue','Microsoft YaHei',sans-serif;color:#333;background:#fff;line-height:1.7}
+:root{--blue:#0052d9;--blue-l:#3d7ff5;--blue-bg:#f3f7fe;--blue-lt:#e8f0fe;--blue-dk:#003cab;--gray-bg:#f6f8fb;--gray-bd:#e5e9f0;--gray-tx:#8a94a6;--dark:#1a2035;--tx:#333d4d;--tx-l:#5a6577}
+
+/* ===== 通用组件 ===== */
+.btn{padding:8px 20px;border-radius:4px;font-size:13px;font-weight:600;cursor:pointer;transition:.2s;text-decoration:none;display:inline-flex;align-items:center;gap:6px;border:none}
+.btn-o{background:#fff;border:1px solid var(--blue);color:var(--blue)}.btn-o:hover{background:var(--blue-lt)}
+.btn-p{background:var(--blue);color:#fff;border:1px solid var(--blue)}.btn-p:hover{background:var(--blue-dk)}
+.btn-w{background:#fff;color:var(--blue);border:1px solid #fff}.btn-w:hover{background:var(--blue-lt)}
+.btn-lg{padding:12px 28px;font-size:14px;border-radius:6px}
+.link{font-size:13px;color:var(--blue);text-decoration:none}.link:hover{text-decoration:underline}
+section{padding:64px 32px}.si{max-width:1280px;margin:0 auto}
+.bg-g{background:var(--gray-bg)}
+.sb{display:inline-block;padding:4px 12px;background:var(--blue-lt);border:1px solid rgba(0,82,217,.1);border-radius:4px;font-size:11px;color:var(--blue);font-weight:600;margin-bottom:10px;letter-spacing:1px}
+.st{font-size:30px;font-weight:800;color:var(--dark);margin-bottom:8px}
+.sd{font-size:14px;color:var(--tx-l);max-width:620px;margin-bottom:40px}
+.sc{text-align:center}.sc .sd{margin-left:auto;margin-right:auto}
+
+/* ===== 1.导航 ===== */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:#fff;border-bottom:1px solid var(--gray-bd);box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.nav-in{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 32px;height:54px}
+.nav-logo{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px;color:var(--dark)}
+.nav-logo .ic{width:26px;height:26px;background:var(--blue);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;font-weight:800}
+.nav-logo .sp{color:#ddd;font-weight:300;margin:0 2px}
+.nav-lk{display:flex;gap:24px}.nav-lk a{color:var(--tx-l);text-decoration:none;font-size:13px;font-weight:500;transition:.2s}.nav-lk a:hover{color:var(--blue)}
+.nav-ct{display:flex;gap:8px}
+
+/* ===== 2.Hero ===== */
+.hero{padding:100px 32px 60px;background:linear-gradient(180deg,#fff 0%,var(--blue-bg) 100%);position:relative}
+.hero-in{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:5px 14px;background:var(--blue-lt);border:1px solid rgba(0,82,217,.12);border-radius:20px;font-size:12px;color:var(--blue);font-weight:500;margin-bottom:16px}
+.hero-badge .dot{width:6px;height:6px;background:var(--blue);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero h1{font-size:38px;font-weight:800;line-height:1.25;color:var(--dark);margin-bottom:12px}.hero h1 .bl{color:var(--blue)}
+.hero .sub{font-size:15px;color:var(--tx-l);line-height:1.8;margin-bottom:24px;max-width:520px}
+.hero-act{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:32px}
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.hs-card{background:#fff;border:1px solid var(--gray-bd);border-radius:8px;padding:14px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,.03)}
+.hs-num{font-size:26px;font-weight:800;color:var(--blue)}.hs-lab{font-size:10px;color:var(--gray-tx);margin-top:1px}
+/* Hero右侧视觉 */
+.hero-vis{position:relative}
+.hv-box{background:#fff;border:1px solid var(--gray-bd);border-radius:12px;overflow:hidden;box-shadow:0 8px 28px rgba(0,82,217,.08)}
+.hv-hd{background:var(--blue);padding:10px 14px;display:flex;align-items:center;gap:8px}
+.hv-hd .dots{display:flex;gap:4px}.hv-hd .dots span{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.3)}
+.hv-hd .tt{color:#fff;font-size:12px;font-weight:600;margin-left:4px}
+.hv-bd{padding:14px}
+.hv-st{display:flex;align-items:center;gap:8px;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--gray-bd)}
+.hv-av{width:30px;height:30px;border-radius:7px;background:var(--blue);display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;font-weight:700}
+.hv-nm{font-size:12px;font-weight:600;color:var(--dark)}.hv-on{font-size:10px;color:#00b365;display:flex;align-items:center;gap:3px}.hv-on::before{content:'';width:5px;height:5px;background:#00b365;border-radius:50%}
+.msgs{display:flex;flex-direction:column;gap:8px}
+.msg{max-width:88%;padding:9px 12px;border-radius:10px;font-size:12px;line-height:1.6}
+.mu{align-self:flex-end;background:var(--blue);color:#fff;border-bottom-right-radius:2px}
+.ma{align-self:flex-start;background:var(--gray-bg);color:var(--tx);border:1px solid var(--gray-bd);border-bottom-left-radius:2px}
+.hv-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:10px;padding-top:10px;border-top:1px solid var(--gray-bd)}
+.hv-tag{padding:2px 7px;background:var(--blue-lt);border:1px solid rgba(0,82,217,.1);border-radius:3px;font-size:9px;color:var(--blue);font-weight:500}
+
+/* ===== 3.公告条 ===== */
+.ann{max-width:1280px;margin:-16px auto 0;padding:0 32px;position:relative;z-index:2}
+.ann-in{background:#fff;border:1px solid var(--gray-bd);border-radius:6px;padding:10px 16px;display:flex;align-items:center;gap:10px;box-shadow:0 2px 6px rgba(0,0,0,.03)}
+.ann-tag{padding:2px 8px;background:var(--blue-lt);color:var(--blue);font-size:10px;font-weight:600;border-radius:3px;white-space:nowrap}
+.ann-tx{font-size:12px;color:var(--tx-l)}.ann-tx a{color:var(--blue);text-decoration:none}.ann-tx a:hover{text-decoration:underline}
+
+/* ===== 4.四卖点横栏 ===== */
+.qf{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--gray-bd);border-radius:8px;overflow:hidden;background:#fff}
+.qf-item{padding:22px 20px;text-align:center;border-right:1px solid var(--gray-bd);transition:.2s}.qf-item:last-child{border-right:none}.qf-item:hover{background:var(--blue-bg)}
+.qf-item h4{font-size:16px;font-weight:700;color:var(--dark);margin-bottom:3px}.qf-item p{font-size:11px;color:var(--gray-tx);line-height:1.5}
+.qf-item.ai h4{color:var(--blue)}
+
+/* ===== 5.CPaaS认可 ===== */
+.cpaas{display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center;background:#fff;border:1px solid var(--gray-bd);border-radius:10px;padding:28px;box-shadow:0 2px 8px rgba(0,0,0,.03)}
+.cpaas-badge{width:180px;height:120px;background:var(--blue);border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;text-align:center;padding:14px}
+.cpaas-badge .big{font-size:28px;font-weight:800}.cpaas-badge .sm{font-size:10px;opacity:.8;margin-top:2px}
+.cpaas-info h3{font-size:20px;font-weight:700;color:var(--dark);margin-bottom:6px}.cpaas-info p{font-size:13px;color:var(--tx-l);margin-bottom:10px}
+.cpaas-products{display:flex;gap:8px;flex-wrap:wrap}
+.cpaas-p{padding:3px 10px;background:var(--blue-lt);border-radius:4px;font-size:11px;color:var(--blue);font-weight:500}
+
+/* ===== 6.三大场景Tab ===== */
+.tabs{display:flex;gap:0;margin-bottom:24px;border-bottom:2px solid var(--gray-bd)}
+.tab{padding:10px 24px;font-size:14px;font-weight:600;color:var(--gray-tx);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:.2s}
+.tab.active{color:var(--blue);border-bottom-color:var(--blue)}
+.tab:hover{color:var(--blue)}
+.tab-content{display:none}.tab-content.active{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center}
+.tc-txt h3{font-size:20px;font-weight:700;color:var(--dark);margin-bottom:8px}.tc-txt p{font-size:13px;color:var(--tx-l);line-height:1.8;margin-bottom:14px}
+.tc-tags{display:flex;flex-wrap:wrap;gap:6px}.tc-tag{padding:3px 10px;background:var(--blue-lt);border:1px solid rgba(0,82,217,.08);border-radius:4px;font-size:11px;color:var(--blue);font-weight:500}
+.tc-tag.ai{background:#e0f2fe;border-color:rgba(0,82,217,.15);font-weight:600}
+.tc-vis{background:var(--gray-bg);border:1px solid var(--gray-bd);border-radius:10px;padding:32px;text-align:center;min-height:240px;display:flex;align-items:center;justify-content:center}
+.tc-vis .placeholder{font-size:48px;opacity:.3}
+
+/* ===== 7.四大座席 ===== */
+.seat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.seat-card{background:#fff;border:1px solid var(--gray-bd);border-radius:10px;padding:22px;transition:.3s}
+.seat-card:hover{border-color:var(--blue);box-shadow:0 4px 14px rgba(0,82,217,.06)}
+.seat-icon{font-size:28px;margin-bottom:10px}
+.seat-card h4{font-size:15px;font-weight:700;color:var(--dark);margin-bottom:6px}
+.seat-card .desc{font-size:12px;color:var(--tx-l);line-height:1.6;margin-bottom:12px}
+.seat-ai{background:var(--blue-lt);border:1px solid rgba(0,82,217,.12);border-radius:6px;padding:8px 10px;font-size:11px;color:var(--blue);font-weight:600;line-height:1.5}
+.seat-ai::before{content:'AI 增强';display:inline-block;background:var(--blue);color:#fff;font-size:9px;padding:1px 6px;border-radius:3px;margin-right:6px;font-weight:700;vertical-align:1px}
+.seat-link{display:block;margin-top:10px;font-size:12px;color:var(--blue);text-decoration:none}.seat-link:hover{text-decoration:underline}
+
+/* ===== 8.AI能力矩阵 ===== */
+.ai-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.ai-card{background:#fff;border:1px solid var(--gray-bd);border-radius:10px;padding:22px;transition:.3s}
+.ai-card:hover{border-color:var(--blue);box-shadow:0 4px 14px rgba(0,82,217,.06);transform:translateY(-2px)}
+.ai-ic{width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:12px;background:var(--blue-lt)}
+.ai-card h4{font-size:14px;font-weight:700;color:var(--dark);margin-bottom:5px}
+.ai-card .cd{font-size:12px;color:var(--tx-l);line-height:1.6;margin-bottom:10px}
+.ai-hl{font-size:10px;color:var(--blue);background:var(--blue-lt);padding:3px 8px;border-radius:3px;display:inline-block;font-weight:500}
+
+/* ===== 9.三代对比 ===== */
+.gen-g{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.gen-c{border-radius:10px;padding:24px;position:relative;overflow:hidden}
+.gen-c.g1{background:#fff;border:1px solid var(--gray-bd)}
+.gen-c.g2{background:#fff;border:1px solid var(--gray-bd)}
+.gen-c.g3{background:#fff;border:2px solid var(--blue);box-shadow:0 4px 16px rgba(0,82,217,.08)}
+.gen-c.g3::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--blue)}
+.gen-b{display:inline-block;padding:2px 8px;border-radius:3px;font-size:10px;font-weight:600;margin-bottom:10px}
+.g1 .gen-b{background:#f3f4f6;color:#9ca3af}.g2 .gen-b{background:#fef9c3;color:#a16207}.g3 .gen-b{background:var(--blue-lt);color:var(--blue)}
+.gen-c h3{font-size:16px;font-weight:700;color:var(--dark);margin-bottom:5px}
+.gen-c>p{font-size:12px;color:var(--tx-l);margin-bottom:12px}
+.gen-f{list-style:none;display:flex;flex-direction:column;gap:6px}
+.gen-f li{font-size:11px;color:var(--tx-l);display:flex;align-items:flex-start;gap:6px;line-height:1.5}
+.gen-f .ic{flex-shrink:0;font-weight:700;font-size:11px}
+.g1 .gen-f .ic{color:#ef4444}.g2 .gen-f .ic{color:#eab308}.g3 .gen-f .ic{color:#00b365}
+
+/* ===== 10.架构图 ===== */
+.arch-s{display:flex;flex-direction:column;gap:4px;max-width:960px;margin:0 auto}
+.arch-l{display:grid;grid-template-columns:110px 1fr;border-radius:6px;overflow:hidden;border:1px solid var(--gray-bd)}
+.arch-lb{padding:12px 8px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;text-align:center;color:#fff}
+.arch-bd{padding:10px 14px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;background:#fff}
+.arch-ch{padding:3px 10px;border-radius:3px;font-size:10px;font-weight:500}
+.la .arch-lb{background:var(--blue)}.la .arch-ch{background:var(--blue-lt);color:var(--blue);border:1px solid rgba(0,82,217,.1)}
+.lb .arch-lb{background:#6366f1}.lb .arch-ch{background:#eef2ff;color:#6366f1;border:1px solid rgba(99,102,241,.12)}
+.lc .arch-lb{background:#0891b2}.lc .arch-ch{background:#ecfeff;color:#0891b2;border:1px solid rgba(8,145,178,.12)}
+.ld .arch-lb{background:#64748b}.ld .arch-ch{background:#f1f5f9;color:#64748b;border:1px solid rgba(100,116,139,.12)}
+.arch-ar{text-align:center;color:var(--blue);font-size:14px;opacity:.3;padding:1px}
+
+/* ===== 11.Demo体验 ===== */
+.demo-s{background:var(--blue);color:#fff;text-align:center}
+.demo-s .sb{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.2);color:#fff}
+.demo-s .st{color:#fff}.demo-s .sd{color:rgba(255,255,255,.7)}
+.demo-g{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:32px}
+.demo-c{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:22px;cursor:pointer;transition:.3s}
+.demo-c:hover{background:rgba(255,255,255,.14);transform:translateY(-2px)}
+.demo-c .di{font-size:30px;margin-bottom:8px}.demo-c h4{font-size:14px;font-weight:700;margin-bottom:4px}.demo-c p{font-size:11px;color:rgba(255,255,255,.6);line-height:1.5}
+.demo-c .dc{margin-top:10px;font-size:12px;font-weight:600}
+
+/* ===== 12.案例 ===== */
+.case-g{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.case-c{background:#fff;border:1px solid var(--gray-bd);border-radius:10px;padding:22px;transition:.3s}.case-c:hover{border-color:var(--blue)}
+.case-logo{font-size:11px;color:var(--gray-tx);font-weight:600;margin-bottom:6px;letter-spacing:.5px}
+.case-q{font-size:12px;color:var(--tx);line-height:1.7;margin-bottom:12px;padding-left:12px;border-left:3px solid var(--blue)}
+.case-m{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
+.cm{background:var(--blue-bg);border-radius:5px;padding:8px;text-align:center}
+.cm .v{font-size:18px;font-weight:800;color:var(--blue)}.cm .l{font-size:9px;color:var(--gray-tx);margin-top:1px}
+.case-p{display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:10px;border-top:1px solid var(--gray-bd)}
+.cp-av{width:30px;height:30px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;font-weight:700}
+.cp-n{font-size:11px;color:var(--dark);font-weight:600}.cp-r{font-size:10px;color:var(--gray-tx)}
+
+/* ===== 13.对比表 ===== */
+.cmp{width:100%;border-collapse:separate;border-spacing:0;border-radius:8px;overflow:hidden;border:1px solid var(--gray-bd);background:#fff}
+.cmp th{background:var(--gray-bg);color:var(--tx-l);font-size:11px;font-weight:600;padding:10px 12px;text-align:left;border-bottom:1px solid var(--gray-bd)}
+.cmp th.hl{background:var(--blue-lt);color:var(--blue)}
+.cmp td{padding:9px 12px;font-size:11px;color:var(--tx-l);border-bottom:1px solid #f0f2f5;vertical-align:top}
+.cmp td:first-child{font-weight:600;color:var(--dark);background:var(--gray-bg);width:120px}
+.cmp td.hl{background:var(--blue-bg);color:var(--tx)}
+.cmp tr:last-child td{border-bottom:none}
+.ck{color:#00b365;font-weight:700}.cr{color:#ccc}.cp2{color:#eab308}
+
+/* ===== 14.融合通信 ===== */
+.fc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.fc-card{background:#fff;border:1px solid var(--gray-bd);border-radius:8px;padding:20px;transition:.2s}
+.fc-card:hover{border-color:var(--blue)}
+.fc-card .fi{font-size:24px;margin-bottom:8px}
+.fc-card h5{font-size:13px;color:var(--dark);font-weight:600;margin-bottom:3px}
+.fc-card p{font-size:11px;color:var(--gray-tx);line-height:1.5}
+
+/* ===== 15.生态 ===== */
+.eco-g{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.eco-c{background:#fff;border:1px solid var(--gray-bd);border-radius:6px;padding:14px;text-align:center;transition:.2s}.eco-c:hover{border-color:var(--blue)}
+.eco-c .ei{font-size:22px;margin-bottom:4px}.eco-c h5{font-size:11px;color:var(--dark);font-weight:600}.eco-c p{font-size:9px;color:var(--gray-tx)}
+
+/* ===== 16.定价 ===== */
+.pr-g{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.pr-c{background:#fff;border:1px solid var(--gray-bd);border-radius:10px;padding:24px;text-align:center;transition:.3s}
+.pr-c.ft{border:2px solid var(--blue);position:relative;box-shadow:0 4px 16px rgba(0,82,217,.08)}
+.pr-c.ft::before{content:'推荐';position:absolute;top:-9px;left:50%;transform:translateX(-50%);background:var(--blue);color:#fff;font-size:10px;font-weight:600;padding:2px 12px;border-radius:3px}
+.pr-c h4{font-size:15px;font-weight:700;color:var(--dark);margin-bottom:3px}
+.pr-c .pd{font-size:11px;color:var(--gray-tx);margin-bottom:14px}
+.pr-amt{font-size:24px;font-weight:800;color:var(--dark);margin-bottom:3px}.pr-amt .u{font-size:12px;font-weight:400;color:var(--gray-tx)}
+.pr-free{font-size:20px;font-weight:800;color:#00b365}
+.pr-f{list-style:none;text-align:left;margin:14px 0;display:flex;flex-direction:column;gap:6px}
+.pr-f li{font-size:11px;color:var(--tx-l);display:flex;align-items:center;gap:6px}.pr-f li::before{content:'✓';color:#00b365;font-weight:700}
+.pr-note{font-size:11px;color:var(--gray-tx);text-align:center;margin-top:16px;padding-top:14px;border-top:1px solid var(--gray-bd)}
+
+/* ===== 17.安全 ===== */
+.sec-g{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.sec-c{background:#fff;border:1px solid var(--gray-bd);border-radius:6px;padding:14px 18px;text-align:center;min-width:130px;transition:.2s}.sec-c:hover{border-color:var(--blue)}
+.sec-c .si2{font-size:20px;margin-bottom:4px}.sec-c h5{font-size:11px;color:var(--dark);font-weight:600}.sec-c p{font-size:9px;color:var(--gray-tx)}
+
+/* ===== 18.底部CTA ===== */
+.cta-s{background:linear-gradient(135deg,var(--blue),var(--blue-dk));text-align:center;padding:64px 32px}
+.cta-s h2{font-size:28px;font-weight:800;color:#fff;margin-bottom:10px}
+.cta-s p{font-size:14px;color:rgba(255,255,255,.7);margin-bottom:24px}
+.cta-a{display:flex;gap:10px;justify-content:center}
+
+/* ===== 19.页脚 ===== */
+.footer{background:var(--gray-bg);padding:28px 32px;border-top:1px solid var(--gray-bd)}
+.footer-in{max-width:1280px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
+.footer-l{font-size:11px;color:var(--gray-tx)}
+.footer-r{display:flex;gap:16px}.footer-r a{font-size:11px;color:var(--tx-l);text-decoration:none}.footer-r a:hover{color:var(--blue)}
+
+@media(max-width:900px){
+  .hero-in,.tab-content.active{grid-template-columns:1fr}.hero-vis{display:none}
+  .hero h1{font-size:26px}.hero-stats,.seat-grid,.qf{grid-template-columns:repeat(2,1fr)}
+  .ai-grid,.gen-g,.case-g,.pr-g,.demo-g,.fc-grid{grid-template-columns:1fr}
+  .eco-g{grid-template-columns:repeat(2,1fr)}.arch-l{grid-template-columns:80px 1fr}
+  .nav-lk{display:none}.cpaas{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== 1.导航栏 ===== -->
+<nav class="nav"><div class="nav-in">
+  <div class="nav-logo"><div class="ic">TC</div>腾讯云<span class="sp">|</span>云联络中心 TCCC</div>
+  <div class="nav-lk"><a href="#scenarios">适用场景</a><a href="#seats">座席类型</a><a href="#ai">AI 能力</a><a href="#arch">技术架构</a><a href="#demo">在线体验</a><a href="#cases">客户案例</a><a href="#pricing">定价</a></div>
+  <div class="nav-ct"><a class="btn btn-o" href="#">登录控制台</a><a class="btn btn-p" href="#">免费注册</a></div>
+</div></nav>
+
+<!-- ===== 2.Hero首屏 ===== -->
+<section class="hero"><div class="hero-in">
+  <div>
+    <div class="hero-badge"><span class="dot"></span>基于腾讯混元大模型 &middot; CPaaS 亚太执行力第一</div>
+    <h1><span class="bl">AI 驱动</span>的<br>全渠道智能联络中心</h1>
+    <p class="sub">集电话、在线交流、音视频通话为一体的客户联络平台。大模型赋能智能 IVR、AI 座席助手、智能外呼，让每一次客户沟通更智能、更高效。</p>
+    <div class="hero-act">
+      <a class="btn btn-p btn-lg" href="#">免费试用</a>
+      <a class="btn btn-o btn-lg" href="#">立即购买</a>
+      <a class="link" href="#">产品文档</a>
+      <a class="link" href="#">出海交流群</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hs-card"><div class="hs-num">&lt;1s</div><div class="hs-lab">AI 响应延迟</div></div>
+      <div class="hs-card"><div class="hs-num">85%+</div><div class="hs-lab">问题自动解决率</div></div>
+      <div class="hs-card"><div class="hs-num">60%</div><div class="hs-lab">人力成本降低</div></div>
+      <div class="hs-card"><div class="hs-num">1天</div><div class="hs-lab">快速接入上线</div></div>
+    </div>
+  </div>
+  <div class="hero-vis">
+    <div class="hv-box">
+      <div class="hv-hd"><div class="dots"><span></span><span></span><span></span></div><div class="tt">TCCC 智能客服 &middot; 人机协同工作台</div></div>
+      <div class="hv-bd">
+        <div class="hv-st"><div class="hv-av">AI</div><div><div class="hv-nm">智能客服 Agent</div><div class="hv-on">在线 &middot; 混元大模型</div></div></div>
+        <div class="msgs">
+          <div class="msg mu">我上周买的蓝牙耳机左耳没声音了</div>
+          <div class="msg ma">查到订单 #20260418-3847，SoundMax Pro 在保修期内。可直接帮您发起换货，无需寄回原品。确认地址为「深圳市南山区xx路」？</div>
+          <div class="msg mu">地址没变</div>
+          <div class="msg ma">已提交换货，预计 2 个工作日发出（RMA-0091）。额外延长 30 天保修作为补偿。</div>
+        </div>
+        <div class="hv-tags">
+          <span class="hv-tag">意图：售后换货</span><span class="hv-tag">情绪：不满→满意</span><span class="hv-tag">订单API ✓</span><span class="hv-tag">自动办结 ✓</span><span class="hv-tag">可转人工座席</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<!-- ===== 3.公告条 ===== -->
+<div class="ann"><div class="ann-in">
+  <span class="ann-tag">产品动态</span>
+  <span class="ann-tx">新加坡独立数据中心已上线，支持企业拓展国际业务 <a href="#">查看出海指南 &gt;</a></span>
+</div></div>
+
+<!-- ===== 4.四卖点横栏 ===== -->
+<div style="max-width:1280px;margin:16px auto 0;padding:0 32px">
+  <div class="qf">
+    <div class="qf-item"><h4>弹性服务</h4><p>随业务发展弹性扩容<br>无需硬件投入</p></div>
+    <div class="qf-item"><h4>快速集成</h4><p>丰富 SDK 和 API 3.0<br>最快 1 天接入</p></div>
+    <div class="qf-item ai"><h4>AI 赋能</h4><p>大模型驱动智能 IVR<br>座席助手、智能外呼</p></div>
+    <div class="qf-item"><h4>全球部署</h4><p>新加坡数据中心<br>低门槛出海</p></div>
+  </div>
+</div>
+
+<!-- ===== 5.CPaaS认可 ===== -->
+<section><div class="si">
+  <div class="cpaas">
+    <div class="cpaas-badge"><div class="big">CPaaS</div><div class="sm">连续三年上榜<br>国内唯一厂商</div></div>
+    <div class="cpaas-info">
+      <h3>腾讯云 CPaaS：连续三年上榜，国内唯一，多项第一！</h3>
+      <p>腾讯云连续三年被国际权威机构评为 CPaaS 市场「挑战者」，是唯一上榜的国内厂商！在执行力维度（服务质量、客户满意度、运营效率等）稳居亚太第一。</p>
+      <div class="cpaas-products">
+        <span class="cpaas-p">TCCC 云联络中心</span><span class="cpaas-p">TRTC 实时音视频</span><span class="cpaas-p">IM 即时通信</span><span class="cpaas-p">SMS 短信</span><span class="cpaas-p">SES 邮件推送</span>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<!-- ===== 6.三大场景Tab ===== -->
+<section class="bg-g" id="scenarios"><div class="si">
+  <div class="sb">适用场景</div>
+  <h2 class="st">三大核心场景，通信 + AI 双轮驱动</h2>
+  <p class="sd">无论是客户服务、销售拓展还是办公协同，每个场景都融合了传统通信能力与 AI 增强。</p>
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab(0)">客户服务</div>
+    <div class="tab" onclick="switchTab(1)">销售拓展</div>
+    <div class="tab" onclick="switchTab(2)">办公协同</div>
+  </div>
+  <div class="tab-content active" id="tc0">
+    <div class="tc-txt">
+      <h3>全渠道智能客户服务</h3>
+      <p>支持 400/95 热线、在线 IM、音视频多渠道统一接入。AI 智能 IVR 语音导航替代传统按键菜单，客户说话即可直达服务；在线智能机器人 7x24 自动应答高频问题；复杂问题无缝转人工座席，完整上下文自动传递，座席 Copilot 实时辅助回复。</p>
+      <div class="tc-tags">
+        <span class="tc-tag">电话座席</span><span class="tc-tag">在线交流</span><span class="tc-tag">音视频通话</span>
+        <span class="tc-tag ai">AI 智能 IVR</span><span class="tc-tag ai">智能机器人</span><span class="tc-tag ai">座席 Copilot</span>
+        <span class="tc-tag">来电弹屏</span><span class="tc-tag">通话录音</span><span class="tc-tag">满意度评价</span>
+      </div>
+    </div>
+    <div class="tc-vis"><div class="placeholder">📞💬🎥🤖</div></div>
+  </div>
+  <div class="tab-content" id="tc1">
+    <div class="tc-txt">
+      <h3>AI 赋能的智能销售外呼</h3>
+      <p>电销座席支持批量自动外呼、智能外呼 API。AI 外呼机器人可自动拨打电话进行营销邀约、回访通知、满意度调研，多轮语音对话自然流畅。外呼外显规则支持相同归属地分配，提升客户接听率。座席数据分析助力销售团队持续优化转化率。</p>
+      <div class="tc-tags">
+        <span class="tc-tag">电销座席</span><span class="tc-tag">批量外呼</span>
+        <span class="tc-tag ai">智能外呼 API</span><span class="tc-tag ai">AI 外呼机器人</span>
+        <span class="tc-tag">外显归属地</span><span class="tc-tag">座席数据分析</span><span class="tc-tag">通话录音</span>
+      </div>
+    </div>
+    <div class="tc-vis"><div class="placeholder">📱🤖📊</div></div>
+  </div>
+  <div class="tab-content" id="tc2">
+    <div class="tc-txt">
+      <h3>办公与服务一体化</h3>
+      <p>企业 IT 部门可在现有 CRM、工单、业务系统上快速搭建通信能力。支持职场、居家、移动办公一体化，1 个微信小程序即可完成电话和在线会话。软件开发商可管理不同租户数据，支持二次开发。连接微信与企业微信生态，办公平台与客户服务平台深度融合。</p>
+      <div class="tc-tags">
+        <span class="tc-tag">微信 / 企业微信</span><span class="tc-tag">小程序</span><span class="tc-tag">SDK 集成</span>
+        <span class="tc-tag">多租户管理</span><span class="tc-tag">居家办公</span><span class="tc-tag">移动办公</span><span class="tc-tag">API 3.0</span>
+      </div>
+    </div>
+    <div class="tc-vis"><div class="placeholder">💻📱🏠</div></div>
+  </div>
+</div></section>
+
+<!-- ===== 7.四大座席类型 ===== -->
+<section id="seats"><div class="si">
+  <div class="sb">座席类型</div>
+  <h2 class="st">四大座席类型，每一种都有 AI 加持</h2>
+  <p class="sd">TCCC 不只有 AI 机器人，更有完整的人工座席体系。AI 是座席的增强引擎，而非替代。</p>
+  <div class="seat-grid">
+    <div class="seat-card">
+      <div class="seat-icon">📞</div>
+      <h4>电话座席</h4>
+      <p class="desc">用户致电企业 400/95 热线，座席电脑/手机/话机多端接听。来电自动弹屏显示客户信息与服务轨迹，通话全量录音留存。</p>
+      <div class="seat-ai">智能 IVR 语音导航，客户说话即可直达服务，无需按键菜单</div>
+      <a class="seat-link" href="#">了解详情 &gt;</a>
+    </div>
+    <div class="seat-card">
+      <div class="seat-icon">📱</div>
+      <h4>电销座席</h4>
+      <p class="desc">主动外呼销售与回访，支持批量自动外呼。外呼外显归属地匹配，提升客户接听率。座席数据分析优化销售效率。</p>
+      <div class="seat-ai">AI 外呼机器人自动多轮语音对话，意向分级、信息采集一步到位</div>
+      <a class="seat-link" href="#">了解详情 &gt;</a>
+    </div>
+    <div class="seat-card">
+      <div class="seat-icon">💬</div>
+      <h4>在线交流</h4>
+      <p class="desc">网页/APP/小程序图文即时通信，与腾讯云 IM 互通。支持多渠道统一接入，会话记录完整保留。</p>
+      <div class="seat-ai">智能机器人 7x24 自动应答 + 座席 Copilot 实时话术推荐</div>
+      <a class="seat-link" href="#">了解详情 &gt;</a>
+    </div>
+    <div class="seat-card">
+      <div class="seat-icon">🎥</div>
+      <h4>音视频服务</h4>
+      <p class="desc">基于 TRTC 的小程序/网页音视频通话能力。适用于远程面签、视频客服、技术支持等场景。</p>
+      <div class="seat-ai">AI 实时语音转写 + 智能质检全量覆盖</div>
+      <a class="seat-link" href="#">了解详情 &gt;</a>
+    </div>
+  </div>
+</div></section>
+
+<!-- ===== 8.AI能力矩阵 ===== -->
+<section class="bg-g" id="ai"><div class="si">
+  <div class="sb">AI 能力矩阵</div>
+  <h2 class="st">六大 AI 引擎，贯穿服务全链路</h2>
+  <p class="sd">不是在传统客服上"贴"AI，而是以 AI 为核心构建的增强引擎。</p>
+  <div class="ai-grid">
+    <div class="ai-card"><div class="ai-ic">🧠</div><h4>大模型智能 Agent</h4><p class="cd">基于腾讯混元大模型，深度理解客户语义与意图，支持复杂多轮对话和自主推理。</p><span class="ai-hl">支持混元 / DeepSeek / 自建模型接入</span></div>
+    <div class="ai-card"><div class="ai-ic">📚</div><h4>RAG 知识引擎</h4><p class="cd">上传文档 5 分钟 AI 即刻上岗。支持 PDF/DOC/网页/FAQ 等多源知识。</p><span class="ai-hl">引用溯源 &middot; 幻觉控制 &middot; 自动学习</span></div>
+    <div class="ai-card"><div class="ai-ic">🔄</div><h4>智能任务流 Agent</h4><p class="cd">AI 不仅回答问题更能办事 — 查订单、收集需求、提工单、退款，全程自动化。</p><span class="ai-hl">可视化编排 &middot; API 调用 &middot; 自主决策</span></div>
+    <div class="ai-card"><div class="ai-ic">🎯</div><h4>座席 Copilot 助手</h4><p class="cd">实时辅助人工座席：话术推荐、知识一键引用、情绪预警、会话自动摘要。</p><span class="ai-hl">实时转写 &middot; 话术推荐 &middot; 自动小结</span></div>
+    <div class="ai-card"><div class="ai-ic">📊</div><h4>AI 质检与洞察</h4><p class="cd">大模型驱动全量对话质检 100% 覆盖。自动识别服务风险、情感趋势、未解决问题。</p><span class="ai-hl">全量质检 &middot; 情感分析 &middot; 意图聚类</span></div>
+    <div class="ai-card"><div class="ai-ic">🌍</div><h4>多语言 AI 服务</h4><p class="cd">支持中/英/印尼/泰等多语种大模型，配合新加坡数据中心助力全球化。</p><span class="ai-hl">全球化服务 &middot; 本地化部署</span></div>
+  </div>
+</div></section>
+
+<!-- ===== 9.三代对比 ===== -->
+<section><div class="si">
+  <div class="sb">技术演进</div>
+  <h2 class="st">联络中心的三次进化</h2>
+  <p class="sd">从按键菜单到大模型 Agent，TCCC 代表第三代联络中心。</p>
+  <div class="gen-g">
+    <div class="gen-c g1"><span class="gen-b">第一代</span><h3>传统 IVR 呼叫中心</h3><p>按键式菜单导航，固定流程</p><ul class="gen-f">
+      <li><span class="ic">✕</span>按键 IVR，客户反复听提示</li><li><span class="ic">✕</span>仅固定流程，无法理解自然语言</li><li><span class="ic">✕</span>需专业 IT 人员配置</li><li><span class="ic">✕</span>无数据洞察能力</li></ul></div>
+    <div class="gen-c g2"><span class="gen-b">第二代</span><h3>关键词 + 意图匹配</h3><p>NLP 关键词匹配，场景有限</p><ul class="gen-f">
+      <li><span class="ic">△</span>关键词匹配 + 固定话术</li><li><span class="ic">△</span>需标注大量意图数据</li><li><span class="ic">△</span>无法处理边缘情况</li><li><span class="ic">△</span>基础统计，缺乏深度洞察</li></ul></div>
+    <div class="gen-c g3"><span class="gen-b">第三代 &middot; TCCC</span><h3>大模型 AI Agent 联络中心</h3><p>混元大模型驱动，能理解、能推理、能办事</p><ul class="gen-f">
+      <li><span class="ic">✓</span>大模型语义理解 + 多轮复杂对话</li><li><span class="ic">✓</span>Prompt + 知识库即配即用</li><li><span class="ic">✓</span>AI Agent 自主推理 + 工具调用</li><li><span class="ic">✓</span>AI 实时辅助座席 + 全量质检</li><li><span class="ic">✓</span>电话/在线/音视频全渠道融合</li></ul></div>
+  </div>
+</div></section>
+
+<!-- ===== 10.技术架构 ===== -->
+<section class="bg-g" id="arch"><div class="si">
+  <div class="sb">技术架构</div>
+  <h2 class="st">四层技术栈，AI 与通信深度融合</h2>
+  <p class="sd">从通信底座到 AI 应用，每一层都为智能而生。</p>
+  <div class="arch-s">
+    <div class="arch-l la"><div class="arch-lb">应用层</div><div class="arch-bd"><span class="arch-ch">智能 IVR 导航</span><span class="arch-ch">AI 座席助手</span><span class="arch-ch">智能外呼 Agent</span><span class="arch-ch">智能质检分析</span><span class="arch-ch">智能工单</span><span class="arch-ch">实时翻译</span></div></div>
+    <div class="arch-ar">↓</div>
+    <div class="arch-l lb"><div class="arch-lb">Agent 层</div><div class="arch-bd"><span class="arch-ch">对话 Agent</span><span class="arch-ch">知识库 RAG</span><span class="arch-ch">意图识别</span><span class="arch-ch">情绪分析</span><span class="arch-ch">任务流编排</span><span class="arch-ch">工具调用</span><span class="arch-ch">话术推荐</span></div></div>
+    <div class="arch-ar">↓</div>
+    <div class="arch-l lc"><div class="arch-lb">模型层</div><div class="arch-bd"><span class="arch-ch">腾讯混元大模型</span><span class="arch-ch">DeepSeek</span><span class="arch-ch">ASR 语音识别</span><span class="arch-ch">TTS 语音合成</span><span class="arch-ch">NLP 语义理解</span><span class="arch-ch">自建模型接入</span></div></div>
+    <div class="arch-ar">↓</div>
+    <div class="arch-l ld"><div class="arch-lb">通信底座</div><div class="arch-bd"><span class="arch-ch">PSTN 电话网络</span><span class="arch-ch">TRTC 实时音视频</span><span class="arch-ch">IM 即时通信</span><span class="arch-ch">微信 / 企微</span><span class="arch-ch">小程序</span><span class="arch-ch">Web / APP</span><span class="arch-ch">SIP Trunk</span></div></div>
+  </div>
+</div></section>
+
+<!-- ===== 11.Demo体验 ===== -->
+<section class="demo-s" id="demo"><div class="si sc">
+  <div class="sb">在线体验</div>
+  <h2 class="st">30 秒感受 AI 的力量</h2>
+  <p class="sd">直接和 TCCC AI 对话，或体验人机协同座席工作台。</p>
+  <div class="demo-g">
+    <div class="demo-c"><div class="di">💬</div><h4>AI 在线对话</h4><p>与智能客服 Agent 在线对话，体验多轮问答与自动任务执行</p><div class="dc">开始对话 →</div></div>
+    <div class="demo-c"><div class="di">📱</div><h4>AI 语音通话</h4><p>输入手机号，立即接到 AI 打来的电话，感受拟人化语音对话</p><div class="dc">获取来电 →</div></div>
+    <div class="demo-c"><div class="di">🖥️</div><h4>座席工作台体验</h4><p>进入模拟工作台，体验人工座席 + AI Copilot 实时协同</p><div class="dc">进入工作台 →</div></div>
+  </div>
+</div></section>
+
+<!-- ===== 12.客户案例 ===== -->
+<section id="cases"><div class="si">
+  <div class="sb">客户案例</div>
+  <h2 class="st">他们选择了 TCCC</h2>
+  <p class="sd">真实客户，通信能力 + AI 赋能 + 全球化三个维度的价值验证。</p>
+  <div class="case-g">
+    <div class="case-c">
+      <div class="case-logo">某头部电商平台 · AI 赋能</div>
+      <div class="case-q">TCCC AI Agent 上线后，85% 的售后咨询由 AI 自动解决，人工座席可以专注处理高价值复杂问题，座席 Copilot 进一步提升了人工服务效率。</div>
+      <div class="case-m"><div class="cm"><div class="v">85%</div><div class="l">AI 自助解决率</div></div><div class="cm"><div class="v">60%</div><div class="l">人力成本降低</div></div><div class="cm"><div class="v">0.8s</div><div class="l">平均响应时间</div></div><div class="cm"><div class="v">4.7</div><div class="l">客户满意度</div></div></div>
+      <div class="case-p"><div class="cp-av">L</div><div><div class="cp-n">李总监</div><div class="cp-r">客服运营负责人</div></div></div>
+    </div>
+    <div class="case-c">
+      <div class="case-logo">格林豪泰 · 全渠道通信</div>
+      <div class="case-q">本地话务平台与云联络中心对接，实现职场/居家/移动办公一体化。400 热线 + 在线客服统一座席工作台，座席不受地域限制。</div>
+      <div class="case-m"><div class="cm"><div class="v">3合1</div><div class="l">职场/居家/移动</div></div><div class="cm"><div class="v">400+</div><div class="l">热线座席统一</div></div><div class="cm"><div class="v">1天</div><div class="l">快速接入</div></div><div class="cm"><div class="v">99.9%</div><div class="l">服务可用性</div></div></div>
+      <div class="case-p"><div class="cp-av">Z</div><div><div class="cp-n">张经理</div><div class="cp-r">IT 运维负责人</div></div></div>
+    </div>
+    <div class="case-c">
+      <div class="case-logo">某全球化零售品牌 · 出海</div>
+      <div class="case-q">TCCC 多语言 AI 客服覆盖东南亚 5 个市场，配合微信小程序入口与新加坡数据中心，国内外客户服务体验完全统一。</div>
+      <div class="case-m"><div class="cm"><div class="v">5+</div><div class="l">覆盖语种</div></div><div class="cm"><div class="v">7x24</div><div class="l">不间断服务</div></div><div class="cm"><div class="v">15x</div><div class="l">外呼效率提升</div></div><div class="cm"><div class="v">50%</div><div class="l">运营成本降低</div></div></div>
+      <div class="case-p"><div class="cp-av">C</div><div><div class="cp-n">陈总</div><div class="cp-r">海外业务 VP</div></div></div>
+    </div>
+  </div>
+  <p style="text-align:center;margin-top:20px;font-size:12px;color:var(--gray-tx)">更多客户：微保 &middot; 微众银行 &middot; 阿维塔 &middot; 岚图 &middot; 利宝保险 &middot; 海保人寿 &middot; 招商云创 &middot; 老百姓大药房 &middot; 立讯精密 &middot; 云聚物流</p>
+</div></section>
+
+<!-- ===== 13.差异化对比表 ===== -->
+<section class="bg-g"><div class="si">
+  <div class="sb">差异化优势</div>
+  <h2 class="st">为什么选择 TCCC</h2>
+  <p class="sd">一张表看清三代联络中心的差距。</p>
+  <div style="overflow-x:auto">
+  <table class="cmp"><thead><tr>
+    <th>能力维度</th><th>传统呼叫中心</th><th>初代智能客服</th><th class="hl">TCCC AI 联络中心</th>
+  </tr></thead><tbody>
+    <tr><td>对话理解</td><td>按键菜单 <span class="cr">✕</span></td><td>关键词匹配 <span class="cp2">△</span></td><td class="hl">大模型语义理解 + 多轮推理 <span class="ck">✓</span></td></tr>
+    <tr><td>知识维护</td><td>人工编写 FAQ <span class="cr">✕</span></td><td>标注意图数据 <span class="cp2">△</span></td><td class="hl">上传文档即用，RAG 自动学习 <span class="ck">✓</span></td></tr>
+    <tr><td>任务执行</td><td>纯人工处理 <span class="cr">✕</span></td><td>固定脚本流程 <span class="cp2">△</span></td><td class="hl">AI Agent 自主推理 + 工具调用 <span class="ck">✓</span></td></tr>
+    <tr><td>座席辅助</td><td>无 <span class="cr">✕</span></td><td>简单弹屏 <span class="cp2">△</span></td><td class="hl">Copilot 话术推荐 + 情绪预警 <span class="ck">✓</span></td></tr>
+    <tr><td>质量检测</td><td>人工抽检 &lt;5% <span class="cr">✕</span></td><td>关键词规则 <span class="cp2">△</span></td><td class="hl">大模型全量质检 100% <span class="ck">✓</span></td></tr>
+    <tr><td>数据洞察</td><td>基础报表 <span class="cr">✕</span></td><td>关键词统计 <span class="cp2">△</span></td><td class="hl">AI 意图聚类 + 情感分析 <span class="ck">✓</span></td></tr>
+    <tr><td>配置上线</td><td>专业 IT 配置 <span class="cr">✕</span></td><td>训练师标注 <span class="cp2">△</span></td><td class="hl">Prompt 配置，分钟级上线 <span class="ck">✓</span></td></tr>
+    <tr><td>渠道覆盖</td><td>单一电话 <span class="cr">✕</span></td><td>有限在线 <span class="cp2">△</span></td><td class="hl">电话+在线+音视频+微信全融合 <span class="ck">✓</span></td></tr>
+  </tbody></table>
+  </div>
+</div></section>
+
+<!-- ===== 14.全渠道融合通信 ===== -->
+<section><div class="si">
+  <div class="sb">融合通信</div>
+  <h2 class="st">全渠道多触点融合通信</h2>
+  <p class="sd">基于 PSTN + TRTC + IM 三大通信能力打造，业界真正实现电话、即时通信、音视频互融互通。这是竞品没有的通信底座优势。</p>
+  <div class="fc-grid">
+    <div class="fc-card"><div class="fi">📞</div><h5>多端接入</h5><p>SIP 话机 / Web 网页 / 移动 APP / 微信小程序 — 四端互通</p></div>
+    <div class="fc-card"><div class="fi">🏠</div><h5>多场景覆盖</h5><p>职场办公 / 居家办公 / 移动办公 — 一体化协同</p></div>
+    <div class="fc-card"><div class="fi">💚</div><h5>微信生态连接</h5><p>1 个小程序完成电话 + 在线，连接微信 & 企业微信</p></div>
+    <div class="fc-card"><div class="fi">⚡</div><h5>轻量接入</h5><p>无需硬件、开箱即用、含 UI SDK、最快 1 天接入</p></div>
+  </div>
+</div></section>
+
+<!-- ===== 15.生态与集成 ===== -->
+<section class="bg-g"><div class="si">
+  <div class="sb">生态与集成</div>
+  <h2 class="st">深度连接腾讯生态，开放集成一切</h2>
+  <p class="sd">微信生态天然优势 + API 3.0 接口，1 天集成到你的业务系统。</p>
+  <div class="eco-g">
+    <div class="eco-c"><div class="ei">💚</div><h5>微信 / 企微</h5><p>原生连接</p></div>
+    <div class="eco-c"><div class="ei">📱</div><h5>小程序</h5><p>一站式服务</p></div>
+    <div class="eco-c"><div class="ei">📹</div><h5>TRTC 音视频</h5><p>高清通话</p></div>
+    <div class="eco-c"><div class="ei">💬</div><h5>IM 即时通信</h5><p>消息互通</p></div>
+    <div class="eco-c"><div class="ei">🔌</div><h5>API 3.0</h5><p>丰富接口</p></div>
+    <div class="eco-c"><div class="ei">🏗️</div><h5>SDK 集成</h5><p>含 UI 低门槛</p></div>
+    <div class="eco-c"><div class="ei">📊</div><h5>CRM / ERP</h5><p>业务对接</p></div>
+    <div class="eco-c"><div class="ei">🌏</div><h5>新加坡数据中心</h5><p>助力出海</p></div>
+  </div>
+</div></section>
+
+<!-- ===== 16.产品定价 ===== -->
+<section id="pricing"><div class="si">
+  <div class="sb">产品价格</div>
+  <h2 class="st">灵活计费，按需选择</h2>
+  <p class="sd">从基础通信到 AI 增强，找到最适合你的方案。</p>
+  <div class="pr-g">
+    <div class="pr-c">
+      <h4>标准版座席</h4><p class="pd">基础通信能力</p>
+      <div class="pr-amt">按月订阅 <span class="u">/ 3 座席起</span></div>
+      <ul class="pr-f"><li>电话 + 在线客服座席</li><li>图形化 IVR 配置与路由分配</li><li>实时监控 & 数据报表</li><li>通话录音 & 服务记录</li><li>Web & 手机接听与外呼</li></ul>
+      <a class="btn btn-o" style="width:100%;justify-content:center;margin-top:12px" href="#">了解详情</a>
+    </div>
+    <div class="pr-c ft">
+      <h4>高级版座席</h4><p class="pd">通信 + AI 完整能力</p>
+      <div class="pr-amt">按月订阅 <span class="u">/ 3 座席起</span></div>
+      <ul class="pr-f"><li>含标准版全部能力</li><li>AI 智能 IVR 语音导航</li><li>座席 Copilot 实时辅助</li><li>智能外呼 Agent</li><li>AI 质检 & 对话分析</li><li>实时通话监听 & 座席分析</li><li>外呼外显归属地分配</li></ul>
+      <a class="btn btn-p" style="width:100%;justify-content:center;margin-top:12px" href="#">免费试用 14 天</a>
+    </div>
+    <div class="pr-c">
+      <h4>高级版智能语音</h4><p class="pd">AI 语音专项能力</p>
+      <div class="pr-free">免费</div>
+      <ul class="pr-f"><li>批量自动外呼</li><li>智能外呼 API</li><li>电话呼入自助导航与接待</li><li>图形化 IVR 配置（呼入/呼出）</li><li>通话记录与通话录音</li></ul>
+      <a class="btn btn-p" style="width:100%;justify-content:center;margin-top:12px" href="#">立即开通</a>
+    </div>
+  </div>
+  <p class="pr-note">总费用 = 座席费用 + 通信费用 &middot; 支持自有号码接入（SIP Trunk / 400 号码），无对接费用</p>
+</div></section>
+
+<!-- ===== 17.安全合规 ===== -->
+<section class="bg-g"><div class="si sc">
+  <div class="sb">安全合规</div>
+  <h2 class="st">企业级安全保障</h2>
+  <p class="sd">腾讯云安全底座，满足金融、医疗、政务等高合规行业要求。</p>
+  <div class="sec-g">
+    <div class="sec-c"><div class="si2">🔒</div><h5>数据加密</h5><p>传输 & 存储全加密</p></div>
+    <div class="sec-c"><div class="si2">🛡️</div><h5>等保三级</h5><p>国家信息安全认证</p></div>
+    <div class="sec-c"><div class="si2">📋</div><h5>SOC 审计</h5><p>安全运营合规</p></div>
+    <div class="sec-c"><div class="si2">🏢</div><h5>私有化部署</h5><p>客户自有基础设施</p></div>
+    <div class="sec-c"><div class="si2">👤</div><h5>RBAC 权限</h5><p>角色级精细控制</p></div>
+    <div class="sec-c"><div class="si2">🔐</div><h5>AI 安全护栏</h5><p>大模型内容安全</p></div>
+  </div>
+</div></section>
+
+<!-- ===== 18.底部CTA ===== -->
+<section class="cta-s">
+  <h2>让 AI 与通信融合，重新定义你的客户联络中心</h2>
+  <p>从今天开始，让每一次客户沟通都更智能、更高效、更有价值。</p>
+  <div class="cta-a">
+    <a class="btn btn-w btn-lg" href="#">免费试用</a>
+    <a class="btn btn-lg" style="background:transparent;color:#fff;border:1px solid rgba(255,255,255,.4)" href="#">预约演示</a>
+    <a class="btn btn-lg" style="background:transparent;color:#fff;border:1px solid rgba(255,255,255,.4)" href="#">下载技术白皮书</a>
+  </div>
+</section>
+
+<!-- ===== 19.页脚 ===== -->
+<footer class="footer"><div class="footer-in">
+  <div class="footer-l">&copy; 2026 腾讯云 &middot; 云联络中心 TCCC &middot; 基于腾讯混元大模型</div>
+  <div class="footer-r"><a href="#">产品文档</a><a href="#">API 参考</a><a href="#">帮助中心</a><a href="#">服务协议</a></div>
+</div></footer>
+
+<script>
+function switchTab(i){
+  document.querySelectorAll('.tab').forEach((t,j)=>{t.classList.toggle('active',j===i)});
+  document.querySelectorAll('.tab-content').forEach((c,j)=>{c.classList.toggle('active',j===i)});
+}
+</script>
+</body>
+</html>

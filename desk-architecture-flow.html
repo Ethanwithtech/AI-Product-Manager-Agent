@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Desk 智能客服 · 电商平台能力架构</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:#f5f7fa}
+body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;padding:14px 20px 8px;color:#1a1a1a}
+.page-title{text-align:center;margin-bottom:6px}
+.page-title h1{font-size:17px;font-weight:700;letter-spacing:1px;color:#2c3e50}
+.page-title p{font-size:10px;color:#8a94a6;margin-top:2px}
+.page-desc{max-width:1120px;margin:0 auto 8px;background:#fff;border:1px solid #DCE6F5;border-radius:8px;padding:8px 12px;box-shadow:0 1px 6px rgba(61,111,232,.04)}
+.page-desc p{font-size:11px;line-height:1.6;color:#4b5565}
+.page-desc p + p{margin-top:4px}
+
+.arch{max-width:1200px;margin:0 auto;display:flex;flex-direction:column;gap:6px}
+
+/* 每一层 */
+.layer{display:grid;grid-template-columns:72px 1fr;gap:6px}
+.layer-label{background:linear-gradient(180deg,#5B8EF5,#3D6FE8);color:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;letter-spacing:2px;writing-mode:vertical-lr;padding:8px 0;box-shadow:0 2px 8px rgba(61,111,232,.15)}
+.layer-body{background:#fff;border:1px solid #DCE6F5;border-radius:8px;padding:10px}
+
+/* 场景卡片：只留标题，不放 chip */
+.scene-blocks{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.scene-block{background:#F8FAFE;border:1px solid #C8DCF5;border-radius:7px;padding:10px 8px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:58px;transition:all .2s}
+.scene-block:hover{border-color:#3D6FE8;background:#EDF3FE}
+.scene-block .ic{font-size:17px;margin-bottom:3px}
+.scene-block .scene-name{font-size:11px;font-weight:700;color:#3D6FE8;letter-spacing:.5px}
+.scene-block .scene-sub{font-size:9px;color:#8a94a6;margin-top:2px}
+
+/* 机器人层：平台/商家双容器 */
+.bot-layer .layer-body{display:flex;gap:10px;align-items:stretch}
+.bot-platform,.bot-merchants{background:#fff;border-radius:7px;padding:12px 10px 10px;position:relative;display:flex;flex-direction:column}
+.bot-platform{flex:0 0 230px;border:1.5px solid #3D6FE8;background:#F8FAFE}
+.bot-merchants{flex:1;border:1.5px dashed #5B8EF5}
+.bot-platform::before{content:"🏢 平台机器人";position:absolute;top:-9px;left:10px;background:#3D6FE8;color:#fff;font-size:10px;padding:2px 9px;border-radius:9px;font-weight:600;letter-spacing:.5px}
+.bot-merchants::before{content:"🏪 商家机器人 · 每店独立 · 消息隔离";position:absolute;top:-9px;left:10px;background:#fff;color:#3D6FE8;font-size:10px;padding:2px 9px;border-radius:9px;font-weight:600;border:1px solid #5B8EF5;letter-spacing:.5px}
+
+/* 平台机器人内部：竖向 3 卡 */
+.bot-platform .scene-blocks{display:grid;grid-template-columns:1fr;gap:6px;margin-top:2px}
+
+/* 商家机器人内部：强制 3×2 网格 */
+.bot-merchants .scene-blocks{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+
+.merchant-list{display:flex;gap:4px;flex-wrap:wrap;margin:4px 0 8px}
+.merchant-chip{background:#EDF3FE;border:1px solid #C8DCF5;border-radius:10px;padding:2px 8px;font-size:10px;color:#3D6FE8}
+.merchant-chip.more{background:#fff;color:#8a94a6;border-style:dashed}
+
+/* 管理端 */
+.manage-layer .layer-body{display:flex;gap:8px;align-items:stretch}
+.mgr-block{flex:1;background:#F8FAFE;border:1px solid #C8DCF5;border-radius:7px;overflow:hidden;display:flex;flex-direction:column}
+.mgr-block.api{background:#F0F6FC;border-color:#95BCE8;flex:0 0 230px}
+.mgr-head{padding:6px 10px;font-size:11px;font-weight:700;color:#3D6FE8;border-bottom:1px solid #C8DCF5;background:#EDF3FE}
+.mgr-block.api .mgr-head{color:#2A5BB8;background:#E1ECF8;border-color:#95BCE8}
+.mgr-body{padding:8px;display:grid;gap:6px;flex:1}
+.mgr-block:nth-child(1) .mgr-body{grid-template-columns:repeat(3,1fr)}
+.mgr-block:nth-child(2) .mgr-body{grid-template-columns:repeat(2,1fr)}
+.mgr-block.api .mgr-body{grid-template-columns:1fr}
+.mgr-body .scene-block{background:#fff;min-height:54px;padding:8px 6px}
+.mgr-body .scene-block .ic{font-size:16px;margin-bottom:3px}
+.mgr-body .scene-block .scene-name{font-size:10px}
+.mgr-body .scene-block .scene-sub{font-size:9px}
+
+/* 多端接入条 */
+.platforms-bar{margin-top:8px;padding:6px 10px;background:#F8FAFE;border:1px dashed #C8DCF5;border-radius:7px;font-size:10px;color:#4b5565;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.platforms-bar strong{color:#3D6FE8;font-weight:700;margin-right:3px;font-size:11px}
+.platforms-bar .pf{background:#fff;border:1px solid #D0DDF2;border-radius:4px;padding:2px 7px;font-size:10px;color:#3D6FE8}
+
+/* 箭头 */
+.arrow-connector{display:grid;grid-template-columns:72px 1fr;gap:6px;margin:-3px 0}
+.arrow-connector .arrow-body{display:flex;align-items:center;gap:6px;padding:0 10px}
+.arrow-line svg{width:18px;height:18px;display:block}
+.arrow-label{flex:1;background:#EDF3FE;border-left:3px solid #3D6FE8;border-radius:0 8px 8px 0;padding:2px 10px;font-size:10px;color:#3D6FE8;font-weight:600;letter-spacing:1px}
+
+@media(max-width:1000px){
+  .bot-layer .layer-body,.manage-layer .layer-body{flex-direction:column}
+  .bot-platform,.mgr-block.api{flex:1}
+  .bot-merchants .scene-blocks{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<div class="page-title">
+  <h1>腾讯云智能客服 Desk · 电商平台能力架构</h1>
+  <p>场景驱动 · 每个业务场景对应具体的产品能力</p>
+</div>
+
+<div class="page-desc">
+  <p>对于提供商户入驻能力的电商平台来说，客服体系是连接平台治理、商家经营和买家体验的服务底座。Desk 以"平台统一建设、商家独立运营"为核心，将用户端、智能机器人、工作台和管理端四层能力打通，帮助平台在统一底座上为官方客服与入驻商家分别配置服务入口、知识内容、任务流与接待策略。</p>
+  <p>架构从上到下分为四层：<strong>用户端</strong>承接不同流量入口的接待；<strong>智能机器人</strong>分为平台机器人和商家机器人两部分，分别承接平台级与经营级问题；<strong>工作台</strong>负责人工客服的多店协同与服务提效；<strong>管理端</strong>承担平台统一建设、商家自治和开放集成。各场景对应的具体产品能力详见最佳实践文档中的配置清单表。</p>
+</div>
+
+<div class="arch">
+
+  <!-- ========== 用户端 ========== -->
+  <div class="layer">
+    <div class="layer-label">用户端</div>
+    <div class="layer-body">
+      <div class="scene-blocks">
+        <div class="scene-block">
+          <div class="ic">🛍️</div>
+          <div class="scene-name">店铺页接待</div>
+          <div class="scene-sub">品牌 / 主营品类</div>
+        </div>
+        <div class="scene-block">
+          <div class="ic">📦</div>
+          <div class="scene-name">商品页咨询</div>
+          <div class="scene-sub">规格 / 库存 / 推荐</div>
+        </div>
+        <div class="scene-block">
+          <div class="ic">🎁</div>
+          <div class="scene-name">活动页接待</div>
+          <div class="scene-sub">活动规则 / 权益</div>
+        </div>
+        <div class="scene-block">
+          <div class="ic">🛒</div>
+          <div class="scene-name">订单页咨询</div>
+          <div class="scene-sub">物流 / 售后</div>
+        </div>
+      </div>
+      <div class="platforms-bar">
+        <strong>多端接入</strong>
+        <span class="pf">Web / H5 免开发</span>
+        <span class="pf">小程序</span>
+        <span class="pf">iOS / Android</span>
+        <span class="pf">uni-app</span>
+        <span class="pf">Flutter</span>
+        <span class="pf">多语言</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="arrow-connector">
+    <div></div>
+    <div class="arrow-body">
+      <div class="arrow-line"><svg viewBox="0 0 32 32"><defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#5B8EF5"/><stop offset="100%" stop-color="#3D6FE8"/></linearGradient></defs><path d="M16 3 V24 M8 18 L16 26 L24 18" stroke="url(#g1)" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="arrow-label">按入口与角色自动分流，进入对应机器人</div>
+    </div>
+  </div>
+
+  <!-- ========== 智能机器人 ========== -->
+  <div class="layer bot-layer">
+    <div class="layer-label">智能机器人</div>
+    <div class="layer-body">
+
+      <div class="bot-platform">
+        <div class="scene-blocks" style="margin-top:4px">
+          <div class="scene-block">
+            <div class="ic">🛡️</div>
+            <div class="scene-name">平台规则</div>
+            <div class="scene-sub">活动 / 保价 / 退款</div>
+          </div>
+          <div class="scene-block">
+            <div class="ic">⚖️</div>
+            <div class="scene-name">投诉咨询</div>
+            <div class="scene-sub">投诉举报受理</div>
+          </div>
+          <div class="scene-block">
+            <div class="ic">🔒</div>
+            <div class="scene-name">账号与支付</div>
+            <div class="scene-sub">账号 / 支付纠纷</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bot-merchants">
+        <div class="merchant-list">
+          <span class="merchant-chip">Colour 美妆</span>
+          <span class="merchant-chip">果冻鼠玩具</span>
+          <span class="merchant-chip">木鱼家居</span>
+          <span class="merchant-chip">飞速跑鞋</span>
+          <span class="merchant-chip more">… N 家商家</span>
+        </div>
+        <div class="scene-blocks">
+          <div class="scene-block">
+            <div class="ic">💡</div>
+            <div class="scene-name">商品导购</div>
+            <div class="scene-sub">售前咨询 / 推荐</div>
+          </div>
+          <div class="scene-block">
+            <div class="ic">💼</div>
+            <div class="scene-name">采购询盘</div>
+            <div class="scene-sub">B 端线索收集</div>
+          </div>
+          <div class="scene-block">
+            <div class="ic">🚚</div>
+            <div class="scene-name">订单物流</div>
+            <div class="scene-sub">状态查询 / 追踪</div>
+          </div>
+          <div class="scene-block">
+            <div class="ic">🔁</div>
+            <div class="scene-name">退换售后</div>
+            <div class="scene-sub">售后受理 / 转人工</div>
+          </div>
+          <div class="scene-block">
+            <div class="ic">🎨</div>
+            <div class="scene-name">品牌差异</div>
+            <div class="scene-sub">独立人设 / 话术</div>
+          </div>
+          <div class="scene-block">
+            <div class="ic">🔗</div>
+            <div class="scene-name">对接自有 AI</div>
+            <div class="scene-sub">开发者回调</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="arrow-connector">
+    <div></div>
+    <div class="arrow-body">
+      <div class="arrow-line"><svg viewBox="0 0 32 32"><path d="M16 3 V24 M8 18 L16 26 L24 18" stroke="url(#g1)" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="arrow-label">复杂场景转人工 · 完整上下文传递</div>
+    </div>
+  </div>
+
+  <!-- ========== 工作台 ========== -->
+  <div class="layer">
+    <div class="layer-label">工作台</div>
+    <div class="layer-body">
+      <div class="scene-blocks">
+        <div class="scene-block">
+          <div class="ic">🏪</div>
+          <div class="scene-name">多店铺接待</div>
+          <div class="scene-sub">跨店协同 / 会话转接</div>
+        </div>
+        <div class="scene-block">
+          <div class="ic">⚡</div>
+          <div class="scene-name">客服提效</div>
+          <div class="scene-sub">AI 辅助 / 快捷回复</div>
+        </div>
+        <div class="scene-block">
+          <div class="ic">📋</div>
+          <div class="scene-name">服务管理</div>
+          <div class="scene-sub">主动联系 / 满意度</div>
+        </div>
+        <div class="scene-block">
+          <div class="ic">💎</div>
+          <div class="scene-name">差异化接待</div>
+          <div class="scene-sub">VIP / 分组路由</div>
+        </div>
+        <div class="scene-block">
+          <div class="ic">🔧</div>
+          <div class="scene-name">工作台集成</div>
+          <div class="scene-sub">SDK 嵌入商家后台</div>
+        </div>
+        <div class="scene-block">
+          <div class="ic">👥</div>
+          <div class="scene-name">客服群聊</div>
+          <div class="scene-sub">多方协同 / @机器人</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="arrow-connector">
+    <div></div>
+    <div class="arrow-body">
+      <div class="arrow-line"><svg viewBox="0 0 32 32"><path d="M16 3 V24 M8 18 L16 26 L24 18" stroke="url(#g1)" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="arrow-label">统一建设 · 商家自治 · 开放集成</div>
+    </div>
+  </div>
+
+  <!-- ========== 管理端 ========== -->
+  <div class="layer manage-layer">
+    <div class="layer-label">管理端</div>
+    <div class="layer-body">
+
+      <div class="mgr-block">
+        <div class="mgr-head">🏢 平台管理端 · 统一建设</div>
+        <div class="mgr-body">
+          <div class="scene-block">
+            <div class="ic">🆕</div>
+            <div class="scene-name">新商家入驻</div>
+            <div class="scene-sub">模板复制 / 批量部署</div>
+          </div>
+          <div class="scene-block">
+            <div class="ic">📊</div>
+            <div class="scene-name">平台监控</div>
+            <div class="scene-sub">实时数据 / 会话分析</div>
+          </div>
+          <div class="scene-block">
+            <div class="ic">🌐</div>
+            <div class="scene-name">多语言</div>
+            <div class="scene-sub">按语种知识库</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mgr-block">
+        <div class="mgr-head">🏪 商家管理端 · 自主经营</div>
+        <div class="mgr-body">
+          <div class="scene-block">
+            <div class="ic">📚</div>
+            <div class="scene-name">店铺装修</div>
+            <div class="scene-sub">知识库 / 任务流 / 话术</div>
+          </div>
+          <div class="scene-block">
+            <div class="ic">👥</div>
+            <div class="scene-name">日常运营</div>
+            <div class="scene-sub">客服团队 / 数据复盘</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mgr-block api">
+        <div class="mgr-head">🔌 开放集成 · 对接自有系统</div>
+        <div class="mgr-body">
+          <div class="scene-block" style="background:#fff;border-color:#95BCE8">
+            <div class="ic">🔗</div>
+            <div class="scene-name" style="color:#2A5BB8">REST API</div>
+            <div class="scene-sub">机器人 / 知识库 / 会话 / 回调</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div style="text-align:center;padding:14px 0 4px;color:#aaa;font-size:10px">
+  腾讯云智能客服 Desk · 电商平台方案架构
+</div>
+
+</body>
+</html>

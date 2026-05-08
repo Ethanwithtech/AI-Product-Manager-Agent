@@ -1,0 +1,2026 @@
+{
+  "userIntentNode": [
+    {
+      "id": "node-b96bc4d1-520f-481e-9bee-eed85d0ce8f2",
+      "type": "start-node",
+      "x": 1200,
+      "y": 70,
+      "name": "客户接入",
+      "nodeData": {
+        "nodeName": "客户接入",
+        "examples": [
+          "你好，我想咨询下商品",
+          "这个A款我要50件，B款100个",
+          "M码白色和L码黑色各20",
+          "别人家这款卖50，你家怎么卖60",
+          "这款和XX品牌的相比，优势在哪",
+          "这个有现货吗",
+          "下1000件一周内能发完吗",
+          "最大产能是多少",
+          "我们可以定制LOGO吗",
+          "我想用更好的材料，按这个设计做",
+          "你们发错货了",
+          "质量太差，我要退货",
+          "我的订单到哪了",
+          "什么时候发货",
+          "想要采购",
+          "批发",
+          "询价",
+          "拿货",
+          "拿样",
+          "查物流",
+          "退货退款",
+          "店铺在哪",
+          "我想下单",
+          "介绍一下你们店"
+        ],
+        "desc": "AI驱动的智能商机挖掘与询价单生成平台入口。识别用户意图进行智能分流：商品咨询（详情/现货/比价/定制/推荐）、物流查询、店铺信息、订单问题（修改/催发货/退款/异常/发票）、采购询盘、售后投诉等全场景。覆盖义乌B2B电商平台的完整客服场景。",
+        "inputVariables": []
+      },
+      "outEdges": [
+        {
+          "id": "node-6d5210b5-5e7b-40db-ae19-c5491ae487f6",
+          "type": "custom:polyline",
+          "source": "node-b96bc4d1-520f-481e-9bee-eed85d0ce8f2",
+          "target": "node-53812771-2d8e-492e-8802-439f89d6d597",
+          "startPoint": {
+            "x": 1200,
+            "y": 111,
+            "anchorIndex": 0,
+            "id": "1200|||111"
+          },
+          "endPoint": {
+            "x": 1200,
+            "y": 242.8,
+            "anchorIndex": 0,
+            "id": "1200|||242.8"
+          },
+          "name": "",
+          "edgeData": {}
+        }
+      ]
+    }
+  ],
+  "conditionJudgeNode": [
+    {
+      "id": "node-53812771-2d8e-492e-8802-439f89d6d597",
+      "type": "custom-node",
+      "x": 1200,
+      "y": 298,
+      "name": "主场景识别",
+      "nodeData": {
+        "nodeName": "主场景识别",
+        "matchMode": 1,
+        "branches": [
+          {
+            "id": "relation-4f310a1f-9526-42b3-b325-7c27d52d7bd0",
+            "name": "条件组 1",
+            "mode": 0,
+            "content": "[SystemFlowTriggerRewriteQuery] 商品咨询",
+            "originContent": "[SystemFlowTriggerRewriteQuery] 商品咨询",
+            "conditions": [
+              {
+                "type": 1,
+                "info_id": "",
+                "mode": 3,
+                "content": "${1-SystemFlowTriggerRewriteQuery} 包含商品咨询、推荐、详情、功能、价格、现货、库存、定制、OEM、ODM、比价、购买等商品相关意图"
+              }
+            ]
+          },
+          {
+            "id": "relation-d16a1c80-39c1-4a3c-a204-17246087bbbe",
+            "name": "条件组 2",
+            "mode": 0,
+            "content": "[SystemFlowTriggerRewriteQuery] 物流查询",
+            "originContent": "[SystemFlowTriggerRewriteQuery] 物流查询",
+            "conditions": [
+              {
+                "type": 1,
+                "info_id": "",
+                "mode": 3,
+                "content": "${2-SystemFlowTriggerRewriteQuery} 包含物流、快递、发货、到哪了、签收、配送、查物流、运输、包裹等物流相关意图"
+              }
+            ]
+          },
+          {
+            "id": "relation-9f8bdda3-e4ff-495f-b503-eec10d6d9eb1",
+            "name": "条件组 3",
+            "mode": 0,
+            "content": "[SystemFlowTriggerRewriteQuery] 店铺信息",
+            "originContent": "[SystemFlowTriggerRewriteQuery] 店铺信息",
+            "conditions": [
+              {
+                "type": 1,
+                "info_id": "",
+                "mode": 3,
+                "content": "${3-SystemFlowTriggerRewriteQuery} 包含店铺、地址、联系方式、主营、商家、店在哪、介绍、工厂等店铺相关意图"
+              }
+            ]
+          },
+          {
+            "id": "relation-c96e262f-c9e6-4ac4-9dd4-ac83a0933e68",
+            "name": "条件组 4",
+            "mode": 0,
+            "content": "[SystemFlowTriggerRewriteQuery] 订单问题",
+            "originContent": "[SystemFlowTriggerRewriteQuery] 订单问题",
+            "conditions": [
+              {
+                "type": 1,
+                "info_id": "",
+                "mode": 3,
+                "content": "${4-SystemFlowTriggerRewriteQuery} 包含订单、修改地址、退款、退货、发票、催单、异常、改地址、改电话等订单相关意图"
+              }
+            ]
+          },
+          {
+            "id": "relation-3e70b02b-1101-4d67-a1be-cf948d678ffe",
+            "name": "条件组 5",
+            "mode": 0,
+            "content": "[SystemFlowTriggerRewriteQuery] 采购询盘",
+            "originContent": "[SystemFlowTriggerRewriteQuery] 采购询盘",
+            "conditions": [
+              {
+                "type": 1,
+                "info_id": "",
+                "mode": 3,
+                "content": "${5-SystemFlowTriggerRewriteQuery} 包含采购、批发、询价、询盘、拿货、拿样、下单、大批量、要货、进货等采购相关意图"
+              }
+            ]
+          },
+          {
+            "id": "relation-a5adb8ec-a5c6-40f1-a5ab-b487d94188b4",
+            "name": "条件组 6",
+            "mode": 0,
+            "content": "[SystemFlowTriggerRewriteQuery] 售后投诉",
+            "originContent": "[SystemFlowTriggerRewriteQuery] 售后投诉",
+            "conditions": [
+              {
+                "type": 1,
+                "info_id": "",
+                "mode": 3,
+                "content": "${6-SystemFlowTriggerRewriteQuery} 包含投诉、差评、发错、破损、质量问题、退货退款、体验差等售后相关意图"
+              }
+            ]
+          },
+          {
+            "id": "relation-75d3631e-509a-452e-8491-dc3ed4b63da1",
+            "name": "其他",
+            "content": "其他",
+            "mode": 3,
+            "conditions": [
+              {
+                "content": ""
+              }
+            ]
+          }
+        ]
+      },
+      "outEdges": [
+        {
+          "id": "node-37ebd937-ab21-44fa-bd14-46e1846583c5",
+          "type": "custom:polyline",
+          "source": "node-53812771-2d8e-492e-8802-439f89d6d597",
+          "target": "node-a732b654-4390-4eec-884a-64776dc3c330",
+          "startPoint": {
+            "x": 1200,
+            "y": 344,
+            "anchorIndex": 1,
+            "id": "1200|||344"
+          },
+          "endPoint": {
+            "x": 300,
+            "y": 432.8,
+            "anchorIndex": 0,
+            "id": "300|||432.8"
+          },
+          "name": "[SystemFlowTriggerRewriteQuery] 商品咨询 ▼",
+          "edgeData": {
+            "branchId": "relation-4f310a1f-9526-42b3-b325-7c27d52d7bd0"
+          }
+        },
+        {
+          "id": "node-af5caff2-0f43-4b02-b1f0-f39d0909ce54",
+          "type": "custom:polyline",
+          "source": "node-53812771-2d8e-492e-8802-439f89d6d597",
+          "target": "node-ce122a33-b150-4fd4-8f3c-b1bf9abde412",
+          "startPoint": {
+            "x": 1200,
+            "y": 344,
+            "anchorIndex": 1,
+            "id": "1200|||344"
+          },
+          "endPoint": {
+            "x": 650,
+            "y": 432.8,
+            "anchorIndex": 0,
+            "id": "650|||432.8"
+          },
+          "name": "[SystemFlowTriggerRewriteQuery] 物流查询 ▼",
+          "edgeData": {
+            "branchId": "relation-d16a1c80-39c1-4a3c-a204-17246087bbbe"
+          }
+        },
+        {
+          "id": "node-85cf8278-cbf2-4403-a278-8b4b9be1acb8",
+          "type": "custom:polyline",
+          "source": "node-53812771-2d8e-492e-8802-439f89d6d597",
+          "target": "node-c0bc8672-5209-4817-8fc6-5e86a8a16e91",
+          "startPoint": {
+            "x": 1200,
+            "y": 344,
+            "anchorIndex": 1,
+            "id": "1200|||344"
+          },
+          "endPoint": {
+            "x": 950,
+            "y": 432.8,
+            "anchorIndex": 0,
+            "id": "950|||432.8"
+          },
+          "name": "[SystemFlowTriggerRewriteQuery] 店铺信息 ▼",
+          "edgeData": {
+            "branchId": "relation-9f8bdda3-e4ff-495f-b503-eec10d6d9eb1"
+          }
+        },
+        {
+          "id": "node-84eecac5-c540-4e1d-a3e1-ea3d362c9789",
+          "type": "custom:polyline",
+          "source": "node-53812771-2d8e-492e-8802-439f89d6d597",
+          "target": "node-df88294f-38ea-4812-bcc6-e4478cd2bf34",
+          "startPoint": {
+            "x": 1200,
+            "y": 344,
+            "anchorIndex": 1,
+            "id": "1200|||344"
+          },
+          "endPoint": {
+            "x": 1250,
+            "y": 432.8,
+            "anchorIndex": 0,
+            "id": "1250|||432.8"
+          },
+          "name": "[SystemFlowTriggerRewriteQuery] 订单问题 ▼",
+          "edgeData": {
+            "branchId": "relation-c96e262f-c9e6-4ac4-9dd4-ac83a0933e68"
+          }
+        },
+        {
+          "id": "node-3ba272a9-58f4-4ff4-8dbb-29cd6bc13362",
+          "type": "custom:polyline",
+          "source": "node-53812771-2d8e-492e-8802-439f89d6d597",
+          "target": "node-ec2e2f5f-b1d5-4917-bbe2-632f8909eb11",
+          "startPoint": {
+            "x": 1200,
+            "y": 344,
+            "anchorIndex": 1,
+            "id": "1200|||344"
+          },
+          "endPoint": {
+            "x": 1600,
+            "y": 432.8,
+            "anchorIndex": 0,
+            "id": "1600|||432.8"
+          },
+          "name": "[SystemFlowTriggerRewriteQuery] 采购询盘 ▼",
+          "edgeData": {
+            "branchId": "relation-3e70b02b-1101-4d67-a1be-cf948d678ffe"
+          }
+        },
+        {
+          "id": "node-7768fdaf-c25f-43dd-ac40-c117b683d49b",
+          "type": "custom:polyline",
+          "source": "node-53812771-2d8e-492e-8802-439f89d6d597",
+          "target": "node-4e8e1d4d-23bd-4338-a0d9-d22a7cacdb63",
+          "startPoint": {
+            "x": 1200,
+            "y": 344,
+            "anchorIndex": 1,
+            "id": "1200|||344"
+          },
+          "endPoint": {
+            "x": 1950,
+            "y": 432.8,
+            "anchorIndex": 0,
+            "id": "1950|||432.8"
+          },
+          "name": "[SystemFlowTriggerRewriteQuery] 售后投诉 ▼",
+          "edgeData": {
+            "branchId": "relation-a5adb8ec-a5c6-40f1-a5ab-b487d94188b4"
+          }
+        },
+        {
+          "id": "node-f0e646eb-9fe7-48ba-9dab-a9b1a5479444",
+          "type": "custom:polyline",
+          "source": "node-53812771-2d8e-492e-8802-439f89d6d597",
+          "target": "node-8d0bd56e-a298-40a2-84fd-aad095b19e3f",
+          "startPoint": {
+            "x": 1200,
+            "y": 344,
+            "anchorIndex": 1,
+            "id": "1200|||344"
+          },
+          "endPoint": {
+            "x": 2200,
+            "y": 432.8,
+            "anchorIndex": 0,
+            "id": "2200|||432.8"
+          },
+          "name": "其他 ▼",
+          "edgeData": {
+            "branchId": "relation-75d3631e-509a-452e-8491-dc3ed4b63da1"
+          }
+        }
+      ]
+    },
+    {
+      "id": "node-a732b654-4390-4eec-884a-64776dc3c330",
+      "type": "custom-node",
+      "x": 300,
+      "y": 488,
+      "name": "商品咨询分流",
+      "nodeData": {
+        "nodeName": "商品咨询分流",
+        "matchMode": 1,
+        "branches": [
+          {
+            "id": "relation-1a60954a-170d-4733-8a8a-60721c0edf03",
+            "name": "条件组 1",
+            "mode": 0,
+            "content": "[SystemFlowTriggerRewriteQuery] 商品详情",
+            "originContent": "[SystemFlowTriggerRewriteQuery] 商品详情",
+            "conditions": [
+              {
+                "type": 1,
+                "info_id": "",
+                "mode": 3,
+                "content": "${1-SystemFlowTriggerRewriteQuery} 用户想了解商品详情、功能介绍、参数规格、材料说明"
+              }
+            ]
+          },
+          {
+            "id": "relation-8f72a5b0-1e63-406d-a221-dfe1506ddedf",
+            "name": "条件组 2",
+            "mode": 0,
+            "content": "[SystemFlowTriggerRewriteQuery] 现货与价格",
+            "originContent": "[SystemFlowTriggerRewriteQuery] 现货与价格",
+            "conditions": [
+              {
+                "type": 1,
+                "info_id": "",
+                "mode": 3,
+                "content": "${2-SystemFlowTriggerRewriteQuery} 用户关心现货库存、价格、交期、产能、供货能力"
+              }
+            ]
+          },
+          {
+            "id": "relation-e350eae7-b0f0-48ac-8f0e-ef4c80813589",
+            "name": "条件组 3",
+            "mode": 0,
+            "content": "[SystemFlowTriggerRewriteQuery] 比价竞品",
+            "originContent": "[SystemFlowTriggerRewriteQuery] 比价竞品",
+            "conditions": [
+              {
+                "type": 1,
+                "info_id": "",
+                "mode": 3,
+                "content": "${3-SystemFlowTriggerRewriteQuery} 用户在做竞品对比、比价，提到别人家、优势、性价比"
+              }
+            ]
+          },
+          {
+            "id": "relation-bcbf58f5-5846-438c-bf08-4fdbae2d0e97",
+            "name": "条件组 4",
+            "mode": 0,
+            "content": "[SystemFlowTriggerRewriteQuery] 定制OEM ODM",
+            "originContent": "[SystemFlowTriggerRewriteQuery] 定制OEM ODM",
+            "conditions": [
+              {
+                "type": 1,
+                "info_id": "",
+                "mode": 3,
+                "content": "${4-SystemFlowTriggerRewriteQuery} 用户有定制需求，提到LOGO、印字、打样、OEM、ODM、来图加工、私模"
+              }
+            ]
+          },
+          {
+            "id": "relation-e1c1673a-fc1f-417d-aca7-8acd00f05bac",
+            "name": "条件组 5",
+            "mode": 0,
+            "content": "[SystemFlowTriggerRewriteQuery] 搭配推荐",
+            "originContent": "[SystemFlowTriggerRewriteQuery] 搭配推荐",
+            "conditions": [
+              {
+                "type": 1,
+                "info_id": "",
+                "mode": 3,
+                "content": "${5-SystemFlowTriggerRewriteQuery} 用户想要搭配推荐、选购建议、哪个好、适合什么"
+              }
+            ]
+          },
+          {
+            "id": "relation-4585f789-5ecb-4fe9-a413-702dabef0ce1",
+            "name": "其他",
+            "content": "其他",
+            "mode": 3,
+            "conditions": [
+              {
+                "content": ""
+              }
+            ]
+          }
+        ]
+      },
+      "outEdges": [
+        {
+          "id": "node-91f5c15f-d418-4730-80a8-3678a525cf92",
+          "type": "custom:polyline",
+          "source": "node-a732b654-4390-4eec-884a-64776dc3c330",
+          "target": "node-2c7d22a4-a9d1-4108-8249-dd26524196d5",
+          "startPoint": {
+            "x": 300,
+            "y": 534,
+            "anchorIndex": 1,
+            "id": "300|||534"
+          },
+          "endPoint": {
+            "x": 80,
+            "y": 622.8,
+            "anchorIndex": 0,
+            "id": "80|||622.8"
+          },
+          "name": "[SystemFlowTriggerRewriteQuery] 商品详情 ▼",
+          "edgeData": {
+            "branchId": "relation-1a60954a-170d-4733-8a8a-60721c0edf03"
+          }
+        },
+        {
+          "id": "node-7fef870c-02c2-4a2a-9abe-1ecf7b870bc4",
+          "type": "custom:polyline",
+          "source": "node-a732b654-4390-4eec-884a-64776dc3c330",
+          "target": "node-35ce7505-3403-4d61-911f-f913b213afe1",
+          "startPoint": {
+            "x": 300,
+            "y": 534,
+            "anchorIndex": 1,
+            "id": "300|||534"
+          },
+          "endPoint": {
+            "x": 220,
+            "y": 622.8,
+            "anchorIndex": 0,
+            "id": "220|||622.8"
+          },
+          "name": "[SystemFlowTriggerRewriteQuery] 现货与价格 ▼",
+          "edgeData": {
+            "branchId": "relation-8f72a5b0-1e63-406d-a221-dfe1506ddedf"
+          }
+        },
+        {
+          "id": "node-da3144cd-6a93-407c-bf16-de0301abc8e1",
+          "type": "custom:polyline",
+          "source": "node-a732b654-4390-4eec-884a-64776dc3c330",
+          "target": "node-51c38ec4-e449-4da0-9987-33b26d97a9b7",
+          "startPoint": {
+            "x": 300,
+            "y": 534,
+            "anchorIndex": 1,
+            "id": "300|||534"
+          },
+          "endPoint": {
+            "x": 360,
+            "y": 622.8,
+            "anchorIndex": 0,
+            "id": "360|||622.8"
+          },
+          "name": "[SystemFlowTriggerRewriteQuery] 比价竞品 ▼",
+          "edgeData": {
+            "branchId": "relation-e350eae7-b0f0-48ac-8f0e-ef4c80813589"
+          }
+        },
+        {
+          "id": "node-3a151168-5b92-430f-8076-6174f252faf1",
+          "type": "custom:polyline",
+          "source": "node-a732b654-4390-4eec-884a-64776dc3c330",
+          "target": "node-557bf0db-acf8-4c30-b548-909c8c97000a",
+          "startPoint": {
+            "x": 300,
+            "y": 534,
+            "anchorIndex": 1,
+            "id": "300|||534"
+          },
+          "endPoint": {
+            "x": 500,
+            "y": 622.8,
+            "anchorIndex": 0,
+            "id": "500|||622.8"
+          },
+          "name": "[SystemFlowTriggerRewriteQuery] 定制OEM ODM ▼",
+          "edgeData": {
+            "branchId": "relation-bcbf58f5-5846-438c-bf08-4fdbae2d0e97"
+          }
+        },
+        {
+          "id": "node-084f30a0-cab6-4786-94c5-3ba8110af815",
+          "type": "custom:polyline",
+          "source": "node-a732b654-4390-4eec-884a-64776dc3c330",
+          "target": "node-2b5e2e5a-c475-48b2-982a-2166c56018d0",
+          "startPoint": {
+            "x": 300,
+            "y": 534,
+            "anchorIndex": 1,
+            "id": "300|||534"
+          },
+          "endPoint": {
+            "x": 140,
+            "y": 622.8,
+            "anchorIndex": 0,
+            "id": "140|||622.8"
+          },
+          "name": "[SystemFlowTriggerRewriteQuery] 搭配推荐 ▼",
+          "edgeData": {
+            "branchId": "relation-e1c1673a-fc1f-417d-aca7-8acd00f05bac"
+          }
+        },
+        {
+          "id": "node-99dcd718-0f11-4dc7-b50a-dcf28003dd5f",
+          "type": "custom:polyline",
+          "source": "node-a732b654-4390-4eec-884a-64776dc3c330",
+          "target": "node-2c7d22a4-a9d1-4108-8249-dd26524196d5",
+          "startPoint": {
+            "x": 300,
+            "y": 534,
+            "anchorIndex": 1,
+            "id": "300|||534"
+          },
+          "endPoint": {
+            "x": 80,
+            "y": 622.8,
+            "anchorIndex": 0,
+            "id": "80|||622.8"
+          },
+          "name": "其他 ▼",
+          "edgeData": {
+            "branchId": "relation-4585f789-5ecb-4fe9-a413-702dabef0ce1"
+          }
+        }
+      ]
+    },
+    {
+      "id": "node-35ce7505-3403-4d61-911f-f913b213afe1",
+      "type": "custom-node",
+      "x": 220,
+      "y": 678,
+      "name": "采购类型分流",
+      "nodeData": {
+        "nodeName": "采购类型分流",
+        "matchMode": 1,
+        "branches": [
+          {
+            "id": "relation-c997c96a-1222-4ade-8ad6-75f6d95a855f",
+            "name": "条件组 1",
+            "mode": 0,
+            "content": "[SystemFlowTriggerRewriteQuery] 零售购买",
+            "originContent": "[SystemFlowTriggerRewriteQuery] 零售购买",
+            "conditions": [
+              {
+                "type": 1,
+                "info_id": "",
+                "mode": 3,
+                "content": "${1-SystemFlowTriggerRewriteQuery} 用户是个人或少量购买，自用，买一个"
+              }
+            ]
+          },
+          {
+            "id": "relation-82364ed4-00f7-4780-92e9-79524e9d9264",
+            "name": "条件组 2",
+            "mode": 0,
+            "content": "[SystemFlowTriggerRewriteQuery] 批量采购",
+            "originContent": "[SystemFlowTriggerRewriteQuery] 批量采购",
+            "conditions": [
+              {
+                "type": 1,
+                "info_id": "",
+                "mode": 3,
+                "content": "${2-SystemFlowTriggerRewriteQuery} 用户是公司或批量采购，需要阶梯价、稳定供货、大量采购"
+              }
+            ]
+          },
+          {
+            "id": "relation-a516a51d-5566-4724-998d-d9ca49c4e496",
+            "name": "其他",
+            "content": "其他",
+            "mode": 3,
+            "conditions": [
+              {
+                "content": ""
+              }
+            ]
+          }
+        ]
+      },
+      "outEdges": [
+        {
+          "id": "node-969177b0-be89-4d48-9cfb-ad90d897ad3f",
+          "type": "custom:polyline",
+          "source": "node-35ce7505-3403-4d61-911f-f913b213afe1",
+          "target": "node-ba7a2c44-20ee-4c60-a6fe-a1cceca9c6b3",
+          "startPoint": {
+            "x": 220,
+            "y": 724,
+            "anchorIndex": 1,
+            "id": "220|||724"
+          },
+          "endPoint": {
+            "x": 160,
+            "y": 812.8,
+            "anchorIndex": 0,
+            "id": "160|||812.8"
+          },
+          "name": "[SystemFlowTriggerRewriteQuery] 零售购买 ▼",
+          "edgeData": {
+            "branchId": "relation-c997c96a-1222-4ade-8ad6-75f6d95a855f"
+          }
+        },
+        {
+          "id": "node-b4c2317e-63ff-47e8-bd5c-f9c40aa94e32",
+          "type": "custom:polyline",
+          "source": "node-35ce7505-3403-4d61-911f-f913b213afe1",
+          "target": "node-5f6150e6-7819-48e8-a35c-b882b446e158",
+          "startPoint": {
+            "x": 220,
+            "y": 724,
+            "anchorIndex": 1,
+            "id": "220|||724"
+          },
+          "endPoint": {
+            "x": 300,
+            "y": 812.8,
+            "anchorIndex": 0,
+            "id": "300|||812.8"
+          },
+          "name": "[SystemFlowTriggerRewriteQuery] 批量采购 ▼",
+          "edgeData": {
+            "branchId": "relation-82364ed4-00f7-4780-92e9-79524e9d9264"
+          }
+        },
+        {
+          "id": "node-64f9914f-011f-4dc2-a6bd-14dd6ab9c9db",
+          "type": "custom:polyline",
+          "source": "node-35ce7505-3403-4d61-911f-f913b213afe1",
+          "target": "node-ba7a2c44-20ee-4c60-a6fe-a1cceca9c6b3",
+          "startPoint": {
+            "x": 220,
+            "y": 724,
+            "anchorIndex": 1,
+            "id": "220|||724"
+          },
+          "endPoint": {
+            "x": 160,
+            "y": 812.8,
+            "anchorIndex": 0,
+            "id": "160|||812.8"
+          },
+          "name": "其他 ▼",
+          "edgeData": {
+            "branchId": "relation-a516a51d-5566-4724-998d-d9ca49c4e496"
+          }
+        }
+      ]
+    },
+    {
+      "id": "node-28953e2a-cde6-45ee-8df0-48799eac6858",
+      "type": "custom-node",
+      "x": 950,
+      "y": 678,
+      "name": "店铺意向分流",
+      "nodeData": {
+        "nodeName": "店铺意向分流",
+        "matchMode": 1,
+        "branches": [
+          {
+            "id": "relation-c9ad87b1-cafd-4cb3-b8e6-22cd01aa7fa3",
+            "name": "条件组 1",
+            "mode": 0,
+            "content": "[SystemFlowTriggerRewriteQuery] 购买咨询",
+            "originContent": "[SystemFlowTriggerRewriteQuery] 购买咨询",
+            "conditions": [
+              {
+                "type": 1,
+                "info_id": "",
+                "mode": 3,
+                "content": "${1-SystemFlowTriggerRewriteQuery} 用户想购买店内商品，想下单，问价格"
+              }
+            ]
+          },
+          {
+            "id": "relation-492c0aa4-ec68-4607-8166-7cebec4f21d5",
+            "name": "条件组 2",
+            "mode": 0,
+            "content": "[SystemFlowTriggerRewriteQuery] 售后联系",
+            "originContent": "[SystemFlowTriggerRewriteQuery] 售后联系",
+            "conditions": [
+              {
+                "type": 1,
+                "info_id": "",
+                "mode": 3,
+                "content": "${2-SystemFlowTriggerRewriteQuery} 用户需要售后服务，退货退款，联系商家"
+              }
+            ]
+          },
+          {
+            "id": "relation-fa0f75b7-4e56-483b-9d76-9f1b92d19580",
+            "name": "条件组 3",
+            "mode": 0,
+            "content": "[SystemFlowTriggerRewriteQuery] 商务合作",
+            "originContent": "[SystemFlowTriggerRewriteQuery] 商务合作",
+            "conditions": [
+              {
+                "type": 1,
+                "info_id": "",
+                "mode": 3,
+                "content": "${3-SystemFlowTriggerRewriteQuery} 用户想要商务合作，批发代理，供应链合作，加盟分销"
+              }
+            ]
+          },
+          {
+            "id": "relation-36482847-f249-40fa-8f5d-95f1d11c27d2",
+            "name": "其他",
+            "content": "其他",
+            "mode": 3,
+            "conditions": [
+              {
+                "content": ""
+              }
+            ]
+          }
+        ]
+      },
+      "outEdges": [
+        {
+          "id": "node-24bc33d3-fdaf-4bb8-bd40-a962c7c027fa",
+          "type": "custom:polyline",
+          "source": "node-28953e2a-cde6-45ee-8df0-48799eac6858",
+          "target": "node-3b82e13d-595c-4a5b-ac39-a8f2cf9edc80",
+          "startPoint": {
+            "x": 950,
+            "y": 724,
+            "anchorIndex": 1,
+            "id": "950|||724"
+          },
+          "endPoint": {
+            "x": 870,
+            "y": 812.8,
+            "anchorIndex": 0,
+            "id": "870|||812.8"
+          },
+          "name": "[SystemFlowTriggerRewriteQuery] 购买咨询 ▼",
+          "edgeData": {
+            "branchId": "relation-c9ad87b1-cafd-4cb3-b8e6-22cd01aa7fa3"
+          }
+        },
+        {
+          "id": "node-07fb08cc-fe96-4344-a632-822949eec5fb",
+          "type": "custom:polyline",
+          "source": "node-28953e2a-cde6-45ee-8df0-48799eac6858",
+          "target": "node-c7137f93-f9b4-469b-90b4-988594c6ba2f",
+          "startPoint": {
+            "x": 950,
+            "y": 724,
+            "anchorIndex": 1,
+            "id": "950|||724"
+          },
+          "endPoint": {
+            "x": 950,
+            "y": 812.8,
+            "anchorIndex": 0,
+            "id": "950|||812.8"
+          },
+          "name": "[SystemFlowTriggerRewriteQuery] 售后联系 ▼",
+          "edgeData": {
+            "branchId": "relation-492c0aa4-ec68-4607-8166-7cebec4f21d5"
+          }
+        },
+        {
+          "id": "node-a319bf1a-94ca-4155-b64d-67733092f651",
+          "type": "custom:polyline",
+          "source": "node-28953e2a-cde6-45ee-8df0-48799eac6858",
+          "target": "node-64e96434-cbe0-4e40-a0a2-d1299282de89",
+          "startPoint": {
+            "x": 950,
+            "y": 724,
+            "anchorIndex": 1,
+            "id": "950|||724"
+          },
+          "endPoint": {
+            "x": 1030,
+            "y": 812.8,
+            "anchorIndex": 0,
+            "id": "1030|||812.8"
+          },
+          "name": "[SystemFlowTriggerRewriteQuery] 商务合作 ▼",
+          "edgeData": {
+            "branchId": "relation-fa0f75b7-4e56-483b-9d76-9f1b92d19580"
+          }
+        },
+        {
+          "id": "node-355aeacc-f925-4a7a-9e2c-d39b8e561795",
+          "type": "custom:polyline",
+          "source": "node-28953e2a-cde6-45ee-8df0-48799eac6858",
+          "target": "node-3b82e13d-595c-4a5b-ac39-a8f2cf9edc80",
+          "startPoint": {
+            "x": 950,
+            "y": 724,
+            "anchorIndex": 1,
+            "id": "950|||724"
+          },
+          "endPoint": {
+            "x": 870,
+            "y": 812.8,
+            "anchorIndex": 0,
+            "id": "870|||812.8"
+          },
+          "name": "其他 ▼",
+          "edgeData": {
+            "branchId": "relation-36482847-f249-40fa-8f5d-95f1d11c27d2"
+          }
+        }
+      ]
+    },
+    {
+      "id": "node-13d49d28-3df9-4b35-a634-3623fba098f5",
+      "type": "custom-node",
+      "x": 1250,
+      "y": 678,
+      "name": "订单问题分流",
+      "nodeData": {
+        "nodeName": "订单问题分流",
+        "matchMode": 1,
+        "branches": [
+          {
+            "id": "relation-defd59a4-0496-4046-b896-79505219de08",
+            "name": "条件组 1",
+            "mode": 0,
+            "content": "[SystemFlowTriggerRewriteQuery] [订单编号] [联系手机号] 修改信息",
+            "originContent": "[SystemFlowTriggerRewriteQuery] [订单编号] [联系手机号] 修改信息",
+            "conditions": [
+              {
+                "type": 1,
+                "info_id": "",
+                "mode": 3,
+                "content": "${1-SystemFlowTriggerRewriteQuery} 用户想修改收货地址、联系电话或商品规格颜色"
+              },
+              {
+                "type": 1,
+                "info_id": "info-3e9ac740-aae4-4da7-806c-44f7a1210819",
+                "mode": 3,
+                "content": "${1-info-3e9ac740-aae4-4da7-806c-44f7a1210819} 已提供订单编号"
+              },
+              {
+                "type": 1,
+                "info_id": "info-86d519a0-e944-4303-be27-84eefb022558",
+                "mode": 3,
+                "content": "${1-info-86d519a0-e944-4303-be27-84eefb022558} 已提供联系手机号"
+              }
+            ]
+          },
+          {
+            "id": "relation-a110d97e-5e1d-4dad-8325-994cab13f761",
+            "name": "条件组 2",
+            "mode": 0,
+            "content": "[SystemFlowTriggerRewriteQuery] [订单编号] [联系手机号] 催促发货",
+            "originContent": "[SystemFlowTriggerRewriteQuery] [订单编号] [联系手机号] 催促发货",
+            "conditions": [
+              {
+                "type": 1,
+                "info_id": "",
+                "mode": 3,
+                "content": "${2-SystemFlowTriggerRewriteQuery} 用户催促发货或查询物流进度"
+              },
+              {
+                "type": 1,
+                "info_id": "info-3e9ac740-aae4-4da7-806c-44f7a1210819",
+                "mode": 3,
+                "content": "${2-info-3e9ac740-aae4-4da7-806c-44f7a1210819} 已提供订单编号"
+              },
+              {
+                "type": 1,
+                "info_id": "info-86d519a0-e944-4303-be27-84eefb022558",
+                "mode": 3,
+                "content": "${2-info-86d519a0-e944-4303-be27-84eefb022558} 已提供联系手机号"
+              }
+            ]
+          },
+          {
+            "id": "relation-12f63ace-12f4-458c-a66e-e46c8cf68deb",
+            "name": "条件组 3",
+            "mode": 0,
+            "content": "[SystemFlowTriggerRewriteQuery] [订单编号] [联系手机号] 退款退货",
+            "originContent": "[SystemFlowTriggerRewriteQuery] [订单编号] [联系手机号] 退款退货",
+            "conditions": [
+              {
+                "type": 1,
+                "info_id": "",
+                "mode": 3,
+                "content": "${3-SystemFlowTriggerRewriteQuery} 用户要退款或退货，取消订单"
+              },
+              {
+                "type": 1,
+                "info_id": "info-3e9ac740-aae4-4da7-806c-44f7a1210819",
+                "mode": 3,
+                "content": "${3-info-3e9ac740-aae4-4da7-806c-44f7a1210819} 已提供订单编号"
+              },
+              {
+                "type": 1,
+                "info_id": "info-86d519a0-e944-4303-be27-84eefb022558",
+                "mode": 3,
+                "content": "${3-info-86d519a0-e944-4303-be27-84eefb022558} 已提供联系手机号"
+              }
+            ]
+          },
+          {
+            "id": "relation-a0e30fef-745f-4cfe-90b5-f07ce5229c17",
+            "name": "条件组 4",
+            "mode": 0,
+            "content": "[SystemFlowTriggerRewriteQuery] [订单编号] [联系手机号] 商品物流异常",
+            "originContent": "[SystemFlowTriggerRewriteQuery] [订单编号] [联系手机号] 商品物流异常",
+            "conditions": [
+              {
+                "type": 1,
+                "info_id": "",
+                "mode": 3,
+                "content": "${4-SystemFlowTriggerRewriteQuery} 用户收到的商品有异常，破损、少件、发错货、质量问题，或要开发票"
+              },
+              {
+                "type": 1,
+                "info_id": "info-3e9ac740-aae4-4da7-806c-44f7a1210819",
+                "mode": 3,
+                "content": "${4-info-3e9ac740-aae4-4da7-806c-44f7a1210819} 已提供订单编号"
+              },
+              {
+                "type": 1,
+                "info_id": "info-86d519a0-e944-4303-be27-84eefb022558",
+                "mode": 3,
+                "content": "${4-info-86d519a0-e944-4303-be27-84eefb022558} 已提供联系手机号"
+              }
+            ]
+          },
+          {
+            "id": "relation-b5365996-f229-44ad-8617-f5ab72a28e65",
+            "name": "条件组 5",
+            "mode": 0,
+            "content": "[SystemFlowTriggerRewriteQuery] [订单编号] [联系手机号] 其他问题",
+            "originContent": "[SystemFlowTriggerRewriteQuery] [订单编号] [联系手机号] 其他问题",
+            "conditions": [
+              {
+                "type": 1,
+                "info_id": "",
+                "mode": 3,
+                "content": "${5-SystemFlowTriggerRewriteQuery} 其他订单相关问题"
+              },
+              {
+                "type": 1,
+                "info_id": "info-3e9ac740-aae4-4da7-806c-44f7a1210819",
+                "mode": 3,
+                "content": "${5-info-3e9ac740-aae4-4da7-806c-44f7a1210819} 已提供订单编号"
+              },
+              {
+                "type": 1,
+                "info_id": "info-86d519a0-e944-4303-be27-84eefb022558",
+                "mode": 3,
+                "content": "${5-info-86d519a0-e944-4303-be27-84eefb022558} 已提供联系手机号"
+              }
+            ]
+          },
+          {
+            "id": "relation-dffa9105-5fc4-4d75-84a9-4a5c919ae6d9",
+            "name": "其他",
+            "content": "其他",
+            "mode": 3,
+            "conditions": [
+              {
+                "content": ""
+              }
+            ]
+          }
+        ]
+      },
+      "outEdges": [
+        {
+          "id": "node-545313e2-bf85-46c7-8444-6fa46daf209c",
+          "type": "custom:polyline",
+          "source": "node-13d49d28-3df9-4b35-a634-3623fba098f5",
+          "target": "node-6e583d78-c25b-4c56-b878-ce6ec0d58a96",
+          "startPoint": {
+            "x": 1250,
+            "y": 724,
+            "anchorIndex": 1,
+            "id": "1250|||724"
+          },
+          "endPoint": {
+            "x": 1130,
+            "y": 812.8,
+            "anchorIndex": 0,
+            "id": "1130|||812.8"
+          },
+          "name": "[SystemFlowTriggerRewriteQuery] [订单编号] [联系手机号] 修改信息 ▼",
+          "edgeData": {
+            "branchId": "relation-defd59a4-0496-4046-b896-79505219de08"
+          }
+        },
+        {
+          "id": "node-458e91bc-ab03-4387-bc8b-f2bcb6ad3b57",
+          "type": "custom:polyline",
+          "source": "node-13d49d28-3df9-4b35-a634-3623fba098f5",
+          "target": "node-a0672dcf-b0a9-446d-9432-c003662eb8f4",
+          "startPoint": {
+            "x": 1250,
+            "y": 724,
+            "anchorIndex": 1,
+            "id": "1250|||724"
+          },
+          "endPoint": {
+            "x": 1200,
+            "y": 812.8,
+            "anchorIndex": 0,
+            "id": "1200|||812.8"
+          },
+          "name": "[SystemFlowTriggerRewriteQuery] [订单编号] [联系手机号] 催促发货 ▼",
+          "edgeData": {
+            "branchId": "relation-a110d97e-5e1d-4dad-8325-994cab13f761"
+          }
+        },
+        {
+          "id": "node-e10d8614-788f-444f-aba6-f4c297e71c7b",
+          "type": "custom:polyline",
+          "source": "node-13d49d28-3df9-4b35-a634-3623fba098f5",
+          "target": "node-ea444930-10ab-4d86-bec5-0c184a001158",
+          "startPoint": {
+            "x": 1250,
+            "y": 724,
+            "anchorIndex": 1,
+            "id": "1250|||724"
+          },
+          "endPoint": {
+            "x": 1270,
+            "y": 812.8,
+            "anchorIndex": 0,
+            "id": "1270|||812.8"
+          },
+          "name": "[SystemFlowTriggerRewriteQuery] [订单编号] [联系手机号] 退款退货 ▼",
+          "edgeData": {
+            "branchId": "relation-12f63ace-12f4-458c-a66e-e46c8cf68deb"
+          }
+        },
+        {
+          "id": "node-54faf613-c2df-4927-9f85-6b439c4ff00d",
+          "type": "custom:polyline",
+          "source": "node-13d49d28-3df9-4b35-a634-3623fba098f5",
+          "target": "node-43c03614-bb92-4c92-b5d4-f20051ec4698",
+          "startPoint": {
+            "x": 1250,
+            "y": 724,
+            "anchorIndex": 1,
+            "id": "1250|||724"
+          },
+          "endPoint": {
+            "x": 1340,
+            "y": 812.8,
+            "anchorIndex": 0,
+            "id": "1340|||812.8"
+          },
+          "name": "[SystemFlowTriggerRewriteQuery] [订单编号] [联系手机号] 商品物流异常 ▼",
+          "edgeData": {
+            "branchId": "relation-a0e30fef-745f-4cfe-90b5-f07ce5229c17"
+          }
+        },
+        {
+          "id": "node-2b9d09a2-eadc-4fd5-b0e7-815f7b35acfa",
+          "type": "custom:polyline",
+          "source": "node-13d49d28-3df9-4b35-a634-3623fba098f5",
+          "target": "node-6f1d93a6-6890-45cd-9951-3183c7d15146",
+          "startPoint": {
+            "x": 1250,
+            "y": 724,
+            "anchorIndex": 1,
+            "id": "1250|||724"
+          },
+          "endPoint": {
+            "x": 1410,
+            "y": 812.8,
+            "anchorIndex": 0,
+            "id": "1410|||812.8"
+          },
+          "name": "[SystemFlowTriggerRewriteQuery] [订单编号] [联系手机号] 其他问题 ▼",
+          "edgeData": {
+            "branchId": "relation-b5365996-f229-44ad-8617-f5ab72a28e65"
+          }
+        },
+        {
+          "id": "node-d4a20e4d-899d-44fb-88a4-41114e29cf7f",
+          "type": "custom:polyline",
+          "source": "node-13d49d28-3df9-4b35-a634-3623fba098f5",
+          "target": "node-64b4e4cf-c41c-4260-be92-acc57e16bd99",
+          "startPoint": {
+            "x": 1250,
+            "y": 724,
+            "anchorIndex": 1,
+            "id": "1250|||724"
+          },
+          "endPoint": {
+            "x": 1480,
+            "y": 812.8,
+            "anchorIndex": 0,
+            "id": "1480|||812.8"
+          },
+          "name": "其他 ▼",
+          "edgeData": {
+            "branchId": "relation-dffa9105-5fc4-4d75-84a9-4a5c919ae6d9"
+          }
+        }
+      ]
+    },
+    {
+      "id": "node-200542e9-daa7-4f60-ae45-95192d7ed786",
+      "type": "custom-node",
+      "x": 650,
+      "y": 678,
+      "name": "物流问题分流",
+      "nodeData": {
+        "nodeName": "物流问题分流",
+        "matchMode": 1,
+        "branches": [
+          {
+            "id": "relation-a879dd22-d759-4548-a514-d356905daf52",
+            "name": "条件组 1",
+            "mode": 0,
+            "content": "[SystemFlowTriggerRewriteQuery] [订单编号] [手机号后4位] 物流不更新",
+            "originContent": "[SystemFlowTriggerRewriteQuery] [订单编号] [手机号后4位] 物流不更新",
+            "conditions": [
+              {
+                "type": 1,
+                "info_id": "",
+                "mode": 3,
+                "content": "${1-SystemFlowTriggerRewriteQuery} 物流长时间不更新、没动、停滞"
+              },
+              {
+                "type": 1,
+                "info_id": "info-73a094dc-25e3-4ed1-8a86-d85daef17b13",
+                "mode": 3,
+                "content": "${1-info-73a094dc-25e3-4ed1-8a86-d85daef17b13} 已提供订单编号"
+              },
+              {
+                "type": 1,
+                "info_id": "info-8073ed7b-b7cb-4d5e-9935-8502489229f7",
+                "mode": 3,
+                "content": "${1-info-8073ed7b-b7cb-4d5e-9935-8502489229f7} 已提供手机号后4位"
+              }
+            ]
+          },
+          {
+            "id": "relation-a9ff7879-fcbe-45c6-8ea8-c64683ba1591",
+            "name": "条件组 2",
+            "mode": 0,
+            "content": "[SystemFlowTriggerRewriteQuery] [订单编号] [手机号后4位] 签收未收到",
+            "originContent": "[SystemFlowTriggerRewriteQuery] [订单编号] [手机号后4位] 签收未收到",
+            "conditions": [
+              {
+                "type": 1,
+                "info_id": "",
+                "mode": 3,
+                "content": "${2-SystemFlowTriggerRewriteQuery} 显示签收但用户没有收到包裹"
+              },
+              {
+                "type": 1,
+                "info_id": "info-73a094dc-25e3-4ed1-8a86-d85daef17b13",
+                "mode": 3,
+                "content": "${2-info-73a094dc-25e3-4ed1-8a86-d85daef17b13} 已提供订单编号"
+              },
+              {
+                "type": 1,
+                "info_id": "info-8073ed7b-b7cb-4d5e-9935-8502489229f7",
+                "mode": 3,
+                "content": "${2-info-8073ed7b-b7cb-4d5e-9935-8502489229f7} 已提供手机号后4位"
+              }
+            ]
+          },
+          {
+            "id": "relation-5055263c-c6f0-4dce-af5e-443ab71e3119",
+            "name": "条件组 3",
+            "mode": 0,
+            "content": "[SystemFlowTriggerRewriteQuery] [订单编号] [手机号后4位] 配送超时",
+            "originContent": "[SystemFlowTriggerRewriteQuery] [订单编号] [手机号后4位] 配送超时",
+            "conditions": [
+              {
+                "type": 1,
+                "info_id": "",
+                "mode": 3,
+                "content": "${3-SystemFlowTriggerRewriteQuery} 配送时间过长、超时、太慢"
+              },
+              {
+                "type": 1,
+                "info_id": "info-73a094dc-25e3-4ed1-8a86-d85daef17b13",
+                "mode": 3,
+                "content": "${3-info-73a094dc-25e3-4ed1-8a86-d85daef17b13} 已提供订单编号"
+              },
+              {
+                "type": 1,
+                "info_id": "info-8073ed7b-b7cb-4d5e-9935-8502489229f7",
+                "mode": 3,
+                "content": "${3-info-8073ed7b-b7cb-4d5e-9935-8502489229f7} 已提供手机号后4位"
+              }
+            ]
+          },
+          {
+            "id": "relation-9e2f8d01-0836-458d-9ecb-136712be8cee",
+            "name": "条件组 4",
+            "mode": 0,
+            "content": "[SystemFlowTriggerRewriteQuery] [订单编号] [手机号后4位] 信息错误",
+            "originContent": "[SystemFlowTriggerRewriteQuery] [订单编号] [手机号后4位] 信息错误",
+            "conditions": [
+              {
+                "type": 1,
+                "info_id": "",
+                "mode": 3,
+                "content": "${4-SystemFlowTriggerRewriteQuery} 物流信息有误，需要修改配送地址或电话"
+              },
+              {
+                "type": 1,
+                "info_id": "info-73a094dc-25e3-4ed1-8a86-d85daef17b13",
+                "mode": 3,
+                "content": "${4-info-73a094dc-25e3-4ed1-8a86-d85daef17b13} 已提供订单编号"
+              },
+              {
+                "type": 1,
+                "info_id": "info-8073ed7b-b7cb-4d5e-9935-8502489229f7",
+                "mode": 3,
+                "content": "${4-info-8073ed7b-b7cb-4d5e-9935-8502489229f7} 已提供手机号后4位"
+              }
+            ]
+          },
+          {
+            "id": "relation-e8d97496-3f10-4f2f-8604-f4241c899f1b",
+            "name": "其他",
+            "content": "其他",
+            "mode": 3,
+            "conditions": [
+              {
+                "content": ""
+              }
+            ]
+          }
+        ]
+      },
+      "outEdges": [
+        {
+          "id": "node-b43c53fb-cd14-4c18-9ff6-82b5e65044d7",
+          "type": "custom:polyline",
+          "source": "node-200542e9-daa7-4f60-ae45-95192d7ed786",
+          "target": "node-c57f4ca6-3d64-4ace-b84f-5c8ce5e9664f",
+          "startPoint": {
+            "x": 650,
+            "y": 724,
+            "anchorIndex": 1,
+            "id": "650|||724"
+          },
+          "endPoint": {
+            "x": 560,
+            "y": 812.8,
+            "anchorIndex": 0,
+            "id": "560|||812.8"
+          },
+          "name": "[SystemFlowTriggerRewriteQuery] [订单编号] [手机号后4位] 物流不更新 ▼",
+          "edgeData": {
+            "branchId": "relation-a879dd22-d759-4548-a514-d356905daf52"
+          }
+        },
+        {
+          "id": "node-236347ce-62e1-4bf3-b894-771d19261bff",
+          "type": "custom:polyline",
+          "source": "node-200542e9-daa7-4f60-ae45-95192d7ed786",
+          "target": "node-92e71881-98e4-4625-a45a-dbcf3d62c013",
+          "startPoint": {
+            "x": 650,
+            "y": 724,
+            "anchorIndex": 1,
+            "id": "650|||724"
+          },
+          "endPoint": {
+            "x": 630,
+            "y": 812.8,
+            "anchorIndex": 0,
+            "id": "630|||812.8"
+          },
+          "name": "[SystemFlowTriggerRewriteQuery] [订单编号] [手机号后4位] 签收未收到 ▼",
+          "edgeData": {
+            "branchId": "relation-a9ff7879-fcbe-45c6-8ea8-c64683ba1591"
+          }
+        },
+        {
+          "id": "node-c3a301ef-635a-4653-b148-651ed7676707",
+          "type": "custom:polyline",
+          "source": "node-200542e9-daa7-4f60-ae45-95192d7ed786",
+          "target": "node-04f4d5b3-7d75-42e4-9f68-0ecded21ac57",
+          "startPoint": {
+            "x": 650,
+            "y": 724,
+            "anchorIndex": 1,
+            "id": "650|||724"
+          },
+          "endPoint": {
+            "x": 700,
+            "y": 812.8,
+            "anchorIndex": 0,
+            "id": "700|||812.8"
+          },
+          "name": "[SystemFlowTriggerRewriteQuery] [订单编号] [手机号后4位] 配送超时 ▼",
+          "edgeData": {
+            "branchId": "relation-5055263c-c6f0-4dce-af5e-443ab71e3119"
+          }
+        },
+        {
+          "id": "node-d17ab092-4239-4eca-8e64-c5c3767ea487",
+          "type": "custom:polyline",
+          "source": "node-200542e9-daa7-4f60-ae45-95192d7ed786",
+          "target": "node-af4747f0-c993-4f85-b6b0-2184b180c9d2",
+          "startPoint": {
+            "x": 650,
+            "y": 724,
+            "anchorIndex": 1,
+            "id": "650|||724"
+          },
+          "endPoint": {
+            "x": 770,
+            "y": 812.8,
+            "anchorIndex": 0,
+            "id": "770|||812.8"
+          },
+          "name": "[SystemFlowTriggerRewriteQuery] [订单编号] [手机号后4位] 信息错误 ▼",
+          "edgeData": {
+            "branchId": "relation-9e2f8d01-0836-458d-9ecb-136712be8cee"
+          }
+        },
+        {
+          "id": "node-d0e95f3d-6d8c-4185-a877-01a031ac0d80",
+          "type": "custom:polyline",
+          "source": "node-200542e9-daa7-4f60-ae45-95192d7ed786",
+          "target": "node-c57f4ca6-3d64-4ace-b84f-5c8ce5e9664f",
+          "startPoint": {
+            "x": 650,
+            "y": 724,
+            "anchorIndex": 1,
+            "id": "650|||724"
+          },
+          "endPoint": {
+            "x": 560,
+            "y": 812.8,
+            "anchorIndex": 0,
+            "id": "560|||812.8"
+          },
+          "name": "其他 ▼",
+          "edgeData": {
+            "branchId": "relation-e8d97496-3f10-4f2f-8604-f4241c899f1b"
+          }
+        }
+      ]
+    }
+  ],
+  "infoExtractNode": [
+    {
+      "id": "node-ce122a33-b150-4fd4-8f3c-b1bf9abde412",
+      "type": "custom-node",
+      "x": 650,
+      "y": 488,
+      "name": "物流查询信息收集",
+      "nodeData": {
+        "nodeName": "物流查询信息收集",
+        "infos": [
+          {
+            "id": "info-73a094dc-25e3-4ed1-8a86-d85daef17b13",
+            "name": "订单编号",
+            "desc": "请提供您的订单编号（通常是13-18位数字），可在我的订单列表中找到",
+            "required": true,
+            "askMode": 1
+          },
+          {
+            "id": "info-8073ed7b-b7cb-4d5e-9935-8502489229f7",
+            "name": "手机号后4位",
+            "desc": "用于信息核对",
+            "required": false,
+            "askMode": 1
+          }
+        ]
+      },
+      "outEdges": [
+        {
+          "id": "node-8d9fac76-afcb-44cd-ba99-077dbdb4b261",
+          "type": "custom:polyline",
+          "source": "node-ce122a33-b150-4fd4-8f3c-b1bf9abde412",
+          "target": "node-200542e9-daa7-4f60-ae45-95192d7ed786",
+          "startPoint": {
+            "x": 650,
+            "y": 534,
+            "anchorIndex": 1,
+            "id": "650|||534"
+          },
+          "endPoint": {
+            "x": 650,
+            "y": 622.8,
+            "anchorIndex": 0,
+            "id": "650|||622.8"
+          },
+          "name": "",
+          "edgeData": {}
+        }
+      ]
+    },
+    {
+      "id": "node-df88294f-38ea-4812-bcc6-e4478cd2bf34",
+      "type": "custom-node",
+      "x": 1250,
+      "y": 488,
+      "name": "订单信息收集",
+      "nodeData": {
+        "nodeName": "订单信息收集",
+        "infos": [
+          {
+            "id": "info-3e9ac740-aae4-4da7-806c-44f7a1210819",
+            "name": "订单编号",
+            "desc": "请输入订单编号",
+            "required": true,
+            "askMode": 1
+          },
+          {
+            "id": "info-86d519a0-e944-4303-be27-84eefb022558",
+            "name": "联系手机号",
+            "desc": "请输入您的联系手机号",
+            "required": false,
+            "askMode": 1
+          }
+        ]
+      },
+      "outEdges": [
+        {
+          "id": "node-b4ed1767-c96e-4cd7-a8e1-fa1efe70d325",
+          "type": "custom:polyline",
+          "source": "node-df88294f-38ea-4812-bcc6-e4478cd2bf34",
+          "target": "node-13d49d28-3df9-4b35-a634-3623fba098f5",
+          "startPoint": {
+            "x": 1250,
+            "y": 534,
+            "anchorIndex": 1,
+            "id": "1250|||534"
+          },
+          "endPoint": {
+            "x": 1250,
+            "y": 622.8,
+            "anchorIndex": 0,
+            "id": "1250|||622.8"
+          },
+          "name": "",
+          "edgeData": {}
+        }
+      ]
+    },
+    {
+      "id": "node-ec2e2f5f-b1d5-4917-bbe2-632f8909eb11",
+      "type": "custom-node",
+      "x": 1600,
+      "y": 488,
+      "name": "采购询盘信息收集",
+      "nodeData": {
+        "nodeName": "采购询盘信息收集",
+        "infos": [
+          {
+            "id": "info-cfd2ba82-336a-40dd-9416-d58998e5463f",
+            "name": "商品名称/品类",
+            "desc": "例如：304不锈钢保温杯",
+            "required": true,
+            "askMode": 1
+          },
+          {
+            "id": "info-e0262d3c-5016-4932-948d-e8243032e263",
+            "name": "具体规格或型号",
+            "desc": "例如：500ml，带茶滤",
+            "required": false,
+            "askMode": 1
+          },
+          {
+            "id": "info-65105b73-50d0-4915-9295-5674beaaf23d",
+            "name": "采购数量",
+            "desc": "例如：初次试单500个，预估年采购2万个",
+            "required": true,
+            "askMode": 1
+          },
+          {
+            "id": "info-c8400816-7e13-4e20-9527-4fd67f328863",
+            "name": "期望交付时间",
+            "desc": "例如：2026年5月30日前",
+            "required": false,
+            "askMode": 1
+          },
+          {
+            "id": "info-c7ade44a-f8c0-4791-ac8c-6230b5769d0d",
+            "name": "公司名称",
+            "desc": "用于开具合同及发票",
+            "required": true,
+            "askMode": 1
+          },
+          {
+            "id": "info-10ee52d7-1105-45ff-b44b-59d4a2799584",
+            "name": "联系人姓名",
+            "desc": "请输入联系人姓名",
+            "required": true,
+            "askMode": 1
+          },
+          {
+            "id": "info-04067c0d-5ba2-446e-b4df-3b6626731ea4",
+            "name": "联系电话",
+            "desc": "请输入联系电话",
+            "required": true,
+            "askMode": 1
+          },
+          {
+            "id": "info-4fa6ec6f-f18d-4cf7-afa2-46b11e17e4af",
+            "name": "电子邮箱",
+            "desc": "用于接收正式报价单",
+            "required": false,
+            "askMode": 1
+          }
+        ]
+      },
+      "outEdges": [
+        {
+          "id": "node-6c6d0500-a5fd-43b1-a6ef-a9c74266ae89",
+          "type": "custom:polyline",
+          "source": "node-ec2e2f5f-b1d5-4917-bbe2-632f8909eb11",
+          "target": "node-24eee437-42a3-4e62-978e-046e1a16fa05",
+          "startPoint": {
+            "x": 1600,
+            "y": 534,
+            "anchorIndex": 1,
+            "id": "1600|||534"
+          },
+          "endPoint": {
+            "x": 1600,
+            "y": 622.8,
+            "anchorIndex": 0,
+            "id": "1600|||622.8"
+          },
+          "name": "",
+          "edgeData": {}
+        }
+      ]
+    },
+    {
+      "id": "node-557bf0db-acf8-4c30-b548-909c8c97000a",
+      "type": "custom-node",
+      "x": 500,
+      "y": 678,
+      "name": "定制需求收集",
+      "nodeData": {
+        "nodeName": "定制需求收集",
+        "infos": [
+          {
+            "id": "info-2cb7e774-8ebb-4d4e-980a-e48b177dc5b0",
+            "name": "定制类型",
+            "desc": "印LOGO/印字、改尺寸/改颜色、来图加工/私模、更换材料、OEM贴牌、ODM设计、其他定制",
+            "required": true,
+            "askMode": 1
+          },
+          {
+            "id": "info-40b44c05-b496-4cc5-b234-f813515e3ded",
+            "name": "定制商品描述",
+            "desc": "例如：保温杯、T恤、包装盒等",
+            "required": true,
+            "askMode": 1
+          },
+          {
+            "id": "info-1b96a933-570d-4034-9fda-082947276687",
+            "name": "定制要求详情",
+            "desc": "详细描述定制要求，支持多图上传",
+            "required": true,
+            "askMode": 1
+          },
+          {
+            "id": "info-6f210ef4-7217-484a-858d-97d31449f99f",
+            "name": "预计数量",
+            "desc": "请输入定制数量",
+            "required": true,
+            "askMode": 1
+          },
+          {
+            "id": "info-5a865d92-8cd5-470f-b418-2e843ab7ecb1",
+            "name": "联系方式",
+            "desc": "请输入手机号或邮箱",
+            "required": true,
+            "askMode": 1
+          }
+        ]
+      },
+      "outEdges": [
+        {
+          "id": "node-baad5679-5b99-4378-b632-2f879d538f2d",
+          "type": "custom:polyline",
+          "source": "node-557bf0db-acf8-4c30-b548-909c8c97000a",
+          "target": "node-afdb4280-b71b-4243-adff-b727d7ec7dd6",
+          "startPoint": {
+            "x": 500,
+            "y": 724,
+            "anchorIndex": 1,
+            "id": "500|||724"
+          },
+          "endPoint": {
+            "x": 500,
+            "y": 812.8,
+            "anchorIndex": 0,
+            "id": "500|||812.8"
+          },
+          "name": "",
+          "edgeData": {}
+        }
+      ]
+    },
+    {
+      "id": "node-5f6150e6-7819-48e8-a35c-b882b446e158",
+      "type": "custom-node",
+      "x": 300,
+      "y": 868,
+      "name": "批量采购信息收集",
+      "nodeData": {
+        "nodeName": "批量采购信息收集",
+        "infos": [
+          {
+            "id": "info-028a3b51-1693-4e5b-8240-8b506f8c668c",
+            "name": "公司名称",
+            "desc": "用于开具合同及发票",
+            "required": true,
+            "askMode": 1
+          },
+          {
+            "id": "info-a5b3aa09-2faa-40a4-bdbd-2534eee153c0",
+            "name": "采购数量或月度需求",
+            "desc": "例如：首批1000件，月需3000件",
+            "required": true,
+            "askMode": 1
+          },
+          {
+            "id": "info-38229937-8e0c-45e0-9e56-106d01eba522",
+            "name": "收货地区",
+            "desc": "用于计算物流方案",
+            "required": true,
+            "askMode": 1
+          }
+        ]
+      },
+      "outEdges": [
+        {
+          "id": "node-d20b7c0d-c868-429e-9dad-b0a094d0908f",
+          "type": "custom:polyline",
+          "source": "node-5f6150e6-7819-48e8-a35c-b882b446e158",
+          "target": "node-369ff37f-8f4c-4e69-b855-40575f5801ee",
+          "startPoint": {
+            "x": 300,
+            "y": 914,
+            "anchorIndex": 1,
+            "id": "300|||914"
+          },
+          "endPoint": {
+            "x": 300,
+            "y": 1002.8,
+            "anchorIndex": 0,
+            "id": "300|||1002.8"
+          },
+          "name": "",
+          "edgeData": {}
+        }
+      ]
+    }
+  ],
+  "endReplyNode": [
+    {
+      "id": "node-2c7d22a4-a9d1-4108-8249-dd26524196d5",
+      "type": "custom-node",
+      "x": 80,
+      "y": 678,
+      "name": "商品详情回复",
+      "nodeData": {
+        "nodeName": "商品详情回复",
+        "mode": 1,
+        "content": "收到，我将为您详细查询此款商品的完整信息。请稍候，我会为您梳理出核心参数、适用场景以及用户常见问题。\n\n请提供您关注的商品名称或链接，我可以为您跳转至商品页面，并查询最新的库存、活动价和用户评价，协助您做出购买决策。\n\n如需了解更多同类产品对比信息，也可以随时告诉我。"
+      },
+      "outEdges": []
+    },
+    {
+      "id": "node-2b5e2e5a-c475-48b2-982a-2166c56018d0",
+      "type": "custom-node",
+      "x": 140,
+      "y": 678,
+      "name": "搭配推荐回复",
+      "nodeData": {
+        "nodeName": "搭配推荐回复",
+        "mode": 1,
+        "content": "很高兴为您提供选购建议！\n\n请问您的主要使用场景和预算范围是怎样的？了解这些后，我可以为您推荐更合适的配置或搭配方案。\n\n也可以直接告诉我您看中的品类或用途（例如：办公用品搭配、礼品组合等），我会为您筛选最热销、性价比最高的组合。"
+      },
+      "outEdges": []
+    },
+    {
+      "id": "node-51c38ec4-e449-4da0-9987-33b26d97a9b7",
+      "type": "custom-node",
+      "x": 360,
+      "y": 678,
+      "name": "比价竞品回复",
+      "nodeData": {
+        "nodeName": "比价竞品回复",
+        "mode": 1,
+        "content": "正在对比商品信息，帮您找到最匹配的选择。\n\n我会从以下维度为您做全面对比：\n1. 价格与性价比\n2. 品质与材料差异\n3. 售后保障与供货稳定性\n4. 定制服务能力\n\n请告诉我您对比的具体商品和竞品信息，或者直接发送竞品链接/截图，我来为您做详细分析。\n\n【提示】整理需求清单生成询价单，可以获得更专业的报价对比。需要帮您生成吗？"
+      },
+      "outEdges": []
+    },
+    {
+      "id": "node-ba7a2c44-20ee-4c60-a6fe-a1cceca9c6b3",
+      "type": "custom-node",
+      "x": 160,
+      "y": 868,
+      "name": "零售购买回复",
+      "nodeData": {
+        "nodeName": "零售购买回复",
+        "mode": 1,
+        "content": "好的，请提供具体商品名称或链接，我将为您确认：\n\n1. 当前零售价格及优惠活动\n2. 库存状态及所在仓库\n3. 预计发货时间及送达时效\n\n库存实时变化，如果您已确定，建议尽快下单锁定库存。需要我为您确认具体的送达时间吗？"
+      },
+      "outEdges": []
+    },
+    {
+      "id": "node-c0bc8672-5209-4817-8fc6-5e86a8a16e91",
+      "type": "custom-node",
+      "x": 950,
+      "y": 488,
+      "name": "店铺信息展示",
+      "nodeData": {
+        "nodeName": "店铺信息展示",
+        "mode": 1,
+        "content": "欢迎莅临本店！我是智能客服助手，很高兴为您服务！\n\n【店铺简介】\n我们是位于义乌国际商贸城的自有工厂，主营全品类商品，核心优势是款式新、更新快、支持定制，产品已出口全球，服务超过1000+意向客户。\n\n请问您本次的主要意向是购买咨询、售后联系还是商务合作？我将为您安排专属服务。"
+      },
+      "outEdges": [
+        {
+          "id": "node-4d7e8da6-f226-4d57-be10-bda98f75d5c3",
+          "type": "custom:polyline",
+          "source": "node-c0bc8672-5209-4817-8fc6-5e86a8a16e91",
+          "target": "node-28953e2a-cde6-45ee-8df0-48799eac6858",
+          "startPoint": {
+            "x": 950,
+            "y": 534,
+            "anchorIndex": 1,
+            "id": "950|||534"
+          },
+          "endPoint": {
+            "x": 950,
+            "y": 622.8,
+            "anchorIndex": 0,
+            "id": "950|||622.8"
+          },
+          "name": "",
+          "edgeData": {}
+        }
+      ]
+    },
+    {
+      "id": "node-3b82e13d-595c-4a5b-ac39-a8f2cf9edc80",
+      "type": "custom-node",
+      "x": 870,
+      "y": 868,
+      "name": "店铺购买咨询回复",
+      "nodeData": {
+        "nodeName": "店铺购买咨询回复",
+        "mode": 1,
+        "content": "好的，您是看中了店内的具体商品吗？\n\n请提供商品名称或链接，我可以为您查询最新的库存、活动价和用户评价，协助您做出购买决策。\n\n目前店内有多款热销商品和专属优惠活动，是否需要我为您推荐？"
+      },
+      "outEdges": []
+    },
+    {
+      "id": "node-c7137f93-f9b4-469b-90b4-988594c6ba2f",
+      "type": "custom-node",
+      "x": 950,
+      "y": 868,
+      "name": "店铺售后联系回复",
+      "nodeData": {
+        "nodeName": "店铺售后联系回复",
+        "mode": 1,
+        "content": "明白，您是需要处理订单售后。为了最高效地解决问题，请优先提供您的订单号。\n\n我可以：\n1. 通过内部渠道直接催促店铺客服\n2. 若店铺未及时响应，我将协助您发起平台介入流程\n\n直接处理订单会比电话联系更高效、有记录可循。"
+      },
+      "outEdges": []
+    },
+    {
+      "id": "node-64e96434-cbe0-4e40-a0a2-d1299282de89",
+      "type": "custom-node",
+      "x": 1030,
+      "y": 868,
+      "name": "商务合作回复",
+      "nodeData": {
+        "nodeName": "商务合作回复",
+        "mode": 1,
+        "content": "欢迎您的合作意向！本店主营多品类商品，适合批发与渠道合作。\n\n建议您：\n1. 通过上方公示电话，直接说明您的合作意图（如批量采购、区域代理）\n2. 如果希望平台协助对接，您可以提供公司名称及姓名、联系方式和初步合作需求（如采购品类、大概数量），我可为您生成一份《采购询盘》提交至店铺及平台批发部门，由专人跟进。\n\n请问您倾向于哪种方式？"
+      },
+      "outEdges": []
+    },
+    {
+      "id": "node-6e583d78-c25b-4c56-b878-ce6ec0d58a96",
+      "type": "custom-node",
+      "x": 1130,
+      "y": 868,
+      "name": "修改信息回复",
+      "nodeData": {
+        "nodeName": "修改信息回复",
+        "mode": 1,
+        "content": "好的，为您处理信息修改。请问需要修改的是收货地址、联系电话还是商品规格/颜色？\n\n【重要提示】\n- 若订单未发货，我可以直接为您尝试修改。\n- 若订单已发货，修改地址需要联系物流拦截，成功与否以物流方操作为准，可能会产生费用。\n\n请提供您要修改成的正确完整信息。"
+      },
+      "outEdges": []
+    },
+    {
+      "id": "node-a0672dcf-b0a9-446d-9432-c003662eb8f4",
+      "type": "custom-node",
+      "x": 1200,
+      "y": 868,
+      "name": "催促发货回复",
+      "nodeData": {
+        "nodeName": "催促发货回复",
+        "mode": 1,
+        "content": "理解您等待的心情。我已为您在系统内加急标注。\n\n将为您查询：\n1. 最晚发货承诺时间\n2. 当前物流单号及最新轨迹\n3. 预计送达时间\n\n我会持续为您关注，如有异常会主动通知您。"
+      },
+      "outEdges": []
+    },
+    {
+      "id": "node-ea444930-10ab-4d86-bec5-0c184a001158",
+      "type": "custom-node",
+      "x": 1270,
+      "y": 868,
+      "name": "退款退货回复",
+      "nodeData": {
+        "nodeName": "退款退货回复",
+        "mode": 1,
+        "content": "好的，为您发起售后申请。请选择售后类型：\nA. 仅退款（未收到货/不退货退部分款）\nB. 退货退款\n\n请根据页面提示选择原因，并按照要求上传凭证（如照片）。提交后，系统会给出审核预计时间（通常24小时内），商家同意后即可进入下一步流程。"
+      },
+      "outEdges": []
+    },
+    {
+      "id": "node-43c03614-bb92-4c92-b5d4-f20051ec4698",
+      "type": "custom-node",
+      "x": 1340,
+      "y": 868,
+      "name": "商品物流异常回复",
+      "nodeData": {
+        "nodeName": "商品物流异常回复",
+        "mode": 1,
+        "content": "非常抱歉给您带来不好的体验。您描述的问题属于优先处理类别。\n\n为了高效处理，请您在1小时内拍照上传相关凭证：\n1. 商品问题：拍摄整体、瑕疵部位、外包装、面单的清晰照片\n2. 物流异常：提供物流详情页面长时间未更新的截图\n\n凭证上传后，我将立即为您提交异常工单，优先审核并给出换货、补发或补偿方案。"
+      },
+      "outEdges": []
+    },
+    {
+      "id": "node-6f1d93a6-6890-45cd-9951-3183c7d15146",
+      "type": "custom-node",
+      "x": 1410,
+      "y": 868,
+      "name": "发票问题回复",
+      "nodeData": {
+        "nodeName": "发票问题回复",
+        "mode": 1,
+        "content": "好的，为您处理发票事宜。请问是：\nA. 需要申请开具本次订单的发票？\nB. 之前申请的发票未收到或信息有误？\n\n请提供开票抬头、税号、邮箱等信息。电子发票一般会在申请后7个工作日内开具并发送至邮箱。"
+      },
+      "outEdges": []
+    },
+    {
+      "id": "node-64b4e4cf-c41c-4260-be92-acc57e16bd99",
+      "type": "custom-node",
+      "x": 1480,
+      "y": 868,
+      "name": "订单其他问题回复",
+      "nodeData": {
+        "nodeName": "订单其他问题回复",
+        "mode": 1,
+        "content": "您的问题我已了解。由于情况较为特殊，为了给您最准确的解决方案，我已经将您的订单情况和问题描述提交给高级客服专员进行复核处理。专员将在30分钟内通过电话/消息主动联系您，请您保持通讯畅通。"
+      },
+      "outEdges": []
+    },
+    {
+      "id": "node-c57f4ca6-3d64-4ace-b84f-5c8ce5e9664f",
+      "type": "custom-node",
+      "x": 560,
+      "y": 868,
+      "name": "物流不更新回复",
+      "nodeData": {
+        "nodeName": "物流不更新回复",
+        "mode": 1,
+        "content": "这种情况通常是由于运输途中扫描遗漏或中转场站拥堵所致。\n\n我已提交“物流催查”工单，物流方会在24小时内核实并更新轨迹。\n\n同时，您可以通过物流单号在承运快递官网查询，有时那里信息更及时。如超过48小时仍无更新，我们将启动异常件处理流程。"
+      },
+      "outEdges": []
+    },
+    {
+      "id": "node-92e71881-98e4-4625-a45a-dbcf3d62c013",
+      "type": "custom-node",
+      "x": 630,
+      "y": 868,
+      "name": "签收未收到回复",
+      "nodeData": {
+        "nodeName": "签收未收到回复",
+        "mode": 1,
+        "content": "请您先检查一下门口、物业、代收点或家人是否代收。\n\n如果都没有，这可能是快递员提前误操作签收。我已提交“签收未收到”核查，配送员会在1小时内与您联系确认。\n\n如有需要，请提供签收时的现场照片或其他证明，我们将全力为您跟进处理。"
+      },
+      "outEdges": []
+    },
+    {
+      "id": "node-04f4d5b3-7d75-42e4-9f68-0ecded21ac57",
+      "type": "custom-node",
+      "x": 700,
+      "y": 868,
+      "name": "配送超时回复",
+      "nodeData": {
+        "nodeName": "配送超时回复",
+        "mode": 1,
+        "content": "查询到您的订单已超过预计送达时间，非常抱歉。\n\n我已将您的订单标记为“紧急”，优先安排配送。同时已联系物流方核实延迟原因，预计2小时内为您回复最新进展。\n\n如持续超时，我们将为您提供补偿方案。"
+      },
+      "outEdges": []
+    },
+    {
+      "id": "node-af4747f0-c993-4f85-b6b0-2184b180c9d2",
+      "type": "custom-node",
+      "x": 770,
+      "y": 868,
+      "name": "物流信息错误回复",
+      "nodeData": {
+        "nodeName": "物流信息错误回复",
+        "mode": 1,
+        "content": "请问是需要修改配送地址或电话吗？\n\n为了保障货物安全，需要您本人通过订单页面内的“修改地址”功能操作，或验证信息后由我为您提交修改申请。\n\n【注意】已发货的包裹修改地址需物流方同意，可能产生费用或无法修改。请尽快提供正确的收货信息。"
+      },
+      "outEdges": []
+    },
+    {
+      "id": "node-24eee437-42a3-4e62-978e-046e1a16fa05",
+      "type": "custom-node",
+      "x": 1600,
+      "y": 678,
+      "name": "询盘信息确认回复",
+      "nodeData": {
+        "nodeName": "询盘信息确认回复",
+        "mode": 1,
+        "content": "您好！您的采购询盘信息已整理完毕。确认无误后，我将即刻为您创建询盘编号，我们的商务专员将在30分钟内通过您预留的电话与您联系，并提供书面报价单及合作方案。\n\n感谢您的信任，期待合作！"
+      },
+      "outEdges": []
+    },
+    {
+      "id": "node-afdb4280-b71b-4243-adff-b727d7ec7dd6",
+      "type": "custom-node",
+      "x": 500,
+      "y": 868,
+      "name": "定制需求确认回复",
+      "nodeData": {
+        "nodeName": "定制需求确认回复",
+        "mode": 1,
+        "content": "您的定制需求已记录。我们的定制专员将在30分钟内通过您留下的联系方式与您对接，确认打样方案、报价及工期。\n\n感谢您选择我们的定制服务！"
+      },
+      "outEdges": []
+    },
+    {
+      "id": "node-369ff37f-8f4c-4e69-b855-40575f5801ee",
+      "type": "custom-node",
+      "x": 300,
+      "y": 1058,
+      "name": "批量采购确认回复",
+      "nodeData": {
+        "nodeName": "批量采购确认回复",
+        "mode": 1,
+        "content": "您的批量采购信息已收到。商务专员将在30分钟内为您提供《初步报价方案》，含阶梯价格、库存计划及物流方案。\n\n感谢您的信任！"
+      },
+      "outEdges": []
+    },
+    {
+      "id": "node-4e8e1d4d-23bd-4338-a0d9-d22a7cacdb63",
+      "type": "custom-node",
+      "x": 1950,
+      "y": 488,
+      "name": "售后投诉回复",
+      "nodeData": {
+        "nodeName": "售后投诉回复",
+        "mode": 1,
+        "content": "检测到您可能遇到了商品或服务方面的问题，我们非常重视您的反馈。\n\n绝对不会在此触发任何采购流程！\n\n请提供订单号和问题描述（如有照片证据更佳），我们将为您优先处理。对于质量问题、发错货、破损等情况，我们承诺24小时内给出解决方案（换货、补发或补偿）。\n\n再次为您带来的不便深感抱歉。"
+      },
+      "outEdges": []
+    },
+    {
+      "id": "node-8d0bd56e-a298-40a2-84fd-aad095b19e3f",
+      "type": "custom-node",
+      "x": 2200,
+      "y": 488,
+      "name": "其他咨询回复",
+      "nodeData": {
+        "nodeName": "其他咨询回复",
+        "mode": 1,
+        "content": "您好，我是智能客服助手。请简要描述您的需求，我将尽力为您解答。如需人工客服协助，请告知我将为您转接。"
+      },
+      "outEdges": []
+    }
+  ],
+  "apiCallNode": [],
+  "userDefinedVar": [],
+  "defineVar": [],
+  "taskType": 1,
+  "name": "B2B智能客服工作流-智能版"
+}

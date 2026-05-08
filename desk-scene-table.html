@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Desk 电商平台 · 场景一览表</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:#f5f7fa;padding:24px}
+h1{font-size:20px;text-align:center;margin-bottom:20px;color:#1a1a1a}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+th{background:#1a73e8;color:#fff;padding:12px 14px;font-size:13px;text-align:left;position:sticky;top:0}
+td{padding:12px 14px;border-bottom:1px solid #f0f0f0;vertical-align:top;font-size:12px;line-height:1.7}
+tr:hover{background:#f8faff}
+td:first-child{font-weight:600;color:#333;min-width:160px;white-space:nowrap}
+td:nth-child(2){color:#555;min-width:300px}
+td:nth-child(2) ul{margin:0;padding-left:16px}
+td:nth-child(2) li{margin-bottom:2px}
+td:nth-child(3){width:420px;padding:8px}
+.scene-thumb{width:400px;height:260px;border:1px solid #e8e8e8;border-radius:8px;overflow:hidden;position:relative;background:#fff}
+.scene-thumb iframe{width:1440px;height:900px;border:none;transform:scale(0.278);transform-origin:0 0;pointer-events:none}
+.scene-thumb .overlay{position:absolute;top:0;left:0;right:0;bottom:0;cursor:pointer}
+.scene-thumb .overlay:hover{background:rgba(26,115,232,.05)}
+.badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;color:#fff;margin-right:4px}
+.badge-core{background:#1a73e8}
+.badge-ext{background:#52c41a}
+.badge-adv{background:#722ed1}
+.group-header td{background:#f0f7ff;font-weight:700;color:#1a73e8;font-size:13px;border-bottom:2px solid #1a73e8}
+@media print{body{padding:0}table{box-shadow:none}.scene-thumb{page-break-inside:avoid}}
+</style>
+</head>
+<body>
+<h1>腾讯云智能客服 Desk · 电商平台全场景一览表</h1>
+<table>
+<thead>
+<tr><th style="width:180px">场景</th><th>功能说明</th><th style="width:420px">示意图</th></tr>
+</thead>
+<tbody>
+
+<tr class="group-header"><td colspan="3">核心电商场景</td></tr>
+
+<tr>
+<td><span class="badge badge-core">核心</span>线上商城 / 批发平台的商家客服</td>
+<td><ul>
+<li>支持每个入驻商家拥有独立 AI 智能体，自定义品牌形象、欢迎语和知识库</li>
+<li>支持 AI 自动识别批量采购、询盘、定制需求等 B 端商机，结构化收集并推送至商家</li>
+<li>支持同一人工客服接待多个店铺客户咨询</li>
+</ul></td>
+<td><div class="scene-thumb"><iframe src="desk-ecommerce-demo.html#s1" onload="this.contentWindow.document.querySelectorAll('.scene-tabs,.scene-desc').forEach(e=>e.style.display='none');this.contentWindow.switchScene&&this.contentWindow.switchScene('s1')"></iframe><div class="overlay" onclick="window.open('desk-ecommerce-demo.html','_blank')"></div></div></td>
+</tr>
+
+<tr>
+<td><span class="badge badge-core">核心</span>B2B 采购平台的询盘自动化</td>
+<td><ul>
+<li>支持通过 AI 智能任务流自动识别买家批量采购意向</li>
+<li>AI 主动引导填写采购需求（商品、数量、公司信息、联系方式），结构化后推送至询盘管理系统</li>
+</ul></td>
+<td><div class="scene-thumb"><iframe src="desk-ecommerce-demo.html" onload="var w=this.contentWindow;w.switchScene&&w.switchScene('s2');w.document.querySelectorAll('.scene-tabs,.scene-desc').forEach(function(e){e.style.display='none'})"></iframe><div class="overlay" onclick="window.open('desk-ecommerce-demo.html','_blank')"></div></div></td>
+</tr>
+
+<tr>
+<td><span class="badge badge-core">核心</span>零售电商平台的商品导购</td>
+<td><ul>
+<li>支持围绕商品详情、规格参数、价格优惠、库存状态、搭配推荐等提供售前咨询</li>
+<li>支持结合商品卡片、快捷问题引导用户快速了解商品，提升下单转化率</li>
+</ul></td>
+<td><div class="scene-thumb"><iframe src="desk-ecommerce-demo.html" onload="var w=this.contentWindow;w.switchScene&&w.switchScene('s7');w.document.querySelectorAll('.scene-tabs,.scene-desc').forEach(function(e){e.style.display='none'})"></iframe><div class="overlay" onclick="window.open('desk-ecommerce-demo.html','_blank')"></div></div></td>
+</tr>
+
+<tr>
+<td><span class="badge badge-core">核心</span>店铺 / 商品 / 活动页多入口接待</td>
+<td><ul>
+<li>支持在店铺首页、商品详情页、活动专题页等不同入口配置专属客服号</li>
+<li>支持针对不同入口分别配置欢迎语、默认问题、服务流程和推荐内容</li>
+</ul></td>
+<td><div class="scene-thumb"><iframe src="desk-ecommerce-demo.html" onload="var w=this.contentWindow;w.switchScene&&w.switchScene('s3');w.document.querySelectorAll('.scene-tabs,.scene-desc').forEach(function(e){e.style.display='none'})"></iframe><div class="overlay" onclick="window.open('desk-ecommerce-demo.html','_blank')"></div></div></td>
+</tr>
+
+<tr>
+<td><span class="badge badge-core">核心</span>订单与物流咨询</td>
+<td><ul>
+<li>支持围绕订单状态、发货进度、物流轨迹、预计送达时间等提供自助查询</li>
+<li>支持结合订单卡片展示和接口查询帮助用户快速核对信息</li>
+</ul></td>
+<td><div class="scene-thumb"><iframe src="desk-ecommerce-demo.html" onload="var w=this.contentWindow;w.switchScene&&w.switchScene('s4');w.document.querySelectorAll('.scene-tabs,.scene-desc').forEach(function(e){e.style.display='none'})"></iframe><div class="overlay" onclick="window.open('desk-ecommerce-demo.html','_blank')"></div></div></td>
+</tr>
+
+<tr>
+<td><span class="badge badge-core">核心</span>退换货与售后处理</td>
+<td><ul>
+<li>支持针对退货退款、换货申请、售后政策、异常物流、投诉等场景提供自动化服务</li>
+<li>标准问题机器人闭环，复杂诉求自动转人工</li>
+</ul></td>
+<td><div class="scene-thumb"><iframe src="desk-ecommerce-demo.html" onload="var w=this.contentWindow;w.switchScene&&w.switchScene('s8');w.document.querySelectorAll('.scene-tabs,.scene-desc').forEach(function(e){e.style.display='none'})"></iframe><div class="overlay" onclick="window.open('desk-ecommerce-demo.html','_blank')"></div></div></td>
+</tr>
+
+<tr>
+<td><span class="badge badge-core">核心</span>平台客服 / 平台规则咨询</td>
+<td><ul>
+<li>支持在购物首页、个人中心、帮助中心等平台入口配置官方客服号，独立于商家客服</li>
+<li>专门承接平台规则、账号安全、支付纠纷、投诉举报、退款申诉、平台活动等平台级问题</li>
+<li>支持跨商家调解、平台侧退款、商家违规处罚与统一投诉工单流转</li>
+</ul></td>
+<td><div class="scene-thumb"><iframe src="desk-ecommerce-demo.html" onload="var w=this.contentWindow;w.switchScene&&w.switchScene('s15');w.document.querySelectorAll('.scene-tabs,.scene-desc').forEach(function(e){e.style.display='none'})"></iframe><div class="overlay" onclick="window.open('desk-ecommerce-demo.html','_blank')"></div></div></td>
+</tr>
+
+<tr class="group-header"><td colspan="3">平台运营场景</td></tr>
+
+<tr>
+<td><span class="badge badge-ext">运营</span>平台招商 / 商务合作</td>
+<td><ul>
+<li>支持承接平台招商、商家入驻、供货合作、渠道分销等商务咨询</li>
+<li>支持自动收集企业名称、联系人、合作诉求等线索信息</li>
+</ul></td>
+<td><div class="scene-thumb"><iframe src="desk-ecommerce-demo.html" onload="var w=this.contentWindow;w.switchScene&&w.switchScene('s5');w.document.querySelectorAll('.scene-tabs,.scene-desc').forEach(function(e){e.style.display='none'})"></iframe><div class="overlay" onclick="window.open('desk-ecommerce-demo.html','_blank')"></div></div></td>
+</tr>
+
+<tr>
+<td><span class="badge badge-ext">运营</span>普通客服 / VIP 客服差异化服务</td>
+<td><ul>
+<li>支持根据用户身份、会员等级配置不同客服号和服务入口</li>
+<li>支持为高价值用户配置专属欢迎语、优先排队策略和专属客服分组</li>
+</ul></td>
+<td><div class="scene-thumb"><iframe src="desk-ecommerce-demo.html" onload="var w=this.contentWindow;w.switchScene&&w.switchScene('s10');w.document.querySelectorAll('.scene-tabs,.scene-desc').forEach(function(e){e.style.display='none'})"></iframe><div class="overlay" onclick="window.open('desk-ecommerce-demo.html','_blank')"></div></div></td>
+</tr>
+
+<tr>
+<td><span class="badge badge-ext">运营</span>多商家 / 多店铺独立运营</td>
+<td><ul>
+<li>支持平台为不同商家创建独立客服号、机器人和知识库</li>
+<li>商家间消息完全隔离，平台统一管理、商家独立运营</li>
+</ul></td>
+<td><div class="scene-thumb"><iframe src="desk-ecommerce-demo.html" onload="var w=this.contentWindow;w.switchScene&&w.switchScene('s6');w.document.querySelectorAll('.scene-tabs,.scene-desc').forEach(function(e){e.style.display='none'})"></iframe><div class="overlay" onclick="window.open('desk-ecommerce-demo.html','_blank')"></div></div></td>
+</tr>
+
+<tr>
+<td><span class="badge badge-ext">运营</span>多门店业务平台的门店客服</td>
+<td><ul>
+<li>支持指定门店客服号关联指定客服分组，无需中台转接，直接联络对应门店客服</li>
+<li>支持各门店按门店策略配置不同接待流程和话术</li>
+</ul></td>
+<td><div class="scene-thumb"><iframe src="desk-ecommerce-demo.html" onload="var w=this.contentWindow;w.switchScene&&w.switchScene('s13');w.document.querySelectorAll('.scene-tabs,.scene-desc').forEach(function(e){e.style.display='none'})"></iframe><div class="overlay" onclick="window.open('desk-ecommerce-demo.html','_blank')"></div></div></td>
+</tr>
+
+<tr class="group-header"><td colspan="3">高级能力场景</td></tr>
+
+<tr>
+<td><span class="badge badge-adv">高级</span>营销获客与线索转化</td>
+<td><ul>
+<li>支持承接活动页、推广页、优惠弹窗等营销场景的咨询行为</li>
+<li>支持结合信息收集、意向识别和人工分配能力沉淀销售线索</li>
+</ul></td>
+<td><div class="scene-thumb"><iframe src="desk-ecommerce-demo.html" onload="var w=this.contentWindow;w.switchScene&&w.switchScene('s12');w.document.querySelectorAll('.scene-tabs,.scene-desc').forEach(function(e){e.style.display='none'})"></iframe><div class="overlay" onclick="window.open('desk-ecommerce-demo.html','_blank')"></div></div></td>
+</tr>
+
+<tr>
+<td><span class="badge badge-adv">高级</span>跨境电商多语言服务</td>
+<td><ul>
+<li>支持多语种自动识别、多语言知识库和工作台实时翻译</li>
+<li>提供中国和东南亚（新加坡）数据存储中心</li>
+</ul></td>
+<td><div class="scene-thumb"><iframe src="desk-ecommerce-demo.html" onload="var w=this.contentWindow;w.switchScene&&w.switchScene('s9');w.document.querySelectorAll('.scene-tabs,.scene-desc').forEach(function(e){e.style.display='none'})"></iframe><div class="overlay" onclick="window.open('desk-ecommerce-demo.html','_blank')"></div></div></td>
+</tr>
+
+<tr>
+<td><span class="badge badge-adv">高级</span>多角色客服群聊</td>
+<td><ul>
+<li>支持多方角色（客服、客户、商家、物流）在同一群聊中协同服务</li>
+<li>支持群聊机器人 @回复</li>
+</ul></td>
+<td><div class="scene-thumb"><iframe src="desk-ecommerce-demo.html" onload="var w=this.contentWindow;w.switchScene&&w.switchScene('s11');w.document.querySelectorAll('.scene-tabs,.scene-desc').forEach(function(e){e.style.display='none'})"></iframe><div class="overlay" onclick="window.open('desk-ecommerce-demo.html','_blank')"></div></div></td>
+</tr>
+
+</tbody>
+</table>
+
+<div style="text-align:center;margin-top:16px;font-size:11px;color:#999">点击示意图可打开完整交互演示 · 腾讯云智能客服 Desk</div>
+
+<script>
+// 等所有iframe加载完后处理
+window.addEventListener('load', function(){
+  document.querySelectorAll('.scene-thumb iframe').forEach(function(iframe){
+    try {
+      var doc = iframe.contentDocument;
+      if(doc){
+        var tabs = doc.querySelector('.scene-tabs');
+        var desc = doc.querySelectorAll('.scene-desc');
+        if(tabs) tabs.style.display = 'none';
+        desc.forEach(function(d){ d.style.display = 'none'; });
+      }
+    } catch(e){}
+  });
+});
+</script>
+</body>
+</html>

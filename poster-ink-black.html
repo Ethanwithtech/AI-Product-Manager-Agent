@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>墨黑・Ink Black 體質海報</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;700;900&family=Noto+Sans+TC:wght@300;400;500;700;900&family=ZCOOL+QingKe+HuangYou&family=Ma+Shan+Zheng&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --ink:#1a1a1a;
+    --ink-soft:#2d2a28;
+    --cream:#f5ede0;
+    --cream-deep:#ece0cc;
+    --burgundy:#8b2c2c;
+    --burgundy-soft:#a84848;
+    --beige:#e8d5b7;
+    --peach:#f4c2b0;
+    --paper:#faf4e8;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{
+    font-family:"Noto Serif TC","Noto Sans TC",serif;
+    background:#d8cdb8;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:40px 20px;
+    color:var(--ink);
+  }
+
+  /* ============ Poster frame ============ */
+  .poster{
+    width:min(540px,100%);
+    aspect-ratio:3/4;
+    background:
+      radial-gradient(ellipse at 20% 10%, rgba(139,44,44,.06), transparent 50%),
+      radial-gradient(ellipse at 85% 90%, rgba(244,194,176,.25), transparent 55%),
+      linear-gradient(180deg, #f8f0e2 0%, #f3e8d4 55%, #eedcc0 100%);
+    border-radius:8px;
+    position:relative;
+    overflow:hidden;
+    box-shadow:
+      0 30px 60px -20px rgba(60,40,20,.35),
+      0 10px 25px -10px rgba(60,40,20,.2),
+      0 0 0 1px rgba(0,0,0,.04);
+    isolation:isolate;
+  }
+  /* paper grain */
+  .poster::before{
+    content:"";
+    position:absolute;inset:0;
+    background-image:
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' seed='3'/><feColorMatrix values='0 0 0 0 0.4 0 0 0 0 0.3 0 0 0 0 0.2 0 0 0 .12 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    mix-blend-mode:multiply;
+    opacity:.55;
+    pointer-events:none;
+    z-index:5;
+  }
+  /* ink wash corners */
+  .poster::after{
+    content:"";
+    position:absolute;inset:0;
+    background:
+      radial-gradient(circle at 0% 0%, rgba(26,26,26,.14), transparent 22%),
+      radial-gradient(circle at 100% 100%, rgba(26,26,26,.1), transparent 25%),
+      radial-gradient(circle at 100% 0%, rgba(139,44,44,.08), transparent 18%);
+    pointer-events:none;
+    z-index:6;
+  }
+
+  /* ============ Decorative ink splashes ============ */
+  .ink-splash{
+    position:absolute;
+    pointer-events:none;
+    z-index:2;
+    opacity:.18;
+  }
+  .ink-splash.s1{top:-20px;left:-20px;width:180px;height:180px;}
+  .ink-splash.s2{bottom:40%;right:-30px;width:140px;height:140px;opacity:.1}
+
+  /* ============ TOP ZONE ============ */
+  .top-zone{
+    position:relative;
+    z-index:10;
+    padding:38px 40px 20px;
+    text-align:center;
+  }
+  .eyebrow{
+    font-family:"Playfair Display",serif;
+    font-style:italic;
+    font-size:11px;
+    letter-spacing:.35em;
+    color:var(--burgundy);
+    text-transform:uppercase;
+    margin-bottom:6px;
+    opacity:.85;
+  }
+  .eyebrow .dot{
+    display:inline-block;width:4px;height:4px;border-radius:50%;
+    background:var(--burgundy);vertical-align:middle;margin:0 8px;
+  }
+  .title-wrap{
+    position:relative;
+    display:inline-block;
+    padding:0 30px;
+  }
+  .title-cn{
+    font-family:"ZCOOL QingKe HuangYou","Noto Serif TC",serif;
+    font-size:82px;
+    font-weight:900;
+    letter-spacing:.08em;
+    color:var(--ink);
+    line-height:1;
+    text-shadow:
+      2px 2px 0 rgba(139,44,44,.08),
+      0 0 30px rgba(26,26,26,.15);
+    position:relative;
+  }
+  .title-cn::before,
+  .title-cn::after{
+    content:"";
+    position:absolute;top:50%;width:18px;height:1px;
+    background:var(--ink);opacity:.4;
+  }
+  .title-cn::before{left:-18px}
+  .title-cn::after{right:-18px}
+  .title-en{
+    font-family:"Playfair Display",serif;
+    font-size:18px;
+    font-weight:400;
+    font-style:italic;
+    letter-spacing:.25em;
+    color:var(--ink-soft);
+    margin-top:8px;
+  }
+  .seal{
+    position:absolute;
+    top:8px;right:-8px;
+    width:42px;height:42px;
+    background:var(--burgundy);
+    border-radius:6px;
+    display:flex;align-items:center;justify-content:center;
+    color:var(--cream);
+    font-family:"Ma Shan Zheng","Noto Serif TC",serif;
+    font-size:13px;
+    font-weight:700;
+    line-height:1.05;
+    text-align:center;
+    transform:rotate(8deg);
+    box-shadow:0 3px 8px rgba(139,44,44,.3);
+    letter-spacing:1px;
+  }
+  .subtitle-tag{
+    display:inline-block;
+    margin-top:14px;
+    padding:5px 18px;
+    background:rgba(26,26,26,.9);
+    color:var(--cream);
+    font-size:12px;
+    letter-spacing:.4em;
+    font-weight:500;
+  }
+
+  /* ============ MIDDLE ZONE ============ */
+  .mid-zone{
+    position:relative;
+    z-index:10;
+    display:grid;
+    grid-template-columns:0.9fr 1.1fr;
+    gap:12px;
+    padding:10px 32px 18px;
+    align-items:center;
+  }
+  .character-wrap{
+    position:relative;
+    aspect-ratio:1/1;
+    border-radius:50%;
+    background:
+      radial-gradient(circle at 30% 30%, rgba(255,255,255,.6), transparent 60%),
+      linear-gradient(135deg,#f7ebd8,#ead7b8);
+    overflow:hidden;
+    box-shadow:
+      inset 0 0 40px rgba(139,44,44,.1),
+      0 12px 25px -8px rgba(60,40,20,.25);
+    border:3px solid rgba(255,255,255,.8);
+  }
+  .character-wrap img{
+    width:115%;height:115%;
+    object-fit:cover;
+    object-position:center 20%;
+    position:absolute;left:-7%;top:-5%;
+  }
+  /* steaming mug overlay */
+  .mug{
+    position:absolute;
+    right:-6px;bottom:8px;
+    width:58px;height:58px;
+    background:var(--ink);
+    border-radius:8px 8px 14px 14px;
+    display:flex;align-items:center;justify-content:center;
+    color:var(--cream);
+    font-size:20px;
+    box-shadow:0 6px 14px rgba(0,0,0,.3);
+    transform:rotate(-6deg);
+  }
+  .mug::before{
+    content:"";position:absolute;
+    right:-12px;top:14px;width:16px;height:22px;
+    border:4px solid var(--ink);border-left:none;
+    border-radius:0 10px 10px 0;
+  }
+  .mug::after{
+    content:"";
+    position:absolute;top:-24px;left:50%;
+    width:14px;height:28px;
+    background:
+      radial-gradient(circle at 50% 0, rgba(255,255,255,.8), transparent 60%);
+    filter:blur(3px);
+    animation:steam 2.4s ease-in-out infinite;
+  }
+  @keyframes steam{
+    0%,100%{opacity:.4;transform:translate(-50%,0) scale(1)}
+    50%{opacity:.85;transform:translate(-50%,-6px) scale(1.1)}
+  }
+  .char-label{
+    position:absolute;
+    left:50%;bottom:-14px;transform:translateX(-50%);
+    background:var(--burgundy);
+    color:var(--cream);
+    font-size:11px;
+    padding:3px 12px;
+    border-radius:20px;
+    letter-spacing:.15em;
+    white-space:nowrap;
+    font-family:"Ma Shan Zheng","Noto Serif TC",serif;
+  }
+
+  .note{
+    position:relative;
+    background:
+      linear-gradient(180deg, #fff9ec 0%, #f8ecd0 100%);
+    padding:16px 16px 14px;
+    border-radius:2px;
+    box-shadow:
+      0 4px 12px -4px rgba(60,40,20,.25),
+      inset 0 0 0 1px rgba(139,44,44,.08);
+    font-family:"Ma Shan Zheng","Noto Serif TC",serif;
+    font-size:13.5px;
+    line-height:1.85;
+    color:var(--ink-soft);
+    /* torn paper edge */
+    clip-path:polygon(
+      0 2%, 4% 0, 12% 2%, 22% 0, 35% 3%, 48% 0, 62% 2%, 75% 0, 88% 2%, 100% 0,
+      100% 98%, 92% 100%, 82% 97%, 70% 100%, 55% 97%, 42% 100%, 28% 97%, 15% 100%, 5% 98%, 0 100%
+    );
+  }
+  .note::before{
+    content:"";
+    position:absolute;top:-8px;left:20px;
+    width:40px;height:14px;
+    background:rgba(139,44,44,.4);
+    transform:rotate(-8deg);
+    border-radius:2px;
+    box-shadow:0 2px 4px rgba(0,0,0,.1);
+  }
+  .note p{margin-bottom:6px}
+  .note p:last-child{margin-bottom:0;margin-top:8px;padding-top:8px;border-top:1px dashed rgba(139,44,44,.3)}
+  .hi{
+    background:linear-gradient(180deg, transparent 55%, rgba(244,194,176,.85) 55%, rgba(244,194,176,.85) 92%, transparent 92%);
+    padding:0 3px;
+    font-weight:700;
+    color:var(--burgundy);
+  }
+  .note .label{
+    display:inline-block;
+    background:var(--ink);color:var(--cream);
+    padding:1px 8px;margin:0 2px;
+    font-size:12px;border-radius:2px;
+    letter-spacing:.1em;
+  }
+  .note .suggest{
+    color:var(--burgundy);
+    font-weight:700;
+    letter-spacing:.1em;
+  }
+  .heart{color:var(--burgundy);font-size:14px}
+
+  /* ============ BOTTOM ZONE ============ */
+  .bottom-zone{
+    position:relative;
+    z-index:10;
+    padding:8px 28px 26px;
+    text-align:center;
+  }
+  .glow{
+    position:absolute;
+    top:18%;left:50%;transform:translateX(-50%);
+    width:78%;height:72%;
+    background:radial-gradient(ellipse at center, rgba(244,194,176,.55), rgba(232,213,183,.3) 40%, transparent 70%);
+    filter:blur(20px);
+    z-index:-1;
+  }
+  .products{
+    display:flex;
+    justify-content:center;
+    align-items:flex-end;
+    margin-bottom:14px;
+    position:relative;
+    height:175px;
+    overflow:hidden;
+  }
+  .product-stage{
+    position:relative;
+    width:88%;
+    height:100%;
+    filter:drop-shadow(0 14px 22px rgba(60,40,20,.38));
+    overflow:hidden;
+    border-radius:4px;
+  }
+  .product-stage img{
+    position:absolute;
+    left:50%;
+    top:0;
+    transform:translateX(-50%) scale(1.02);
+    width:auto;
+    height:260px;                 /* 放大后用 object-position 切出包装主体，去掉下方文字条 */
+    object-fit:cover;
+    object-position:center 28%;
+    clip-path:inset(16% 4% 40% 4%);
+    margin-top:-30px;
+  }
+  /* 备用：直接贴合产品主视觉的内圈 */
+  .product-stage::after{
+    content:"";
+    position:absolute;inset:0;
+    background:
+      radial-gradient(ellipse at 50% 60%, transparent 55%, rgba(245,237,224,.85) 90%);
+    pointer-events:none;
+  }
+
+  .tagline{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    background:var(--burgundy);
+    color:var(--cream);
+    padding:8px 22px;
+    font-family:"Noto Serif TC",serif;
+    font-size:14px;
+    letter-spacing:.35em;
+    font-weight:500;
+    position:relative;
+    box-shadow:0 4px 10px rgba(139,44,44,.3);
+  }
+  .tagline::before,
+  .tagline::after{
+    content:"";
+    width:0;height:0;
+    border-style:solid;
+  }
+  .tagline::before{
+    border-width:17px 10px 17px 0;
+    border-color:transparent var(--burgundy) transparent transparent;
+    position:absolute;left:-10px;top:0;
+  }
+  .tagline::after{
+    border-width:17px 0 17px 10px;
+    border-color:transparent transparent transparent var(--burgundy);
+    position:absolute;right:-10px;top:0;
+  }
+  .tagline .sep{
+    width:4px;height:4px;background:var(--cream);border-radius:50%;
+  }
+  .brand-row{
+    margin-top:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    font-family:"Playfair Display",serif;
+    font-size:10px;
+    letter-spacing:.3em;
+    color:var(--ink-soft);
+    text-transform:uppercase;
+  }
+  .brand-row .line{
+    width:30px;height:1px;background:var(--ink-soft);opacity:.4;
+  }
+
+  /* ============ sprinkle decoration dots ============ */
+  .deco{position:absolute;z-index:3;pointer-events:none}
+  .deco.d1{top:42%;left:5%;width:6px;height:6px;border-radius:50%;background:var(--burgundy);opacity:.6}
+  .deco.d2{top:48%;left:8%;width:3px;height:3px;border-radius:50%;background:var(--ink);opacity:.5}
+  .deco.d3{top:30%;right:6%;width:4px;height:4px;border-radius:50%;background:var(--burgundy);opacity:.5}
+  .deco.star{top:18%;right:12%;color:var(--burgundy);font-size:14px;transform:rotate(20deg);opacity:.6}
+
+  /* ============ Responsive ============ */
+  @media (max-width:560px){
+    .title-cn{font-size:62px}
+    .title-en{font-size:14px}
+    .mid-zone{padding:10px 22px 18px}
+    .note{font-size:12px}
+    .product img{height:120px}
+    .tagline{font-size:12px;padding:7px 16px}
+  }
+</style>
+</head>
+<body>
+
+<div class="poster">
+
+  <!-- ink wash decorations -->
+  <svg class="ink-splash s1" viewBox="0 0 200 200">
+    <path fill="#1a1a1a" d="M40,60 Q20,40 50,30 T100,20 Q140,15 150,50 T120,110 Q90,140 60,120 T40,60 Z"/>
+  </svg>
+  <svg class="ink-splash s2" viewBox="0 0 200 200">
+    <path fill="#8b2c2c" d="M60,50 Q30,70 50,110 T110,140 Q150,130 140,90 T100,50 T60,50 Z"/>
+  </svg>
+
+  <!-- tiny deco -->
+  <div class="deco d1"></div>
+  <div class="deco d2"></div>
+  <div class="deco d3"></div>
+  <div class="deco star">✦</div>
+
+  <!-- ========== TOP ZONE ========== -->
+  <div class="top-zone">
+    <div class="eyebrow">Your Body Type <span class="dot"></span> 體質 報 告</div>
+    <div class="title-wrap">
+      <div class="title-cn">墨黑</div>
+      <div class="title-en">— Ink Black —</div>
+      <div class="seal">墨<br>黑</div>
+    </div>
+    <div class="subtitle-tag">溫 養 氣 血 系 列</div>
+  </div>
+
+  <!-- ========== MIDDLE ZONE ========== -->
+  <div class="mid-zone">
+    <div class="character-wrap">
+      <img src="%E6%88%AA%E5%B1%8F2026-04-18%20%E4%B8%8A%E5%8D%8812.00.05.png" alt="小Q 卡通形象" />
+      <div class="mug">☕
+      </div>
+      <div class="char-label">小 Q ・ 陪 住 你</div>
+    </div>
+
+    <div class="note">
+      <p>你嘅體質係<span class="label">墨黑</span>！</p>
+      <p>電量夠用 但<span class="hi">回血慢</span>，</p>
+      <p>特別容易<span class="hi">手腳冰凍</span>、</p>
+      <p>經期唔舒服，成日需要人<span class="hi">暖住</span>～</p>
+      <p><span class="suggest">小Q建議 ▸</span> 先飲<span class="hi">五紅燕麥</span>補血氣，再用<span class="hi">五黑</span>穩住能量，日日都暖笠笠 <span class="heart">♡</span></p>
+    </div>
+  </div>
+
+  <!-- ========== BOTTOM ZONE ========== -->
+  <div class="bottom-zone">
+    <div class="glow"></div>
+    <div class="products">
+      <div class="product-stage">
+        <img src="%E6%88%AA%E5%B1%8F2026-04-18%20%E4%B8%8A%E5%8D%8812.00.24.png" alt="桂格五紅五黑燕麥片" />
+      </div>
+    </div>
+
+    <div class="tagline">
+      <span>溫養氣血</span>
+      <span class="sep"></span>
+      <span>日日暖笠笠</span>
+    </div>
+
+    <div class="brand-row">
+      <span class="line"></span>
+      <span>QUAKER · EST.1877</span>
+      <span class="line"></span>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

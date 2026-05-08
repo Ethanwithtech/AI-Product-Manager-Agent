@@ -1,0 +1,80 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3] [cursor=pointer]: 零售商品咨询
+    - generic [ref=e4] [cursor=pointer]: 采购询盘
+    - generic [ref=e5] [cursor=pointer]: 多入口接待
+    - generic [ref=e6] [cursor=pointer]: 订单物流售后
+    - generic [ref=e7] [cursor=pointer]: 招商合作
+    - generic [ref=e8] [cursor=pointer]: 多商家运营
+    - generic [ref=e9] [cursor=pointer]: 智能导购
+    - generic [ref=e10] [cursor=pointer]: 退换货处理
+    - generic [ref=e11] [cursor=pointer]: 多语言客服
+    - generic [ref=e12] [cursor=pointer]: VIP分级服务
+    - generic [ref=e13] [cursor=pointer]: 群聊协同
+    - generic [ref=e14] [cursor=pointer]: 营销获客
+    - generic [ref=e15] [cursor=pointer]: 管理端
+    - generic [ref=e16] [cursor=pointer]: 商家工作台
+  - generic [ref=e17]:
+    - generic [ref=e18]: 零售电商 · 商品售卖场景：买家从商品列表点击客服，进入对应商家的独立 AI 智能客服。AI 自动识别商品详情、库存、价格、优惠、搭配推荐等意图，不同商家的客服号完全独立隔离。
+    - generic [ref=e19]:
+      - generic [ref=e20]:
+        - generic [ref=e22]:
+          - generic [ref=e23]: 9:41
+          - generic [ref=e24]:
+            - generic [ref=e25]: 5G
+            - generic [ref=e26]: 100%
+        - textbox "搜索商品、店铺..." [ref=e28]
+        - generic [ref=e29]:
+          - generic [ref=e30] [cursor=pointer]: 推荐
+          - generic [ref=e31] [cursor=pointer]: 时尚女装
+          - generic [ref=e32] [cursor=pointer]: 家居美学
+          - generic [ref=e33] [cursor=pointer]: 运动户外
+          - generic [ref=e34] [cursor=pointer]: 穿搭配饰
+        - generic [ref=e35]:
+          - generic [ref=e36] [cursor=pointer]:
+            - generic [ref=e37]:
+              - img "彩色餐具" [ref=e38]
+              - generic [ref=e39]: 热卖
+            - generic [ref=e40]:
+              - generic [ref=e41]: Colour 彩色餐具 餐桌艺术系列
+              - generic [ref=e42]: ¥469 ¥599
+              - generic [ref=e43]: 600+人付款
+              - generic [ref=e44]: Colour 旗舰店
+          - generic [ref=e45] [cursor=pointer]:
+            - generic [ref=e46]:
+              - img "电动玩具车" [ref=e47]
+              - generic [ref=e48]: 新品
+            - generic [ref=e49]:
+              - generic [ref=e50]: 2024新款电动四轮巴士汽车合金大号
+              - generic [ref=e51]: ¥128
+              - generic [ref=e52]: 12+人付款
+              - generic [ref=e53]: 木鱼玩具
+          - generic [ref=e54] [cursor=pointer]:
+            - img "料理机" [ref=e56]
+            - generic [ref=e57]:
+              - generic [ref=e58]: 多功能家用小型料理搅拌机 金合系列
+              - generic [ref=e59]: ¥1268
+              - generic [ref=e60]: 100+人付款
+              - generic [ref=e61]: Colour 旗舰店
+          - generic [ref=e62] [cursor=pointer]:
+            - img "益智积木" [ref=e64]
+            - generic [ref=e65]:
+              - generic [ref=e66]: 益智积木城市系列 儿童拼装玩具
+              - generic [ref=e67]: ¥399
+              - generic [ref=e68]: 200+人付款
+              - generic [ref=e69]: 木鱼玩具
+        - generic [ref=e70]:
+          - generic [ref=e71] [cursor=pointer]:
+            - generic [ref=e72]: 🏠
+            - text: 首页
+          - generic [ref=e73] [cursor=pointer]:
+            - generic [ref=e74]: 🛍
+            - text: 购物
+          - generic [ref=e76] [cursor=pointer]: +
+          - generic [ref=e77] [cursor=pointer]:
+            - generic [ref=e78]: 💬
+            - text: 消息
+          - generic [ref=e79] [cursor=pointer]:
+            - generic [ref=e80]: 👤
+            - text: 我的
+      - img

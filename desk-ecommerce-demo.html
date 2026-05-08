@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Desk 电商平台智能客服 · 全场景演示</title>
+<link rel="stylesheet" href="desk-demo-styles.css">
+</head>
+<body>
+
+<div class="scene-tabs">
+  <div class="scene-tab active" onclick="switchScene('s1')">零售商品咨询</div>
+  <div class="scene-tab" onclick="switchScene('s2')">采购询盘</div>
+  <div class="scene-tab" onclick="switchScene('s3')">多入口接待</div>
+  <div class="scene-tab" onclick="switchScene('s4')">订单物流售后</div>
+  <div class="scene-tab" onclick="switchScene('s15')">平台客服</div>
+  <div class="scene-tab" onclick="switchScene('s5')">招商合作</div>
+  <div class="scene-tab" onclick="switchScene('s6')">多商家运营</div>
+  <div class="scene-tab" onclick="switchScene('s7')">智能导购</div>
+  <div class="scene-tab" onclick="switchScene('s8')">退换货处理</div>
+  <div class="scene-tab" onclick="switchScene('s9')">多语言客服</div>
+  <div class="scene-tab" onclick="switchScene('s10')">VIP分级服务</div>
+  <div class="scene-tab" onclick="switchScene('s11')">群聊协同</div>
+  <div class="scene-tab" onclick="switchScene('s12')">营销获客</div>
+  <div class="scene-tab" onclick="switchScene('s13')">管理端</div>
+  <div class="scene-tab" onclick="switchScene('s14')">商家工作台</div>
+</div>
+
+<!-- ============ 场景一：零售商品咨询 ============ -->
+<div class="scene-container active" id="s1">
+  <div class="scene-desc"><b>零售电商 · 商品售卖场景</b>：买家从商品列表点击客服，进入对应商家的独立 AI 智能客服。AI 自动识别商品详情、库存、价格、优惠、搭配推荐等意图，不同商家的客服号完全独立隔离。</div>
+  <div class="scene-layout" id="s1-layout" style="position:relative">
+    <!-- 左：商城 -->
+    <div class="phone" id="shop-phone-1">
+      <div class="phone-notch"></div>
+      <div class="phone-status"><span class="time">9:41</span><span class="icons"><span>5G</span> <span>100%</span></span></div>
+      <div class="shop-search"><input placeholder="搜索商品、店铺..." readonly></div>
+      <div class="shop-categories"><span>推荐</span><span>时尚女装</span><span class="active">家居美学</span><span>运动户外</span><span>穿搭配饰</span></div>
+      <div class="product-grid">
+        <div class="product-card" onclick="openChat('chat1a')" id="pc1">
+          <div class="product-img" style="border:2px solid #e4393c;border-radius:6px"><img src="demo-assets/dish1.jpg" alt="彩色餐具"><div class="tag">热卖</div></div>
+          <div class="info"><div class="name">Colour 彩色餐具 餐桌艺术系列</div><div class="price">¥469 <small>¥599</small></div><div class="sales">600+人付款</div><div class="shop-tag" style="color:#e4393c;background:#fff0f0">Colour 旗舰店</div></div>
+        </div>
+        <div class="product-card" onclick="openChat('chat1b')" id="pc2">
+          <div class="product-img" style="border:2px solid #1a73e8;border-radius:6px"><img src="demo-assets/toycar1.jpg" alt="电动玩具车"><div class="tag" style="background:rgba(26,115,232,.9)">新品</div></div>
+          <div class="info"><div class="name">2024新款电动四轮巴士汽车合金大号</div><div class="price">¥128</div><div class="sales">12+人付款</div><div class="shop-tag">木鱼玩具</div></div>
+        </div>
+        <div class="product-card" onclick="openChat('chat1a')" id="pc3">
+          <div class="product-img"><img src="demo-assets/blender1.jpg" alt="料理机"></div>
+          <div class="info"><div class="name">多功能家用小型料理搅拌机 金合系列</div><div class="price">¥1268</div><div class="sales">100+人付款</div><div class="shop-tag" style="color:#e4393c;background:#fff0f0">Colour 旗舰店</div></div>
+        </div>
+        <div class="product-card" onclick="openChat('chat1b')" id="pc4">
+          <div class="product-img"><img src="demo-assets/blocks1.jpg" alt="益智积木"></div>
+          <div class="info"><div class="name">益智积木城市系列 儿童拼装玩具</div><div class="price">¥399</div><div class="sales">200+人付款</div><div class="shop-tag">木鱼玩具</div></div>
+        </div>
+      </div>
+      <div class="phone-bottom-nav">
+        <div class="nav-item active"><div class="icon">🏠</div>首页</div>
+        <div class="nav-item"><div class="icon">🛍</div>购物</div>
+        <div class="nav-item"><div class="nav-plus">+</div></div>
+        <div class="nav-item"><div class="icon">💬</div>消息</div>
+        <div class="nav-item"><div class="icon">👤</div>我的</div>
+      </div>
+    </div>
+    <!-- SVG连线覆盖层：由JS动态绘制 -->
+    <svg id="s1-lines" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:10" fill="none"></svg>
+    <!-- 客服A (Colour) -->
+    <div class="phone chat-phone" id="chat1a" style="display:none;margin-left:80px">
+      <div class="phone-notch"></div>
+      <div class="phone-status"><span class="time">9:41</span><span class="icons"><span>5G</span> <span>100%</span></span></div>
+      <div class="chat-header" style="border-left:3px solid #e4393c"><span class="back" onclick="closeChat('chat1a')">‹</span><span class="shop-name">Colour 旗舰店</span><span class="more">店铺</span></div>
+      <div class="chat-body" id="chatBody1a" style="height:520px">
+        <div class="msg-time">11:08</div>
+        <div class="msg-row bot"><div class="msg-avatar"><img src="demo-assets/avatar-bot.jpg" alt="AI"></div><div><div class="msg-bubble">亲，很高兴为您服务，请问您要咨询什么问题？</div><div class="quick-btns"><span class="quick-btn" onclick="sendUserMsg('chatBody1a','满300减50活动')">满300减50</span><span class="quick-btn" onclick="sendUserMsg('chatBody1a','双十一新品专区')">新品专区</span><span class="quick-btn" onclick="sendUserMsg('chatBody1a','哪里发货？')">哪里发货？</span><span class="quick-btn" onclick="sendUserMsg('chatBody1a','如何退款')">如何退款</span></div></div></div>
+        <div class="msg-row bot"><div class="msg-avatar"><img src="demo-assets/avatar-bot.jpg" alt="AI"></div><div><div class="product-msg"><div class="pm-img"><img src="demo-assets/dish1.jpg" alt="餐具"></div><div class="p-info"><div class="p-name">Colour 彩色餐具 餐桌艺术系列</div><div class="p-bottom"><span class="p-price">¥469</span><span class="p-btn">发送商品</span></div></div></div></div></div>
+        <div class="msg-row user"><div class="msg-avatar"><img src="demo-assets/avatar-user.jpg" alt="用户"></div><div class="msg-bubble">这款商品是多大尺寸的？</div></div>
+        <div class="msg-row bot"><div class="msg-avatar"><img src="demo-assets/avatar-bot.jpg" alt="AI"></div><div class="msg-bubble">您好，这款有8.5英寸和6.5英寸两个规格。材质为骨瓷，釉下彩工艺，不含铅镉，可放心使用。</div></div>
+      </div>
+      <div class="chat-toolbar" style="bottom:50px"><span>在线时间</span><span>人工服务</span><span>新品推荐</span><span>退换货</span></div>
+      <div class="chat-input-bar"><span class="mic">🎤</span><input placeholder="请输入您要咨询的问题..." id="input1a" onkeydown="if(event.key==='Enter')sendFromInput('chatBody1a','input1a')"><span class="extra">😊</span><span class="extra">+</span></div>
+    </div>
+    <!-- 客服B (木鱼) -->
+    <div class="phone chat-phone" id="chat1b" style="display:none;margin-left:20px">
+      <div class="phone-notch"></div>
+      <div class="phone-status"><span class="time">9:41</span><span class="icons"><span>5G</span> <span>100%</span></span></div>
+      <div class="chat-header" style="border-left:3px solid #1a73e8"><span class="back" onclick="closeChat('chat1b')">‹</span><span class="shop-name">木鱼玩具</span><span class="more">店铺</span></div>
+      <div class="chat-body" id="chatBody1b" style="height:520px">
+        <div class="msg-time">11:08</div>
+        <div class="msg-row bot"><div class="msg-avatar"><img src="demo-assets/avatar-cs1.jpg" alt="AI"></div><div><div class="msg-bubble">欢迎您光临木鱼玩具！入手热爱，生活更可爱</div><div class="quick-btns"><span class="quick-btn" onclick="sendUserMsg('chatBody1b','必抢爆款-仅7折')">必抢爆款-仅7折</span><span class="quick-btn" onclick="sendUserMsg('chatBody1b','超值满赠-满499正装豪礼')">满499送豪礼</span><span class="quick-btn" onclick="sendUserMsg('chatBody1b','支付打卡-最新款积木')">最新款积木</span></div></div></div>
+        <div class="msg-row bot"><div class="msg-avatar"><img src="demo-assets/avatar-cs1.jpg" alt="AI"></div><div><div class="product-msg"><div class="pm-img"><img src="demo-assets/toycar1.jpg" alt="玩具车"></div><div class="p-info"><div class="p-name">2024新款电动四轮巴士汽车合金大号</div><div class="p-bottom"><span class="p-price">¥128</span><span class="p-btn">发送商品</span></div></div></div></div></div>
+        <div class="msg-row user"><div class="msg-avatar"><img src="demo-assets/avatar-user.jpg" alt="用户"></div><div class="msg-bubble">这款可以遥控的吗</div></div>
+        <div class="msg-row bot"><div class="msg-avatar"><img src="demo-assets/avatar-cs1.jpg" alt="AI"></div><div class="msg-bubble">您好，这款拥有2.4G抗干扰遥控，一键开门/关门。车前部有LED大灯，车顶可拆换，赠送DIY贴纸。</div></div>
+      </div>
+      <div class="chat-toolbar" style="bottom:50px"><span>在线时间</span><span>人工服务</span><span>退换货</span></div>
+      <div class="chat-input-bar"><span class="mic">🎤</span><input placeholder="请输入您要咨询的问题..." id="input1b" onkeydown="if(event.key==='Enter')sendFromInput('chatBody1b','input1b')"><span class="extra">😊</span><span class="extra">+</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 场景二：采购询盘 ============ -->
+<div class="scene-container" id="s2">
+  <div class="scene-desc"><b>批发/分销 · 采购询盘场景</b>：AI 自动识别批量采购、询价、OEM/定制、代理分销等意向，主动引导收集结构化采购需求，推送至询盘管理系统，避免高价值商机被埋没。</div>
+  <div style="display:flex;justify-content:center">
+    <div class="phone chat-phone">
+      <div class="phone-notch"></div>
+      <div class="phone-status"><span class="time">14:22</span><span class="icons"><span>5G</span> <span>100%</span></span></div>
+      <div class="chat-header"><span class="back">‹</span><span class="shop-name">果冻鼠旗舰店 · 智能客服</span><span class="more">店铺</span></div>
+      <div class="chat-body" id="chatBody2" style="height:520px">
+        <div class="msg-time">14:22</div>
+        <div class="msg-row bot"><div class="msg-avatar">AI</div><div><div class="msg-bubble">欢迎光临果冻鼠旗舰店！我们主营儿童玩具，支持批发定制。请选择您的来访目的：</div><div class="quick-btns"><span class="quick-btn" onclick="playInquiry()">💰 批量采购</span><span class="quick-btn" onclick="sendUserMsg('chatBody2','这款有没有现货')">🔍 商品咨询</span><span class="quick-btn">📦 订单查询</span><span class="quick-btn">💬 联系人工</span></div></div></div>
+        <div class="msg-row user" id="iq-step1" style="display:none"><div class="msg-avatar">我</div><div class="msg-bubble">我想批量采购泡泡玛特手办</div></div>
+        <div class="msg-row bot" id="iq-step2" style="display:none"><div class="msg-avatar">AI</div><div class="msg-bubble">好的！为您启动采购询盘流程。请问您的初步采购数量是多少？</div></div>
+        <div class="msg-row user" id="iq-step3" style="display:none"><div class="msg-avatar">我</div><div class="msg-bubble">大概1000件，公司叫鑫达贸易</div></div>
+        <div class="msg-row bot" id="iq-step4" style="display:none"><div class="msg-avatar">AI</div><div class="msg-bubble">收到！请提供联系电话，商务专员将在30分钟内联系您。</div></div>
+        <div class="msg-row user" id="iq-step5" style="display:none"><div class="msg-avatar">我</div><div class="msg-bubble">138xxxx1234</div></div>
+        <div class="msg-row bot" id="iq-step6" style="display:none"><div class="msg-avatar">AI</div><div><div class="msg-bubble">询盘已提交成功！</div><div class="inquiry-card"><div class="iq-title">📋 采购询盘单</div><div class="iq-row"><span class="iq-label">采购商品</span>泡泡玛特手办</div><div class="iq-row"><span class="iq-label">采购数量</span>1000件</div><div class="iq-row"><span class="iq-label">公司名称</span>鑫达贸易</div><div class="iq-row"><span class="iq-label">联系电话</span>138xxxx1234</div><div class="iq-row"><span class="iq-label">询盘编号</span>INQ-20260417-001</div><div class="iq-success">✅ 已推送至商家询盘系统</div></div></div></div>
+      </div>
+      <div class="chat-toolbar" style="bottom:50px"><span>在线时间</span><span>人工服务</span><span>新品推荐</span><span>退换货</span></div>
+      <div class="chat-input-bar"><span class="mic">🎤</span><input placeholder="请输入您要咨询的问题..."><span class="extra">😊</span><span class="extra">+</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 场景三：多入口接待 ============ -->
+<div class="scene-container" id="s3">
+  <div class="scene-desc"><b>品牌商城 · 多入口接待场景</b>：同一商家从店铺页、商品详情页、活动页等不同入口进入，配置不同欢迎语、默认问题和任务流，实现差异化接待。点击下方按钮切换入口。</div>
+  <div style="text-align:center;margin-bottom:12px">
+    <span class="scene-tab entry-tab active" onclick="switchEntry('shop')" style="display:inline-block">从店铺入口进入</span>
+    <span class="scene-tab entry-tab" onclick="switchEntry('product')" style="display:inline-block">从商品入口进入</span>
+    <span class="scene-tab entry-tab" onclick="switchEntry('promo')" style="display:inline-block">从活动页入口进入</span>
+  </div>
+  <div class="scene-layout" style="position:relative">
+    <!-- 左：来源页面示意 -->
+    <div class="phone" id="entry-source-phone">
+      <div class="phone-notch"></div>
+      <div class="phone-status"><span class="time">10:15</span><span class="icons"><span>5G</span> <span>100%</span></span></div>
+      <!-- 店铺页 -->
+      <div class="entry-source" id="src-shop" style="display:block">
+        <div style="height:42px;background:#e4393c;display:flex;align-items:center;padding:0 14px;color:#fff;font-size:14px;font-weight:600">🏪 果冻鼠旗舰店</div>
+        <div style="padding:12px;background:#fff">
+          <div style="background:linear-gradient(135deg,#fce4ec,#fff);border-radius:8px;padding:16px;text-align:center;margin-bottom:10px">
+            <div style="font-size:16px;font-weight:700;color:#333;margin-bottom:4px">果冻鼠旗舰店</div>
+            <div style="font-size:11px;color:#888">主营：益智玩具 | 电动遥控 | IP联名</div>
+            <div style="font-size:10px;color:#999;margin-top:4px">12年老店 · 50万+客户 · 好评率98.6%</div>
+          </div>
+          <div style="display:flex;gap:6px;margin-bottom:10px">
+            <div style="flex:1;background:#f8f8f8;border-radius:6px;padding:8px;text-align:center"><div style="font-size:18px">🧸</div><div style="font-size:9px;color:#666;margin-top:2px">IP手办</div></div>
+            <div style="flex:1;background:#f8f8f8;border-radius:6px;padding:8px;text-align:center"><div style="font-size:18px">🚗</div><div style="font-size:9px;color:#666;margin-top:2px">遥控车</div></div>
+            <div style="flex:1;background:#f8f8f8;border-radius:6px;padding:8px;text-align:center"><div style="font-size:18px">🏗️</div><div style="font-size:9px;color:#666;margin-top:2px">积木</div></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+            <div style="border-radius:6px;overflow:hidden"><img src="demo-assets/figurine1.jpg" style="width:100%;height:80px;object-fit:cover"><div style="padding:4px 6px;font-size:10px;color:#333">泡泡玛特联名 <span style="color:#e4393c;font-weight:700">¥89</span></div></div>
+            <div style="border-radius:6px;overflow:hidden"><img src="demo-assets/toycar1.jpg" style="width:100%;height:80px;object-fit:cover"><div style="padding:4px 6px;font-size:10px;color:#333">电动巴士合金 <span style="color:#e4393c;font-weight:700">¥128</span></div></div>
+          </div>
+        </div>
+        <div style="position:absolute;bottom:70px;right:14px;width:48px;height:48px;background:#e4393c;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:600;box-shadow:0 4px 12px rgba(228,57,60,.4);cursor:pointer" id="s3-contact-btn">客服</div>
+      </div>
+      <!-- 商品详情页 -->
+      <div class="entry-source" id="src-product" style="display:none">
+        <div style="height:42px;background:#fff;display:flex;align-items:center;padding:0 14px;border-bottom:1px solid #eee"><span style="font-size:16px;margin-right:8px">‹</span><span style="font-size:14px;font-weight:600">商品详情</span></div>
+        <div><img src="demo-assets/figurine1.jpg" style="width:100%;height:200px;object-fit:cover"></div>
+        <div style="padding:10px 14px;background:#fff">
+          <div style="font-size:18px;color:#e4393c;font-weight:700">¥89.00 <small style="font-size:11px;color:#999;text-decoration:line-through;font-weight:400">¥129.00</small></div>
+          <div style="font-size:14px;color:#333;font-weight:500;margin-top:6px">泡泡玛特联名手办 限量款 PVC 12cm</div>
+          <div style="font-size:11px;color:#999;margin-top:4px">月销 2000+ | 好评率 99.2%</div>
+          <div style="display:flex;gap:8px;margin-top:10px">
+            <div style="flex:1;background:#fff0f0;border-radius:6px;padding:6px;text-align:center;font-size:10px;color:#e4393c">满300减50</div>
+            <div style="flex:1;background:#f0f7ff;border-radius:6px;padding:6px;text-align:center;font-size:10px;color:#1a73e8">新人首单9折</div>
+          </div>
+        </div>
+        <div style="position:absolute;bottom:70px;left:0;right:0;display:flex;padding:0 14px;gap:8px">
+          <div style="flex:1;background:#faad14;color:#fff;text-align:center;padding:10px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer">咨询客服</div>
+          <div style="flex:1;background:#e4393c;color:#fff;text-align:center;padding:10px;border-radius:20px;font-size:13px;font-weight:600">立即购买</div>
+        </div>
+      </div>
+      <!-- 活动页 -->
+      <div class="entry-source" id="src-promo" style="display:none">
+        <div style="height:42px;background:linear-gradient(135deg,#e4393c,#ff6b6b);display:flex;align-items:center;padding:0 14px;color:#fff;font-size:14px;font-weight:600">🔥 双十一狂欢节</div>
+        <div style="background:linear-gradient(180deg,#e4393c 0%,#fff 40%);padding:16px">
+          <div style="background:#fff;border-radius:10px;padding:16px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.08)">
+            <div style="font-size:22px;font-weight:800;color:#e4393c">全场低至5折</div>
+            <div style="font-size:12px;color:#666;margin-top:4px">满300减50 | 前100名送限量礼盒</div>
+            <div style="margin-top:12px;display:flex;gap:6px;justify-content:center">
+              <div style="background:#fff0f0;padding:4px 10px;border-radius:4px;font-size:10px;color:#e4393c">玩具5折</div>
+              <div style="background:#fff0f0;padding:4px 10px;border-radius:4px;font-size:10px;color:#e4393c">手办7折</div>
+              <div style="background:#fff0f0;padding:4px 10px;border-radius:4px;font-size:10px;color:#e4393c">积木6折</div>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px">
+            <div style="background:#fff;border-radius:6px;overflow:hidden"><img src="demo-assets/blocks1.jpg" style="width:100%;height:70px;object-fit:cover"><div style="padding:4px 6px;font-size:10px"><span style="color:#e4393c;font-weight:700">¥199</span> <small style="text-decoration:line-through;color:#999;font-size:9px">¥399</small></div></div>
+            <div style="background:#fff;border-radius:6px;overflow:hidden"><img src="demo-assets/toycar1.jpg" style="width:100%;height:70px;object-fit:cover"><div style="padding:4px 6px;font-size:10px"><span style="color:#e4393c;font-weight:700">¥64</span> <small style="text-decoration:line-through;color:#999;font-size:9px">¥128</small></div></div>
+          </div>
+        </div>
+        <div style="position:absolute;bottom:70px;right:14px;width:48px;height:48px;background:#e4393c;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:600;box-shadow:0 4px 12px rgba(228,57,60,.4);cursor:pointer">客服</div>
+      </div>
+      <div class="phone-bottom-nav">
+        <div class="nav-item active"><div class="icon">🏠</div>首页</div>
+        <div class="nav-item"><div class="icon">🛍</div>购物</div>
+        <div class="nav-item"><div class="nav-plus">+</div></div>
+        <div class="nav-item"><div class="icon">💬</div>消息</div>
+        <div class="nav-item"><div class="icon">👤</div>我的</div>
+      </div>
+    </div>
+    <!-- SVG 连线 -->
+    <svg id="s3-lines" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:10" fill="none"></svg>
+    <!-- 右：聊天窗口 -->
+    <div class="phone chat-phone" id="s3-chat" style="margin-left:100px">
+      <div class="phone-notch"></div>
+      <div class="phone-status"><span class="time">10:15</span><span class="icons"><span>5G</span> <span>100%</span></span></div>
+      <div class="chat-header"><span class="back">‹</span><span class="shop-name">果冻鼠旗舰店</span><span class="more">店铺</span></div>
+      <!-- 店铺入口聊天 -->
+      <div class="entry-chat" id="entry-shop" style="display:block">
+        <div class="chat-body" style="height:520px">
+          <div class="msg-time">从店铺首页 → 联系客服</div>
+          <div class="msg-row bot"><div class="msg-avatar">AI</div><div><div class="msg-bubble">欢迎光临果冻鼠旗舰店！<br><br>我们主营儿童益智玩具，支持批发定制。<br>品牌成立12年，累计服务50万+客户。</div><div class="quick-btns"><span class="quick-btn">💰 批量采购</span><span class="quick-btn">🔍 店铺主营</span><span class="quick-btn">📦 订单查询</span><span class="quick-btn">💬 联系人工</span></div></div></div>
+          <div class="msg-row user"><div class="msg-avatar">我</div><div class="msg-bubble">你们主营什么产品？</div></div>
+          <div class="msg-row bot"><div class="msg-avatar">AI</div><div class="msg-bubble">我们主营三大品类：<br>1. 益智积木（城市/机械/建筑系列）<br>2. 电动遥控车（合金/越野/赛车）<br>3. IP联名手办（泡泡玛特/迪士尼）<br><br>全线产品支持批量采购和OEM定制！</div></div>
+        </div>
+      </div>
+      <!-- 商品入口聊天 -->
+      <div class="entry-chat" id="entry-product" style="display:none">
+        <div class="chat-body" style="height:520px">
+          <div class="msg-time">从商品详情页 → 咨询</div>
+          <div class="msg-row bot"><div class="msg-avatar">AI</div><div><div class="product-msg"><div class="pm-img"><img src="demo-assets/figurine1.jpg" alt="手办"></div><div class="p-info"><div class="p-name">泡泡玛特联名手办 限量款</div><div class="p-bottom"><span class="p-price">¥89.00</span><span class="p-btn">去购买</span></div></div></div></div></div>
+          <div class="msg-row bot"><div class="msg-avatar">AI</div><div><div class="msg-bubble">您好！请问关于这款商品，您想了解哪方面？</div><div class="quick-btns"><span class="quick-btn">📋 商品详情</span><span class="quick-btn">💰 价格优惠</span><span class="quick-btn">📦 批量采购</span></div></div></div>
+          <div class="msg-row user"><div class="msg-avatar">我</div><div class="msg-bubble">这款有什么特色？</div></div>
+          <div class="msg-row bot"><div class="msg-avatar">AI</div><div class="msg-bubble">这款泡泡玛特联名手办为限量款，采用PVC材质，高度12cm。包含隐藏款概率1/144，全球限量5000套。附赠收藏卡和编号证书。</div></div>
+        </div>
+      </div>
+      <!-- 活动页入口聊天 -->
+      <div class="entry-chat" id="entry-promo" style="display:none">
+        <div class="chat-body" style="height:520px">
+          <div class="msg-time">从大促活动页 → 了解活动</div>
+          <div class="msg-row bot"><div class="msg-avatar">AI</div><div class="msg-bubble" style="background:#fff0f0;border:1px solid #ffd6d6">🔥 双十一狂欢节<br>全场低至5折！满300减50！<br>前100名下单送限量礼盒</div></div>
+          <div class="msg-row bot"><div class="msg-avatar">AI</div><div><div class="msg-bubble">欢迎来到双十一专场！请问您想了解什么？</div><div class="quick-btns"><span class="quick-btn">🎁 活动规则</span><span class="quick-btn">🏷 优惠券领取</span><span class="quick-btn">🔥 爆款推荐</span></div></div></div>
+          <div class="msg-row user"><div class="msg-avatar">我</div><div class="msg-bubble">活动规则是什么？可以叠加吗？</div></div>
+          <div class="msg-row bot"><div class="msg-avatar">AI</div><div class="msg-bubble">双十一活动规则：<br>1. 满300减50，全场通用<br>2. 可叠加店铺优惠券（满200减20）<br>3. 会员享额外9.5折<br>4. 前100名下单送限量礼盒<br><br>也就是说，300元商品最低可享约 ¥215！</div></div>
+        </div>
+      </div>
+      <div class="chat-toolbar" style="bottom:50px"><span>在线时间</span><span>人工服务</span><span>新品推荐</span><span>退换货</span></div>
+      <div class="chat-input-bar"><span class="mic">🎤</span><input placeholder="请输入您要咨询的问题..."><span class="extra">😊</span><span class="extra">+</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 场景四：订单物流售后 ============ -->
+<div class="scene-container" id="s4">
+  <div class="scene-desc"><b>订单 · 物流 · 售后服务场景</b>：买家从订单页面进入客服，AI 自动识别订单信息并提供物流查询、退换货等服务。标准化问题机器人闭环处理，复杂售后自动转人工。</div>
+  <div class="scene-layout" style="position:relative">
+    <!-- 左：订单列表页 -->
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-status"><span class="time">16:05</span><span class="icons"><span>5G</span> <span>100%</span></span></div>
+      <div style="height:42px;background:#fff;display:flex;align-items:center;justify-content:center;border-bottom:1px solid #eee;font-size:15px;font-weight:600">我的订单</div>
+      <div style="display:flex;padding:8px 14px;gap:0;background:#fff;border-bottom:1px solid #f0f0f0">
+        <div style="flex:1;text-align:center;font-size:12px;color:#999;padding:6px 0">全部</div>
+        <div style="flex:1;text-align:center;font-size:12px;color:#999;padding:6px 0">待付款</div>
+        <div style="flex:1;text-align:center;font-size:12px;color:#e4393c;padding:6px 0;border-bottom:2px solid #e4393c;font-weight:600">待收货</div>
+        <div style="flex:1;text-align:center;font-size:12px;color:#999;padding:6px 0">已完成</div>
+        <div style="flex:1;text-align:center;font-size:12px;color:#999;padding:6px 0">退换货</div>
+      </div>
+      <div style="padding:10px;background:#f5f5f5;overflow-y:auto;height:calc(100% - 155px)">
+        <!-- 订单1 - 高亮 -->
+        <div id="order-card-1" style="background:#fff;border-radius:8px;padding:12px;margin-bottom:8px;border:2px solid #1a73e8;cursor:pointer">
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:#666;margin-bottom:8px"><span>果冻鼠旗舰店</span><span style="color:#1a73e8;font-weight:600">已发货</span></div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <img src="demo-assets/figurine1.jpg" style="width:60px;height:60px;border-radius:4px;object-fit:cover">
+            <div style="flex:1"><div style="font-size:12px;color:#333;margin-bottom:2px">泡泡玛特联名手办 限量款 x2</div><div style="font-size:10px;color:#999">PVC材质 / 12cm / 含收藏卡</div><div style="font-size:14px;color:#e4393c;font-weight:700;margin-top:4px">¥178.00</div></div>
+          </div>
+          <div style="display:flex;justify-content:flex-end;gap:6px;margin-top:8px">
+            <div style="padding:4px 12px;border:1px solid #d9d9d9;border-radius:14px;font-size:10px;color:#666;cursor:pointer">查看物流</div>
+            <div style="padding:4px 12px;border:1px solid #1a73e8;border-radius:14px;font-size:10px;color:#1a73e8;cursor:pointer;font-weight:600">联系客服</div>
+          </div>
+        </div>
+        <!-- 订单2 -->
+        <div style="background:#fff;border-radius:8px;padding:12px;margin-bottom:8px">
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:#666;margin-bottom:8px"><span>Colour 旗舰店</span><span style="color:#52c41a">已签收</span></div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <img src="demo-assets/dish1.jpg" style="width:60px;height:60px;border-radius:4px;object-fit:cover">
+            <div style="flex:1"><div style="font-size:12px;color:#333">Colour 彩色餐具套装</div><div style="font-size:10px;color:#999">8.5寸 + 6.5寸 / 骨瓷</div><div style="font-size:14px;color:#e4393c;font-weight:700;margin-top:4px">¥469.00</div></div>
+          </div>
+          <div style="display:flex;justify-content:flex-end;gap:6px;margin-top:8px">
+            <div style="padding:4px 12px;border:1px solid #d9d9d9;border-radius:14px;font-size:10px;color:#666">再次购买</div>
+            <div style="padding:4px 12px;border:1px solid #d9d9d9;border-radius:14px;font-size:10px;color:#666">评价</div>
+          </div>
+        </div>
+        <!-- 订单3 -->
+        <div style="background:#fff;border-radius:8px;padding:12px">
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:#666;margin-bottom:8px"><span>木鱼玩具</span><span style="color:#faad14">运输中</span></div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <img src="demo-assets/toycar1.jpg" style="width:60px;height:60px;border-radius:4px;object-fit:cover">
+            <div style="flex:1"><div style="font-size:12px;color:#333">电动四轮巴士汽车合金大号</div><div style="font-size:10px;color:#999">遥控版 / 含LED</div><div style="font-size:14px;color:#e4393c;font-weight:700;margin-top:4px">¥128.00</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="phone-bottom-nav">
+        <div class="nav-item"><div class="icon">🏠</div>首页</div>
+        <div class="nav-item"><div class="icon">🛍</div>购物</div>
+        <div class="nav-item"><div class="nav-plus">+</div></div>
+        <div class="nav-item"><div class="icon">💬</div>消息</div>
+        <div class="nav-item active"><div class="icon">👤</div>我的</div>
+      </div>
+    </div>
+    <!-- SVG 连线 -->
+    <svg id="s4-lines" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:10" fill="none"></svg>
+    <!-- 右：聊天窗口 -->
+    <div class="phone chat-phone" style="margin-left:100px">
+      <div class="phone-notch"></div>
+      <div class="phone-status"><span class="time">16:05</span><span class="icons"><span>5G</span> <span>100%</span></span></div>
+      <div class="chat-header"><span class="back">‹</span><span class="shop-name">果冻鼠旗舰店 · 智能客服</span><span class="more">店铺</span></div>
+      <div class="chat-body" style="height:520px">
+        <div class="msg-time">16:05 · 从订单页进入</div>
+        <div class="msg-row bot"><div class="msg-avatar">AI</div><div><div class="order-msg"><div class="o-head"><span>📦 订单号：20260415001234</span></div><div class="o-body"><div class="o-img" style="background:#f5f5f5"><img src="demo-assets/figurine1.jpg" alt="手办" style="width:100%;height:100%;object-fit:cover;border-radius:4px"></div><div><div class="o-name">泡泡玛特联名手办 x2</div><div class="o-price">¥178.00</div></div></div><div class="o-status">状态：已发货</div></div></div></div>
+        <div class="msg-row bot"><div class="msg-avatar">AI</div><div><div class="msg-bubble">您好！检测到您有一笔进行中的订单，请问需要什么帮助？</div><div class="quick-btns"><span class="quick-btn" onclick="showLogistics()">📦 查物流</span><span class="quick-btn">🔄 退换货</span><span class="quick-btn">✏️ 修改信息</span></div></div></div>
+        <div class="msg-row user" id="order-q" style="display:none"><div class="msg-avatar">我</div><div class="msg-bubble">查一下物流到哪了</div></div>
+        <div class="msg-row bot" id="order-a" style="display:none"><div class="msg-avatar">AI</div><div class="msg-bubble">正在为您查询...</div></div>
+        <div class="msg-row bot" id="order-b" style="display:none"><div class="msg-avatar">AI</div><div class="msg-bubble">您的包裹当前位于<b>【广州分拨中心】</b>，预计明天送达。<br><br>物流单号：SF1234567890<br>承运商：顺丰速运<br><br>📍 04-17 08:30 广州分拨中心 - 正在派送<br>📍 04-16 22:10 深圳转运中心 - 已发出<br>📍 04-16 15:00 商家已发货</div></div>
+      </div>
+      <div class="chat-toolbar" style="bottom:50px"><span>在线时间</span><span>人工服务</span><span>退换货</span></div>
+      <div class="chat-input-bar"><span class="mic">🎤</span><input placeholder="请输入您要咨询的问题..."><span class="extra">😊</span><span class="extra">+</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 场景十五：平台客服 ============ -->
+<div class="scene-container" id="s15">
+  <div class="scene-desc"><b>平台客服 · 平台规则咨询场景</b>：买家从购物首页、个人中心、帮助中心等"平台入口"点击「平台客服」进入。与商家客服互相独立，专门承接平台规则、账号安全、支付纠纷、投诉举报、退款申诉、平台活动等与商家无关的问题。</div>
+  <div class="scene-layout" style="position:relative">
+    <!-- 左：个人中心（我的）页面 -->
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-status"><span class="time">13:44</span><span class="icons"><span>4G</span> <span>55%</span></span></div>
+      <!-- 顶部用户信息区 + 官方客服入口 -->
+      <div style="background:linear-gradient(135deg,#fff5eb,#ffe4d0);padding:16px 14px 20px;position:relative">
+        <!-- 右上角官方客服 + 设置 -->
+        <div style="position:absolute;top:10px;right:14px;display:flex;gap:12px;align-items:center">
+          <div id="platform-service-card" style="text-align:center;cursor:pointer;position:relative">
+            <div style="font-size:22px">🎧</div>
+            <div style="font-size:10px;color:#e4393c;font-weight:600;margin-top:1px">官方客服</div>
+            <!-- 红色指示箭头 -->
+            <svg style="position:absolute;right:-4px;top:-18px;width:40px;height:40px" viewBox="0 0 40 40">
+              <path d="M5,35 Q15,20 30,8" stroke="#e4393c" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <path d="M30,8 L24,10 M30,8 L28,14" stroke="#e4393c" stroke-width="2" fill="none" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div style="text-align:center;cursor:pointer">
+            <div style="font-size:22px">⚙️</div>
+            <div style="font-size:10px;color:#666;margin-top:1px">设置</div>
+          </div>
+        </div>
+        <!-- 用户资料 -->
+        <div style="display:flex;align-items:center;gap:10px;margin-top:8px">
+          <img src="demo-assets/avatar-user.jpg" style="width:52px;height:52px;border-radius:50%;border:2px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.1)">
+          <div>
+            <div style="font-size:15px;font-weight:700;color:#333">小李同学</div>
+            <div style="font-size:10px;color:#888;margin-top:3px">💎 黄金会员 · 等级L3</div>
+          </div>
+        </div>
+      </div>
+      <!-- 快捷操作 -->
+      <div style="background:#fff;padding:12px 14px;display:grid;grid-template-columns:repeat(4,1fr);text-align:center;gap:6px">
+        <div><div style="font-size:20px">⭐</div><div style="font-size:10px;color:#666;margin-top:2px">收藏</div></div>
+        <div><div style="font-size:20px">🏪</div><div style="font-size:10px;color:#666;margin-top:2px">关注店铺</div></div>
+        <div><div style="font-size:20px">🕐</div><div style="font-size:10px;color:#666;margin-top:2px">足迹</div></div>
+        <div><div style="font-size:20px">📝</div><div style="font-size:10px;color:#666;margin-top:2px">作品</div></div>
+      </div>
+      <div style="padding:8px 10px;background:#f5f5f5;overflow-y:auto;height:calc(100% - 280px)">
+        <!-- 我的订单 -->
+        <div style="background:#fff;border-radius:10px;padding:12px;margin-bottom:8px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+            <div style="font-size:13px;font-weight:700;color:#333">我的订单</div>
+            <div style="font-size:10px;color:#999">全部 ›</div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(5,1fr);text-align:center;gap:4px">
+            <div><div style="font-size:18px">💳</div><div style="font-size:9px;color:#666;margin-top:2px">待付款</div></div>
+            <div><div style="font-size:18px">📦</div><div style="font-size:9px;color:#666;margin-top:2px">待发货</div></div>
+            <div><div style="font-size:18px">🚚</div><div style="font-size:9px;color:#666;margin-top:2px">待收货</div></div>
+            <div><div style="font-size:18px">💬</div><div style="font-size:9px;color:#666;margin-top:2px">待评价</div></div>
+            <div><div style="font-size:18px">💰</div><div style="font-size:9px;color:#666;margin-top:2px">退款/售后</div></div>
+          </div>
+        </div>
+        <!-- 我的权益 -->
+        <div style="background:#fff;border-radius:10px;padding:12px;margin-bottom:8px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+            <div style="font-size:13px;font-weight:700;color:#333">我的权益</div>
+            <div style="font-size:10px;color:#999">全部 ›</div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);text-align:center">
+            <div><div style="font-size:14px;font-weight:700;color:#e4393c">¥0</div><div style="font-size:9px;color:#666;margin-top:2px">红包</div></div>
+            <div><div style="font-size:14px;font-weight:700;color:#333"><span style="font-size:10px">2</span>张</div><div style="font-size:9px;color:#666;margin-top:2px">优惠券</div></div>
+            <div style="border-bottom:2px solid #e4393c;padding-bottom:4px"><div style="font-size:14px;font-weight:700;color:#e4393c">¥108</div><div style="font-size:9px;color:#666;margin-top:2px">金币可抵</div></div>
+            <div><div style="font-size:14px;font-weight:700;color:#333">85</div><div style="font-size:9px;color:#666;margin-top:2px">积分</div></div>
+          </div>
+        </div>
+        <!-- 常用工具 -->
+        <div style="background:#fff;border-radius:10px;padding:12px">
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);text-align:center;gap:10px">
+            <div><div style="width:36px;height:36px;border-radius:50%;background:#e8f5e9;display:flex;align-items:center;justify-content:center;margin:0 auto;font-size:16px">🌱</div><div style="font-size:9px;color:#666;margin-top:4px">芭芭农场</div></div>
+            <div style="position:relative"><div style="width:36px;height:36px;border-radius:50%;background:#ffebee;display:flex;align-items:center;justify-content:center;margin:0 auto;font-size:16px">🧧</div><div style="position:absolute;top:-4px;right:8px;background:#e4393c;color:#fff;font-size:8px;padding:1px 4px;border-radius:6px">领</div><div style="font-size:9px;color:#666;margin-top:4px">签到领现金</div></div>
+            <div><div style="width:36px;height:36px;border-radius:50%;background:#f3e5f5;display:flex;align-items:center;justify-content:center;margin:0 auto;font-size:16px">🍃</div><div style="font-size:9px;color:#666;margin-top:4px">购物人生</div></div>
+            <div><div style="width:36px;height:36px;border-radius:50%;background:#fff3e0;display:flex;align-items:center;justify-content:center;margin:0 auto;font-size:16px">🔥</div><div style="font-size:9px;color:#666;margin-top:4px">火爆连连消</div></div>
+            <div><div style="width:36px;height:36px;border-radius:50%;background:#e3f2fd;display:flex;align-items:center;justify-content:center;margin:0 auto;font-size:16px">📮</div><div style="font-size:9px;color:#666;margin-top:4px">我的快递</div></div>
+            <div><div style="width:36px;height:36px;border-radius:50%;background:#f3e5f5;display:flex;align-items:center;justify-content:center;margin:0 auto;font-size:16px">🎁</div><div style="font-size:9px;color:#666;margin-top:4px">一起摇现金</div></div>
+            <div><div style="width:36px;height:36px;border-radius:50%;background:#e0f2f1;display:flex;align-items:center;justify-content:center;margin:0 auto;font-size:16px">🎀</div><div style="font-size:9px;color:#666;margin-top:4px">试用领取</div></div>
+            <div><div style="width:36px;height:36px;border-radius:50%;background:#fce4ec;display:flex;align-items:center;justify-content:center;margin:0 auto;font-size:16px">🎫</div><div style="font-size:9px;color:#666;margin-top:4px">领券中心</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="phone-bottom-nav">
+        <div class="nav-item"><div class="icon">🏠</div>首页</div>
+        <div class="nav-item"><div class="icon">▶</div>逛逛</div>
+        <div class="nav-item"><div class="icon">💬</div>消息</div>
+        <div class="nav-item"><div class="icon">🛒</div>购物车</div>
+        <div class="nav-item active"><div class="icon">🧡</div>我的</div>
+      </div>
+    </div>
+    <!-- SVG 连线 -->
+    <svg id="s15-lines" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:10" fill="none"></svg>
+    <!-- 右：平台客服聊天 -->
+    <div class="phone chat-phone" id="s15-chat" style="margin-left:100px">
+      <div class="phone-notch"></div>
+      <div class="phone-status"><span class="time">10:52</span><span class="icons"><span>5G</span> <span>100%</span></span></div>
+      <div class="chat-header" style="border-left:3px solid #1a73e8;background:linear-gradient(135deg,#e8f0fe,#fff)">
+        <span class="back">‹</span>
+        <span class="shop-name">🛡️ 平台官方客服</span>
+        <span class="more" style="background:#1a73e8;color:#fff">官方</span>
+      </div>
+      <div class="chat-body" id="chatBody15" style="height:520px">
+        <div class="msg-time">10:52 · 官方客服</div>
+        <div class="msg-row bot"><div class="msg-avatar"><img src="demo-assets/avatar-bot.jpg" alt="AI"></div><div>
+          <div class="msg-bubble" style="background:#f0f7ff;border:1px solid #d6e4ff">您好，我是平台官方客服小智 🛡️<br><br>这里仅处理<b>平台规则、账号安全、支付纠纷</b>等平台相关问题。<br>如果是商品质量、发货物流问题，请联系对应商家客服哦～</div>
+          <div class="quick-btns">
+            <span class="quick-btn" onclick="sendUserMsg('chatBody15','平台退款规则')">📋 平台退款规则</span>
+            <span class="quick-btn" onclick="sendUserMsg('chatBody15','举报商家')">🚨 举报商家</span>
+            <span class="quick-btn" onclick="sendUserMsg('chatBody15','账号安全问题')">🔒 账号安全</span>
+            <span class="quick-btn" onclick="sendUserMsg('chatBody15','支付纠纷申诉')">⚖️ 支付纠纷</span>
+            <span class="quick-btn" onclick="sendUserMsg('chatBody15','平台活动规则')">🎁 活动规则</span>
+            <span class="quick-btn" onclick="sendUserMsg('chatBody15','发票相关问题')">🧾 发票问题</span>
+          </div>
+        </div></div>
+        <div class="msg-row user"><div class="msg-avatar"><img src="demo-assets/avatar-user.jpg" alt="用户"></div><div class="msg-bubble">平台双十一活动规则是什么？</div></div>
+        <div class="msg-row bot"><div class="msg-avatar"><img src="demo-assets/avatar-bot.jpg" alt="AI"></div><div class="msg-bubble">双十一平台活动规则如下：<br><br>1️⃣ <b>跨店满减</b>：满300减50，可跨店铺叠加<br>2️⃣ <b>平台券</b>：每天10点发放，单笔最高抵100<br>3️⃣ <b>保价服务</b>：双十一后15天内降价自动退差价<br>4️⃣ <b>先用后付</b>：0元下单，确认收货后付款<br>5️⃣ <b>退款保障</b>：退款3小时极速审核<br><br>📖 查看<a style="color:#1a73e8;text-decoration:underline">完整活动规则</a></div></div>
+        <div class="msg-row user"><div class="msg-avatar"><img src="demo-assets/avatar-user.jpg" alt="用户"></div><div class="msg-bubble">我想举报一个商家虚假发货</div></div>
+        <div class="msg-row bot"><div class="msg-avatar"><img src="demo-assets/avatar-bot.jpg" alt="AI"></div><div>
+          <div class="msg-bubble">虚假发货是平台严厉打击的违规行为，已为您启动<b>投诉工单</b>流程。请提供以下信息：</div>
+          <div class="inquiry-card" style="border-color:#faad14;background:#fffbe6">
+            <div class="iq-title" style="color:#faad14">⚠️ 投诉举报单</div>
+            <div class="iq-row"><span class="iq-label">订单号</span>20260418xxx</div>
+            <div class="iq-row"><span class="iq-label">被投诉商家</span>待填写</div>
+            <div class="iq-row"><span class="iq-label">问题类型</span>虚假发货</div>
+            <div class="iq-row"><span class="iq-label">问题描述</span>待填写</div>
+            <div class="iq-row"><span class="iq-label">凭证截图</span>待上传</div>
+            <div class="iq-success" style="color:#faad14">⏱️ 平台将在24小时内处理</div>
+          </div>
+        </div></div>
+      </div>
+      <div class="chat-toolbar" style="bottom:50px">
+        <span>平台规则</span><span>常见问题</span><span>投诉流程</span><span>人工客服</span>
+      </div>
+      <div class="chat-input-bar">
+        <span class="mic">🎤</span>
+        <input placeholder="请输入您要咨询的问题..." id="input15" onkeydown="if(event.key==='Enter')sendFromInput('chatBody15','input15')">
+        <span class="extra">😊</span><span class="extra">+</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 平台客服 vs 商家客服对比 -->
+  <div style="max-width:1100px;margin:24px auto 0;background:#fff;border-radius:10px;padding:20px;box-shadow:0 1px 4px rgba(0,0,0,.05)">
+    <div style="text-align:center;font-size:14px;font-weight:600;color:#333;margin-bottom:14px">平台客服 vs 商家客服 · 职责边界</div>
+    <table class="feature-table" style="margin:0">
+      <tr><th style="width:120px">对比维度</th><th>🛡️ 平台官方客服</th><th>🏪 商家店铺客服</th></tr>
+      <tr><td>入口位置</td><td>首页平台服务中心 / 帮助中心 / 个人中心</td><td>店铺首页 / 商品详情页 / 订单页</td></tr>
+      <tr><td>服务范围</td><td>平台规则、账号安全、支付纠纷、投诉举报、活动咨询、发票开具</td><td>商品详情、库存价格、发货物流、商品售后、店铺活动</td></tr>
+      <tr><td>典型问题</td><td>"平台退款规则"、"如何举报商家"、"账号被冻结"、"平台满减怎么叠加"</td><td>"这款有现货吗"、"什么时候发货"、"商品有问题怎么退"</td></tr>
+      <tr><td>AI 能力</td><td>平台规则知识库、投诉工单生成、身份核验、纠纷申诉流程</td><td>商品知识库、订单查询、物流接口、售后任务流</td></tr>
+      <tr><td>处理权限</td><td>跨商家调解、平台侧退款、商家处罚、账号管理</td><td>仅限本店铺内订单、商品、活动处理</td></tr>
+      <tr><td>转人工</td><td>平台客服中心（统一分组）</td><td>商家自有客服团队</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ============ 场景五：招商合作 ============ -->
+<div class="scene-container" id="s5">
+  <div class="scene-desc"><b>平台招商 · 商务合作场景</b>：承接平台招商、商家入驻、供应链合作、渠道分销等咨询，自动收集企业名称、联系人、合作诉求等线索信息，同步给招商团队。</div>
+  <div style="display:flex;justify-content:center">
+    <div class="phone chat-phone">
+      <div class="phone-notch"></div>
+      <div class="phone-status"><span class="time">11:30</span><span class="icons"><span>5G</span> <span>100%</span></span></div>
+      <div class="chat-header"><span class="back">‹</span><span class="shop-name">平台招商中心 · 智能客服</span><span class="more">更多</span></div>
+      <div class="chat-body" style="height:520px">
+        <div class="msg-time">11:30</div>
+        <div class="msg-row bot"><div class="msg-avatar">AI</div><div><div class="msg-bubble">欢迎来到平台招商中心！我可以帮您了解入驻政策、合作方式和招商流程。</div><div class="quick-btns"><span class="quick-btn" onclick="sendUserMsg('chatBody5','怎么入驻你们平台')">🏪 商家入驻</span><span class="quick-btn" onclick="sendUserMsg('chatBody5','我想做代理/分销')">🤝 代理分销</span><span class="quick-btn">🏭 供应链合作</span><span class="quick-btn">📞 联系招商经理</span></div></div></div>
+        <div class="msg-row user"><div class="msg-avatar">我</div><div class="msg-bubble">我们是工厂，想和平台合作供货</div></div>
+        <div class="msg-row bot"><div class="msg-avatar">AI</div><div class="msg-bubble">欢迎合作！为了帮您快速对接招商经理，请提供以下信息：<br><br>1. 企业名称<br>2. 主营品类<br>3. 联系人姓名和电话<br>4. 合作意向（供货/入驻/代理）</div></div>
+        <div class="msg-row user"><div class="msg-avatar">我</div><div class="msg-bubble">深圳市瑞达玩具有限公司，主营益智玩具，联系人张总 139xxxx5678，想入驻供货</div></div>
+        <div class="msg-row bot"><div class="msg-avatar">AI</div><div><div class="msg-bubble">信息已收到！</div><div class="inquiry-card"><div class="iq-title">🏪 招商线索单</div><div class="iq-row"><span class="iq-label">企业名称</span>深圳市瑞达玩具有限公司</div><div class="iq-row"><span class="iq-label">主营品类</span>益智玩具</div><div class="iq-row"><span class="iq-label">联系人</span>张总</div><div class="iq-row"><span class="iq-label">电话</span>139xxxx5678</div><div class="iq-row"><span class="iq-label">合作意向</span>入驻供货</div><div class="iq-success">✅ 已推送至招商团队，预计1个工作日内联系</div></div></div></div>
+      </div>
+      <div class="chat-toolbar" style="bottom:50px"><span>入驻流程</span><span>费用标准</span><span>人工服务</span></div>
+      <div class="chat-input-bar" id="chatBody5"><span class="mic">🎤</span><input placeholder="请输入您要咨询的问题..."><span class="extra">😊</span><span class="extra">+</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 场景六：多商家独立运营 ============ -->
+<div class="scene-container" id="s6">
+  <div class="scene-desc"><b>多商家/多店铺 · 独立运营场景</b>：每个商家拥有独立客服号、独立机器人、独立知识库。消息完全隔离，平台统一管理、商家独立运营。支持基于模板快速复制标准化机器人给新商家。</div>
+  <div style="max-width:1000px;margin:0 auto">
+    <!-- 架构图 -->
+    <div style="background:#fff;border-radius:10px;padding:20px;margin-bottom:16px;box-shadow:0 1px 4px rgba(0,0,0,.05)">
+      <div style="text-align:center;font-size:14px;font-weight:600;color:#333;margin-bottom:16px">多商家独立运营架构</div>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <div style="flex:1;min-width:200px;border:2px solid #e4393c;border-radius:8px;padding:12px;text-align:center"><div style="font-size:12px;font-weight:600;color:#e4393c;margin-bottom:6px">商家 A - Colour旗舰店</div><div style="font-size:10px;color:#666;line-height:1.8">客服号：KF-001<br>AI智能体：colour-bot<br>知识库：餐具/家居产品库<br>客服分组：Colour客服组</div></div>
+        <div style="flex:1;min-width:200px;border:2px solid #1a73e8;border-radius:8px;padding:12px;text-align:center"><div style="font-size:12px;font-weight:600;color:#1a73e8;margin-bottom:6px">商家 B - 木鱼玩具</div><div style="font-size:10px;color:#666;line-height:1.8">客服号：KF-002<br>AI智能体：muyu-bot<br>知识库：玩具/积木产品库<br>客服分组：木鱼客服组</div></div>
+        <div style="flex:1;min-width:200px;border:2px solid #52c41a;border-radius:8px;padding:12px;text-align:center"><div style="font-size:12px;font-weight:600;color:#52c41a;margin-bottom:6px">商家 C - 果冻鼠旗舰店</div><div style="font-size:10px;color:#666;line-height:1.8">客服号：KF-003<br>AI智能体：jelly-bot<br>知识库：手办/潮玩产品库<br>客服分组：果冻鼠客服组</div></div>
+      </div>
+      <div style="text-align:center;margin:12px 0;font-size:20px;color:#999">⬇️</div>
+      <div style="border:2px dashed #faad14;border-radius:8px;padding:12px;text-align:center"><div style="font-size:12px;font-weight:600;color:#faad14;margin-bottom:4px">平台统一管理层</div><div style="font-size:10px;color:#666">模板复制 | 批量部署 | 统一监控 | 数据隔离 | REST API 管理</div></div>
+    </div>
+    <table class="feature-table">
+      <tr><th>特性</th><th>说明</th></tr>
+      <tr><td>多商家独立隔离</td><td>不同商家的客服号之间消息完全隔离，知识库独立</td></tr>
+      <tr><td>同一买家多店咨询</td><td>同一个买家可以同时向多个商家发起咨询</td></tr>
+      <tr><td>同一客服跨店接待</td><td>同一个人工客服可以关联并处理多个客服号的会话</td></tr>
+      <tr><td>历史记录接力</td><td>同一客服号下关联的客服分组成员，可看到历史聊天记录</td></tr>
+      <tr><td>一键模板复制</td><td>基于标准模板快速为新商家部署AI机器人，无需逐个配置</td></tr>
+      <tr><td>REST API 批量管理</td><td>通过 API 批量创建机器人、导入知识库、复制任务流</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ============ 场景七：智能导购与转化 (9.1) ============ -->
+<div class="scene-container" id="s7">
+  <div class="scene-desc"><b>智能导购与转化（9.1）</b>：精准识别用户购买意图，提供个性化商品推荐。支持意图识别与推荐、库存活动咨询、商机线索捕获。</div>
+  <div style="display:flex;justify-content:center;gap:24px;flex-wrap:wrap;align-items:flex-start">
+    <div class="phone chat-phone">
+      <div class="phone-notch"></div>
+      <div class="phone-status"><span class="time">15:20</span><span class="icons"><span>5G</span> <span>100%</span></span></div>
+      <div class="chat-header"><span class="back">‹</span><span class="shop-name">果冻鼠 · 智能导购</span><span class="more">店铺</span></div>
+      <div class="chat-body" style="height:520px">
+        <div class="msg-time">15:20</div>
+        <div class="msg-row bot"><div class="msg-avatar">AI</div><div><div class="msg-bubble">您好！我是智能导购助手，可以帮您挑选最适合的商品~</div><div class="quick-btns"><span class="quick-btn">🔥 热销榜单</span><span class="quick-btn">🎁 新品推荐</span><span class="quick-btn">💰 限时优惠</span></div></div></div>
+        <div class="msg-row user"><div class="msg-avatar">我</div><div class="msg-bubble">帮我推荐一款适合6岁男孩的生日礼物</div></div>
+        <div class="msg-row bot"><div class="msg-avatar">AI</div><div><div class="msg-bubble">6岁男孩的生日礼物，我推荐以下几款：</div><div class="product-msg"><div class="pm-img" style="background:linear-gradient(135deg,#e3f2fd,#bbdefb)">🏗️</div><div class="p-info"><div class="p-name">城市工程系列积木 520片 含说明书</div><div class="p-bottom"><span class="p-price">¥259</span><span class="p-btn">去购买</span></div></div></div><div class="product-msg" style="margin-top:6px"><div class="pm-img" style="background:linear-gradient(135deg,#d4e5f7,#e8f0fe)">🚗</div><div class="p-info"><div class="p-name">电动遥控越野车 1:16 合金车身</div><div class="p-bottom"><span class="p-price">¥188</span><span class="p-btn">去购买</span></div></div></div></div></div>
+        <div class="msg-row bot"><div class="msg-avatar">AI</div><div class="msg-bubble">这两款都很适合6岁男孩，积木锻炼动手能力，遥控车更偏户外玩乐。现在下单都享满200减30优惠！</div></div>
+      </div>
+      <div class="chat-toolbar" style="bottom:50px"><span>在线时间</span><span>人工服务</span><span>新品推荐</span></div>
+      <div class="chat-input-bar"><span class="mic">🎤</span><input placeholder="描述您的需求，智能推荐商品..."><span class="extra">😊</span><span class="extra">+</span></div>
+    </div>
+    <div style="max-width:440px">
+      <div class="scenario-card"><h4>功能配置步骤</h4>
+        <table class="steps-table"><tr><th>步骤</th><th>配置内容</th><th>操作路径</th></tr>
+        <tr><td>1</td><td>创建售前导购任务流，配置意图识别触发条件</td><td>管理端 > 智能体 > 任务流</td></tr>
+        <tr><td>2</td><td>配置信息收集节点，收集用户偏好（品类、预算、用途）</td><td>任务流 > 信息收集节点</td></tr>
+        <tr><td>3</td><td>配置接口调用节点，对接商品推荐API</td><td>任务流 > 接口调用节点</td></tr>
+        <tr><td>4</td><td>配置结束回复，展示推荐商品</td><td>任务流 > 结束回复节点</td></tr></table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 场景八：退换货处理 (9.3) ============ -->
+<div class="scene-container" id="s8">
+  <div class="scene-desc"><b>退换货自动化处理（9.3）</b>：根据渠道和时效自动化处理退换货，政策自助咨询、渠道差异化引导、退款申请自动触发转人工。</div>
+  <div style="display:flex;justify-content:center;gap:24px;flex-wrap:wrap;align-items:flex-start">
+    <div class="phone chat-phone">
+      <div class="phone-notch"></div>
+      <div class="phone-status"><span class="time">17:40</span><span class="icons"><span>5G</span> <span>100%</span></span></div>
+      <div class="chat-header"><span class="back">‹</span><span class="shop-name">Colour旗舰店 · 售后服务</span><span class="more">店铺</span></div>
+      <div class="chat-body" style="height:520px">
+        <div class="msg-time">17:40</div>
+        <div class="msg-row bot"><div class="msg-avatar">AI</div><div><div class="msg-bubble">您好，这里是售后服务中心。请问需要什么帮助？</div><div class="quick-btns"><span class="quick-btn">📋 退货政策</span><span class="quick-btn">🔄 申请退换</span><span class="quick-btn">💰 退款进度</span></div></div></div>
+        <div class="msg-row user"><div class="msg-avatar">我</div><div class="msg-bubble">我要退款，收到的餐具有色差</div></div>
+        <div class="msg-row bot"><div class="msg-avatar">AI</div><div class="msg-bubble">非常抱歉给您带来不好的体验！请问您的订单号是多少？我来为您查询退换货资格。</div></div>
+        <div class="msg-row user"><div class="msg-avatar">我</div><div class="msg-bubble">订单号 20260410003456</div></div>
+        <div class="msg-row bot"><div class="msg-avatar">AI</div><div class="msg-bubble">已查到您的订单：<br>商品：Colour彩色餐具套装<br>签收日期：2026-04-12<br><br>✅ 在7天无理由退换期内，符合退换条件。<br><br>由于您反馈的是<b>质量问题（色差）</b>，建议您拍照留证，我将为您转接人工客服优先处理退款。</div></div>
+        <div class="msg-row bot"><div class="msg-avatar">AI</div><div class="msg-bubble" style="background:#fff8e1;border:1px solid #ffe082;color:#333">⚡ 正在为您转接人工客服...<br>预计等待时间：< 1分钟<br>请稍候，客服人员马上接入。</div></div>
+      </div>
+      <div class="chat-toolbar" style="bottom:50px"><span>在线时间</span><span>人工服务</span><span>退换货</span></div>
+      <div class="chat-input-bar"><span class="mic">🎤</span><input placeholder="请输入您要咨询的问题..."><span class="extra">😊</span><span class="extra">+</span></div>
+    </div>
+    <div style="max-width:440px">
+      <div class="scenario-card"><h4>退换货自动化配置</h4>
+        <table class="steps-table"><tr><th>步骤</th><th>配置内容</th><th>操作路径</th></tr>
+        <tr><td>1</td><td>在知识库配置退换货政策FAQ</td><td>管理端 > 智能体 > 问答库</td></tr>
+        <tr><td>2</td><td>上传售后服务政策文档</td><td>管理端 > 智能体 > 文档问答</td></tr>
+        <tr><td>3</td><td>创建售后任务流，识别退换货意图</td><td>管理端 > 智能体 > 任务流</td></tr>
+        <tr><td>4</td><td>复杂售后自动触发转人工节点</td><td>任务流 > 转人工节点</td></tr></table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 场景九：多语言客服 (9.5) ============ -->
+<div class="scene-container" id="s9">
+  <div class="scene-desc"><b>多语言客服场景（9.5）</b>：为跨境电商提供端到端的多语言服务能力。语种自动识别、多语言知识库、工作台实时翻译，消除全球化沟通壁垒。</div>
+  <div style="display:flex;justify-content:center;gap:16px;flex-wrap:wrap">
+    <!-- 中文客服 -->
+    <div class="phone chat-phone small">
+      <div class="phone-notch"></div>
+      <div class="phone-status"><span class="time">20:15</span><span class="icons"><span>5G</span> <span>100%</span></span></div>
+      <div class="chat-header"><span class="back">‹</span><span class="shop-name">JellyMouse Store</span><span class="more">CN</span></div>
+      <div class="chat-body" style="height:430px">
+        <div class="msg-time">自动识别：中文</div>
+        <div class="msg-row bot"><div class="msg-avatar">AI</div><div class="msg-bubble">欢迎光临果冻鼠旗舰店！请问有什么可以帮您？</div></div>
+        <div class="msg-row user"><div class="msg-avatar">我</div><div class="msg-bubble">这款手办发到广州要多久？</div></div>
+        <div class="msg-row bot"><div class="msg-avatar">AI</div><div class="msg-bubble">广州地区一般1-2天送达，顺丰包邮！下单后24小时内发货。</div></div>
+      </div>
+      <div class="chat-input-bar"><span class="mic">🎤</span><input placeholder="请输入..."><span class="extra">+</span></div>
+    </div>
+    <!-- English -->
+    <div class="phone chat-phone small">
+      <div class="phone-notch"></div>
+      <div class="phone-status"><span class="time">8:15 AM</span><span class="icons"><span>5G</span> <span>100%</span></span></div>
+      <div class="chat-header"><span class="back">‹</span><span class="shop-name">JellyMouse Store</span><span class="more">EN</span></div>
+      <div class="chat-body" style="height:430px">
+        <div class="msg-time">Auto detected: English</div>
+        <div class="msg-row bot"><div class="msg-avatar">AI</div><div class="msg-bubble">Welcome to JellyMouse Store! How can I help you today?</div></div>
+        <div class="msg-row user"><div class="msg-avatar">Me</div><div class="msg-bubble">Do you ship to the US? How long does it take?</div></div>
+        <div class="msg-row bot"><div class="msg-avatar">AI</div><div class="msg-bubble">Yes! We ship worldwide. US delivery takes 7-12 business days via DHL Express. Free shipping on orders over $50!</div></div>
+      </div>
+      <div class="chat-input-bar"><span class="mic">🎤</span><input placeholder="Type a message..."><span class="extra">+</span></div>
+    </div>
+    <!-- 日本語 -->
+    <div class="phone chat-phone small">
+      <div class="phone-notch"></div>
+      <div class="phone-status"><span class="time">21:15</span><span class="icons"><span>5G</span> <span>100%</span></span></div>
+      <div class="chat-header"><span class="back">‹</span><span class="shop-name">JellyMouse Store</span><span class="more">JP</span></div>
+      <div class="chat-body" style="height:430px">
+        <div class="msg-time">自動検出：日本語</div>
+        <div class="msg-row bot"><div class="msg-avatar">AI</div><div class="msg-bubble">JellyMouseストアへようこそ！何かお手伝いできますか？</div></div>
+        <div class="msg-row user"><div class="msg-avatar">私</div><div class="msg-bubble">日本への配送は可能ですか？</div></div>
+        <div class="msg-row bot"><div class="msg-avatar">AI</div><div class="msg-bubble">はい！日本への配送は可能です。EMS便で5-8営業日でお届けします。5,000円以上のご注文で送料無料です！</div></div>
+      </div>
+      <div class="chat-input-bar"><span class="mic">🎤</span><input placeholder="メッセージを入力..."><span class="extra">+</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 场景十：VIP分级服务 (9.6) ============ -->
+<div class="scene-container" id="s10">
+  <div class="scene-desc"><b>普通客服 / VIP客服 · 分级服务场景（9.6）</b>：根据用户等级路由至专属服务入口，VIP用户跳过排队、享受专属欢迎语和高级客服团队。</div>
+  <div style="display:flex;justify-content:center;gap:24px;flex-wrap:wrap">
+    <!-- 普通用户 -->
+    <div class="phone chat-phone small">
+      <div class="phone-notch"></div>
+      <div class="phone-status"><span class="time">14:00</span><span class="icons"><span>5G</span> <span>100%</span></span></div>
+      <div class="chat-header" style="background:#f5f5f5"><span class="back">‹</span><span class="shop-name">普通客服通道</span><span class="more">普通</span></div>
+      <div class="chat-body" style="height:430px">
+        <div class="msg-time">普通用户 · 标准接待</div>
+        <div class="msg-row bot"><div class="msg-avatar">AI</div><div class="msg-bubble">您好，欢迎咨询！请问有什么可以帮您？</div></div>
+        <div class="msg-row user"><div class="msg-avatar">我</div><div class="msg-bubble">我想转人工</div></div>
+        <div class="msg-row bot"><div class="msg-avatar">AI</div><div class="msg-bubble">好的，正在为您排队转接人工客服...<br><br>当前排队人数：<b>23人</b><br>预计等待时间：约 <b>8分钟</b><br><br>您也可以先告诉我问题，我来尝试帮您解答。</div></div>
+      </div>
+      <div class="chat-input-bar"><span class="mic">🎤</span><input placeholder="请输入问题..."><span class="extra">+</span></div>
+    </div>
+    <!-- VIP用户 -->
+    <div class="phone chat-phone small">
+      <div class="phone-notch"></div>
+      <div class="phone-status"><span class="time">14:00</span><span class="icons"><span>5G</span> <span>100%</span></span></div>
+      <div class="chat-header" style="background:linear-gradient(135deg,#fff8e1,#ffe082)"><span class="back">‹</span><span class="shop-name">💎 VIP专属客服</span><span class="more">VIP</span></div>
+      <div class="chat-body" style="height:430px">
+        <div class="msg-time">钻石会员 · 专属接待</div>
+        <div class="msg-row bot"><div class="msg-avatar" style="background:linear-gradient(135deg,#ffd700,#ffb300)">V</div><div class="msg-bubble" style="background:#fffde7;border:1px solid #ffe082">尊敬的钻石会员，欢迎回来！🌟<br><br>您的专属客服经理「小美」已为您在线待命，有任何需求请直接告诉我。</div></div>
+        <div class="msg-row user"><div class="msg-avatar">我</div><div class="msg-bubble">我想转人工</div></div>
+        <div class="msg-row bot"><div class="msg-avatar" style="background:linear-gradient(135deg,#ffd700,#ffb300)">V</div><div class="msg-bubble" style="background:#fffde7;border:1px solid #ffe082">好的！VIP通道免排队，正在为您<b>优先连接</b>专属客服经理...<br><br>⚡ 预计等待：<b>< 10秒</b></div></div>
+        <div class="msg-row bot"><div class="msg-avatar" style="background:linear-gradient(135deg,#52c41a,#73d13d)">美</div><div class="msg-bubble">钻石会员您好！我是您的专属客服小美，请问有什么可以帮您？</div></div>
+      </div>
+      <div class="chat-input-bar"><span class="mic">🎤</span><input placeholder="VIP专属通道..."><span class="extra">+</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 场景十一：群聊协同 (9.4) ============ -->
+<div class="scene-container" id="s11">
+  <div class="scene-desc"><b>多角色客服群聊场景（9.4）</b>：多方角色（客服、客户、合作伙伴、物流）在同一群聊中协同服务。支持VIP专属群服务、群聊机器人@回复。</div>
+  <div style="display:flex;justify-content:center">
+    <div class="phone chat-phone">
+      <div class="phone-notch"></div>
+      <div class="phone-status"><span class="time">16:30</span><span class="icons"><span>5G</span> <span>100%</span></span></div>
+      <div class="chat-header"><span class="back">‹</span><span class="shop-name">VIP服务群 · 张总专属(4)</span><span class="more">...</span></div>
+      <div class="chat-body" style="height:520px">
+        <div class="msg-time">16:30 · VIP专属服务群</div>
+        <div class="msg-row user"><div class="msg-avatar" style="background:#faad14">张</div><div class="msg-bubble" style="background:#faad14">上次那批货有3箱包装破损，需要补发</div></div>
+        <div class="msg-row bot"><div class="msg-avatar" style="background:#52c41a">客</div><div class="msg-bubble">张总您好，马上为您核实。@物流小王 请查一下上批次配送记录</div></div>
+        <div class="msg-row bot"><div class="msg-avatar" style="background:#722ed1">物</div><div class="msg-bubble">已查到，上批次单号 SF98765，确认运输途中有颠簸记录。这边已安排补发3箱，预计明天发出。</div></div>
+        <div class="msg-row user"><div class="msg-avatar" style="background:#faad14">张</div><div class="msg-bubble" style="background:#faad14">好的，@智能客服 帮我查一下补发的物流单号</div></div>
+        <div class="msg-row bot"><div class="msg-avatar">AI</div><div class="msg-bubble">收到！已查询到您的补发订单：<br>物流单号：SF-REP-20260417<br>承运商：顺丰速运<br>状态：正在打包中<br>预计发出：明天上午<br>预计送达：后天下午</div></div>
+        <div class="msg-row user"><div class="msg-avatar" style="background:#faad14">张</div><div class="msg-bubble" style="background:#faad14">谢谢，效率很高</div></div>
+      </div>
+      <div class="chat-input-bar"><span class="mic">🎤</span><input placeholder="在群聊中输入消息..."><span class="extra">@</span><span class="extra">+</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 场景十二：营销获客 (9.8) ============ -->
+<div class="scene-container" id="s12">
+  <div class="scene-desc"><b>营销获客场景（9.8）</b>：将营销推送与智能客服结合，实现"触达→互动→转化"全链路闭环。支持主动触达、个性化推送、线索获取与分配。</div>
+  <div style="display:flex;justify-content:center;gap:24px;flex-wrap:wrap;align-items:flex-start">
+    <div class="phone chat-phone">
+      <div class="phone-notch"></div>
+      <div class="phone-status"><span class="time">19:45</span><span class="icons"><span>5G</span> <span>100%</span></span></div>
+      <div class="chat-header"><span class="back">‹</span><span class="shop-name">果冻鼠旗舰店</span><span class="more">店铺</span></div>
+      <div class="chat-body" style="height:520px">
+        <div class="msg-time">19:45 · 主动触达</div>
+        <div class="msg-row bot"><div class="msg-avatar" style="background:linear-gradient(135deg,#e4393c,#ff6b6b)">营</div><div class="msg-bubble" style="background:#fff0f0;border:1px solid #ffd6d6;color:#333">🎉 专属优惠提醒<br><br>您关注的「泡泡玛特联名手办」已降价！<br>原价 ¥89 → 限时 ¥59<br>仅剩最后 <b>28件</b>！</div></div>
+        <div class="msg-row bot"><div class="msg-avatar">AI</div><div><div class="product-msg"><div class="pm-img" style="background:linear-gradient(135deg,#fce4ec,#f8bbd0)">🧸</div><div class="p-info"><div class="p-name">泡泡玛特联名手办 限量款</div><div class="p-bottom"><span class="p-price">¥59 <small style="text-decoration:line-through;color:#999;font-weight:400;font-size:10px">¥89</small></span><span class="p-btn">立即抢购</span></div></div></div></div></div>
+        <div class="msg-row user"><div class="msg-avatar">我</div><div class="msg-bubble">有兴趣，但我想多了解一下</div></div>
+        <div class="msg-row bot"><div class="msg-avatar">AI</div><div class="msg-bubble">好的！这款手办是全球限量版，PVC材质，高度12cm，含隐藏款。<br><br>方便留下您的联系方式吗？我们的产品专员可以为您提供更详细的介绍和专属优惠。</div></div>
+        <div class="msg-row user"><div class="msg-avatar">我</div><div class="msg-bubble">好的，我叫小李，电话 186xxxx7890</div></div>
+        <div class="msg-row bot"><div class="msg-avatar">AI</div><div><div class="msg-bubble">感谢小李！信息已收到。</div><div class="inquiry-card" style="border-color:#52c41a;background:#f6ffed"><div class="iq-title" style="color:#52c41a">🎯 营销线索</div><div class="iq-row"><span class="iq-label">姓名</span>小李</div><div class="iq-row"><span class="iq-label">电话</span>186xxxx7890</div><div class="iq-row"><span class="iq-label">兴趣商品</span>泡泡玛特联名手办</div><div class="iq-row"><span class="iq-label">来源</span>促销主动触达</div><div class="iq-success">✅ 已分配给产品专员跟进</div></div></div></div>
+      </div>
+      <div class="chat-toolbar" style="bottom:50px"><span>在线时间</span><span>人工服务</span><span>新品推荐</span></div>
+      <div class="chat-input-bar"><span class="mic">🎤</span><input placeholder="请输入您要咨询的问题..."><span class="extra">😊</span><span class="extra">+</span></div>
+    </div>
+    <div style="max-width:440px">
+      <div class="scenario-card"><h4>营销获客流程</h4><p>主动触达 → 用户反馈兴趣 → AI 互动介绍 → 收集线索信息 → 自动分配销售跟进</p>
+        <table class="feature-table" style="margin:8px 0"><tr><th>场景</th><th>功能</th></tr>
+        <tr><td>推送后智能咨询</td><td>用户收到活动推送后点击咨询，AI自动回复</td></tr>
+        <tr><td>主动触达</td><td>浏览特定页面后主动弹出聊天窗口</td></tr>
+        <tr><td>个性化推送</td><td>对话中推送商品推荐、案例、视频</td></tr>
+        <tr><td>线索获取</td><td>根据用户意图适时弹出表单收集信息</td></tr>
+        <tr><td>线索分配</td><td>按地区/产品兴趣自动分配至销售</td></tr></table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 场景十三：管理端 ============ -->
+<div class="scene-container" id="s13">
+  <div class="scene-desc"><b>平台管理端</b>：统一管理多个商家的 AI 智能体，一键复制模板、批量配置客服号与接待规则，支持 REST API 批量管理。</div>
+  <div class="admin-panel" style="display:flex">
+    <div class="admin-sidebar">
+      <div class="logo">🤖 Desk 管理中心</div>
+      <div class="menu-item active">📋 智能体管理</div>
+      <div class="menu-item">💬 客服号配置</div>
+      <div class="menu-item">📚 知识库管理</div>
+      <div class="menu-item">🔄 任务流编辑</div>
+      <div class="menu-item">👥 客服分组</div>
+      <div class="menu-item">📊 数据统计</div>
+      <div class="menu-item">⚙️ 系统设置</div>
+    </div>
+    <div class="admin-content">
+      <h3>我的智能体</h3>
+      <div style="display:flex;gap:6px;margin-bottom:12px"><button class="btn primary" style="padding:5px 14px">+ 新建智能体</button><button class="btn" style="padding:5px 14px">批量导入</button><button class="btn" style="padding:5px 14px">模板库</button></div>
+      <table class="bot-table">
+        <thead><tr><th>智能体名称</th><th>ID</th><th>类型</th><th>关联商家</th><th>状态</th><th>操作</th></tr></thead>
+        <tbody>
+          <tr><td>Colour 旗舰店客服</td><td>bot-001</td><td>AI 智能体</td><td>Colour 旗舰店</td><td class="status-on">● 运行中</td><td><span class="btn">编辑</span><span class="btn">复制</span></td></tr>
+          <tr><td>木鱼玩具客服</td><td>bot-002</td><td>AI 智能体</td><td>木鱼玩具</td><td class="status-on">● 运行中</td><td><span class="btn">编辑</span><span class="btn">复制</span></td></tr>
+          <tr><td>果冻鼠旗舰店客服</td><td>bot-003</td><td>AI 智能体</td><td>果冻鼠旗舰店</td><td class="status-on">● 运行中</td><td><span class="btn">编辑</span><span class="btn">复制</span></td></tr>
+          <tr><td>跑鞋店人工</td><td>bot-004</td><td>智能对话机器人</td><td>飞速跑鞋</td><td class="status-off">● 未启用</td><td><span class="btn">编辑</span><span class="btn">启用</span></td></tr>
+          <tr><td>平台通用模板</td><td>tpl-001</td><td>AI 智能体模板</td><td>—</td><td class="status-on">● 可用</td><td><span class="btn">编辑</span><span class="btn primary">一键部署</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 场景十四：商家工作台 ============ -->
+<div class="scene-container" id="s14">
+  <div class="scene-desc"><b>商家人工客服工作台</b>：AI 识别到复杂场景后自动转人工，客服人员可查看完整 AI 对话历史，实时接管回复。右侧展示用户画像。</div>
+  <div class="workstation">
+    <div class="ws-sidebar">
+      <div class="ws-title">会话列表 <span class="badge">6</span></div>
+      <div class="session-item active"><div class="s-name">买家 张先生</div><div class="s-preview">我要退款，商品质量有问题</div><div class="s-meta"><span class="s-time">14:32</span><span class="s-tag human">人工接待</span></div></div>
+      <div class="session-item"><div class="s-name">买家 李女士</div><div class="s-preview">请问这款有白色的吗？</div><div class="s-meta"><span class="s-time">14:28</span><span class="s-tag ai">AI 接待中</span></div></div>
+      <div class="session-item"><div class="s-name">买家 王总（B端）</div><div class="s-preview">想长期合作，批量采购...</div><div class="s-meta"><span class="s-time">14:15</span><span class="s-tag human">人工接待</span></div></div>
+      <div class="session-item"><div class="s-name">买家 刘小姐</div><div class="s-preview">物流一直没更新怎么办？</div><div class="s-meta"><span class="s-time">13:58</span><span class="s-tag ai">AI 接待中</span></div></div>
+      <div class="session-item"><div class="s-name">买家 赵先生</div><div class="s-preview">可以开增值税发票吗？</div><div class="s-meta"><span class="s-time">13:42</span><span class="s-tag ai">AI 接待中</span></div></div>
+    </div>
+    <div class="ws-chat">
+      <div class="ws-chat-header"><div class="user-info">买家 张先生 <small>来自 Colour 旗舰店</small></div><div class="action-btns"><span class="action-btn">转接</span><span class="action-btn">标记</span><span class="action-btn primary">接管会话</span></div></div>
+      <div class="ws-chat-body">
+        <div class="msg-time">14:20 · AI 智能体接待</div>
+        <div class="msg-row bot"><div class="msg-avatar">AI</div><div class="msg-bubble">您好，欢迎光临 Colour 旗舰店！请问有什么可以帮您？</div></div>
+        <div class="msg-row user"><div class="msg-avatar">买</div><div class="msg-bubble">我买的餐具收到了，但有一个盘子有裂纹</div></div>
+        <div class="msg-row bot"><div class="msg-avatar">AI</div><div class="msg-bubble">非常抱歉！请提供订单号和商品照片，我来为您处理。</div></div>
+        <div class="msg-row user"><div class="msg-avatar">买</div><div class="msg-bubble">订单号 20260412005678</div></div>
+        <div class="msg-row user"><div class="msg-avatar">买</div><div class="msg-bubble" style="padding:3px"><div style="width:100px;height:70px;background:linear-gradient(135deg,#f5f5f5,#e0e0e0);border-radius:4px;display:flex;align-items:center;justify-content:center;color:#999;font-size:10px">[破损照片]</div></div></div>
+        <div class="msg-row bot"><div class="msg-avatar">AI</div><div class="msg-bubble">检测到<b>售后质量投诉</b>，正在转接人工客服...</div></div>
+        <div class="msg-time" style="color:#e4393c">14:32 · 人工客服已接管</div>
+        <div class="msg-row bot"><div class="msg-avatar" style="background:linear-gradient(135deg,#52c41a,#73d13d)">客</div><div class="msg-bubble">张先生您好，我是客服小美。已看到照片和订单信息，为您申请补发新盘子，预计明天发出。</div></div>
+        <div class="msg-row user"><div class="msg-avatar">买</div><div class="msg-bubble">好的，麻烦了</div></div>
+      </div>
+      <div class="ws-chat-input"><textarea placeholder="输入回复内容..."></textarea><button class="send">发送</button></div>
+    </div>
+    <div class="ws-user-panel">
+      <h4>用户信息</h4>
+      <div class="info-row"><span class="info-label">用户 ID</span><span>U-88921345</span></div>
+      <div class="info-row"><span class="info-label">昵称</span><span>张先生</span></div>
+      <div class="info-row"><span class="info-label">来源</span><span>Colour 旗舰店</span></div>
+      <div class="info-row"><span class="info-label">渠道</span><span>Web端</span></div>
+      <div class="info-row"><span class="info-label">历史订单</span><span>12 笔</span></div>
+      <div class="info-row"><span class="info-label">累计消费</span><span>¥5,680</span></div>
+      <div class="info-row"><span class="info-label">会员等级</span><span style="color:#faad14">黄金会员</span></div>
+      <h4 style="margin-top:12px">当前订单</h4>
+      <div class="info-row"><span class="info-label">订单号</span><span>20260412005678</span></div>
+      <div class="info-row"><span class="info-label">商品</span><span>彩色餐具套装</span></div>
+      <div class="info-row"><span class="info-label">金额</span><span>¥469.00</span></div>
+      <div class="info-row"><span class="info-label">状态</span><span style="color:#52c41a">已签收</span></div>
+      <h4 style="margin-top:12px">备注</h4>
+      <div style="font-size:11px;color:#666;background:#fffbe6;padding:6px;border-radius:4px;border:1px solid #ffe58f">优质老客户，售后优先处理</div>
+    </div>
+  </div>
+</div>
+
+<script src="desk-demo-scripts.js"></script>
+</body>
+</html>
